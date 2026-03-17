@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refined.Autos — Article Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-dark: #a8893c;
+    --bg: #0e0e0e;
+    --bg2: #161616;
+    --bg3: #1e1e1e;
+    --bg4: #252525;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0ede8;
+    --text2: #999;
+    --text3: #666;
+    --success: #3a7d44;
+    --danger: #c0392b;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14,14,14,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+    text-decoration: none;
+  }
+
+  .logo em { color: var(--text); font-style: normal; font-weight: 400; }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .api-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--text3);
+    transition: background 0.3s;
+  }
+
+  .api-dot.connected { background: #4caf6e; box-shadow: 0 0 6px #4caf6e66; }
+  .api-dot.error { background: var(--danger); }
+
+  .api-label { font-size: 12px; color: var(--text2); }
+
+  /* ── LAYOUT ── */
+  .app {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 60px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 1.5rem 1rem;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+
+  .nav-section {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    margin: 1.25rem 0 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text2);
+    font-size: 13.5px;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+  }
+
+  .nav-btn:hover { background: var(--bg3); color: var(--text); }
+
+  .nav-btn.active {
+    background: var(--bg4);
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .nav-icon { font-size: 15px; width: 18px; text-align: center; }
+
+  .metrics-mini {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 12px;
+  }
+
+  .metric-row-label { color: var(--text3); }
+  .metric-row-val { color: var(--text); font-weight: 500; }
+
+  /* ── MAIN ── */
+  .main {
+    padding: 2rem;
+    max-width: 780px;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── PAGE TITLE ── */
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 2rem;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-badge {
+    width: 22px; height: 22px;
+    background: var(--gold);
+    color: #000;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-badge.done { background: #4caf6e; color: #fff; }
+
+  /* ── FORM ── */
+  label {
+    font-size: 12px;
+    color: var(--text2);
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  select, input[type="text"], input[type="password"], textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: 1rem;
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+  }
+
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23999' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+
+  select:focus, input:focus, textarea:focus { border-color: var(--gold); }
+
+  select option { background: var(--bg3); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+    border: none;
+    text-decoration: none;
+  }
+
+  .btn-gold { background: var(--gold); color: #000; }
+  .btn-gold:hover { background: var(--gold-dark); }
+  .btn-gold:disabled { background: #444; color: #888; cursor: not-allowed; }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+
+  .btn-ghost:hover { background: var(--bg3); color: var(--text); }
+
+  .btn-full { width: 100%; }
+
+  .btn-sm { padding: 7px 14px; font-size: 12px; }
+
+  /* ── TOPIC GRID ── */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+
+  .topic-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .topic-card:hover { border-color: var(--border2); background: var(--bg4); }
+
+  .topic-card.selected {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.07);
+  }
+
+  .topic-title { font-size: 13px; font-weight: 500; line-height: 1.4; margin-bottom: 6px; color: var(--text); }
+
+  .topic-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .pill {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .pill-green { background: rgba(74,175,100,0.15); color: #4caf6e; }
+  .pill-gold { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .pill-blue { background: rgba(66,153,225,0.15); color: #63b3ed; }
+
+  /* ── OUTPUT ── */
+  .output-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+    white-space: pre-wrap;
+    max-height: 520px;
+    overflow-y: auto;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .output-box::-webkit-scrollbar { width: 5px; }
+  .output-box::-webkit-scrollbar-track { background: transparent; }
+  .output-box::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  .meta-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+
+  .meta-chip {
+    font-size: 12px;
+    color: var(--text2);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .output-actions { display: flex; gap: 10px; margin-top: 1rem; flex-wrap: wrap; }
+
+  /* ── PROGRESS ── */
+  .generating-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    display: none;
+  }
+
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid rgba(201,168,76,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .gen-label { font-size: 14px; color: var(--text2); }
+  .gen-sublabel { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
+  /* ── NOTICE ── */
+  .notice {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #d4b060;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .notice-info {
+    background: rgba(66,153,225,0.08);
+    border-color: rgba(66,153,225,0.2);
+    color: #63b3ed;
+  }
+
+  .notice-success {
+    background: rgba(74,175,100,0.08);
+    border-color: rgba(74,175,100,0.2);
+    color: #4caf6e;
+  }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+
+  /* ── HISTORY ── */
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  .history-item:last-child { border-bottom: none; }
+
+  .history-title { font-size: 13px; font-weight: 500; color: var(--text); }
+  .history-meta { font-size: 12px; color: var(--text3); margin-top: 3px; }
+
+  /* ── ROADMAP ── */
+  .phase {
+    border-left: 2px solid var(--border2);
+    padding-left: 1.25rem;
+    margin-bottom: 1.75rem;
+    position: relative;
+  }
+
+  .phase::before {
+    content: '';
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: absolute;
+    left: -6px;
+    top: 4px;
+  }
+
+  .phase-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .phase-body {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.8;
+  }
+
+  /* ── RPM TABLE ── */
+  .rpm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+
+  .rpm-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+
+  .rpm-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .rpm-val { font-size: 11px; color: var(--text2); }
+
+  /* ── API SETUP ── */
+  .setup-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gold);
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    transition: all 0.15s;
+  }
+
+  .setup-link:hover { background: rgba(201,168,76,0.08); }
+
+  /* ── SECTION ROW ── */
+  .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 1.25rem; }
+    .topic-grid { grid-template-columns: 1fr; }
+    .rpm-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="#">refined<em>.autos</em></a>
+  <div class="header-right">
+    <div class="api-dot" id="api-dot"></div>
+    <span class="api-label" id="api-label">Not connected</span>
+  </div>
+</header>
+
+<div class="app">
+  <nav class="sidebar">
+    <div class="nav-section">Tools</div>
+    <button class="nav-btn active" onclick="switchPanel('generate')" id="nav-generate">
+      <span class="nav-icon">✦</span> Generate
+    </button>
+    <button class="nav-btn" onclick="switchPanel('history')" id="nav-history">
+      <span class="nav-icon">◷</span> History
+    </button>
+
+    <div class="nav-section">Config</div>
+    <button class="nav-btn" onclick="switchPanel('setup')" id="nav-setup">
+      <span class="nav-icon">⚙</span> API Setup
+    </button>
+
+    <div class="nav-section">Planning</div>
+    <button class="nav-btn" onclick="switchPanel('roadmap')" id="nav-roadmap">
+      <span class="nav-icon">◈</span> $1k Roadmap
+    </button>
+
+    <div class="metrics-mini">
+      <div class="metric-row">
+        <span class="metric-row-label">Articles</span>
+        <span class="metric-row-val" id="s-count">0</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-row-label">Total words</span>
+        <span class="metric-row-val" id="s-words">0</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-row-label">API spend</span>
+        <span class="metric-row-val" id="s-cost">$0.00</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- GENERATE -->
+    <div class="panel active" id="panel-generate">
+      <h1 class="page-title">Generate article</h1>
+      <p class="page-subtitle">Pick a topic strategy, choose a suggested title, and generate a full SEO-optimised article.</p>
+
+      <div class="card">
+        <div class="card-title">Content strategy</div>
+
+        <label>Content angle</label>
+        <select id="angle-select" onchange="onAngleChange()">
+          <option value="cost">True cost of ownership — highest RPM</option>
+          <option value="compare">Head-to-head comparisons</option>
+          <option value="used">Best used cars by budget</option>
+          <option value="problems">Common problems & reliability</option>
+          <option value="review">Detailed car reviews</option>
+          <option value="custom">Custom topic</option>
+        </select>
+
+        <div id="custom-wrap" style="display:none;">
+          <label>Your topic / title</label>
+          <input type="text" id="custom-topic" placeholder="e.g. Is the BMW M3 worth buying in 2024?">
+        </div>
+
+        <label>Target reader</label>
+        <select id="audience-select">
+          <option value="buyer">Car buyer researching a purchase</option>
+          <option value="owner">Owner focused on running costs</option>
+          <option value="enthusiast">Car enthusiast</option>
+        </select>
+
+        <label>Article length</label>
+        <select id="length-select">
+          <option value="long">Long-form (1,800–2,200 words) — best for SEO</option>
+          <option value="medium">Medium (1,000–1,400 words)</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="card-title" style="margin:0;">Suggested topics</div>
+          <button class="btn btn-ghost btn-sm" onclick="renderTopics()">Refresh</button>
+        </div>
+        <div class="topic-grid" id="topic-grid"></div>
+
+        <button class="btn btn-gold btn-full" id="gen-btn" onclick="generateArticle()">
+          Generate article
+        </button>
+      </div>
+
+      <div class="generating-state" id="gen-state">
+        <div class="spinner"></div>
+        <div class="gen-label">Writing your article...</div>
+        <div class="gen-sublabel">This takes about 15–25 seconds</div>
+      </div>
+
+      <div id="output-wrap" style="display:none;">
+        <div class="card">
+          <div class="row">
+            <div class="card-title" style="margin:0;">Generated article</div>
+            <button class="btn btn-ghost btn-sm" onclick="copyFull()">Copy all</button>
+          </div>
+          <div class="meta-chips" id="article-chips"></div>
+          <div class="notice" id="meta-box" style="display:none;"></div>
+          <div class="output-box" id="output-box"></div>
+          <div class="output-actions">
+            <button class="btn btn-ghost btn-sm" onclick="copyFull()">Copy article</button>
+            <button class="btn btn-ghost btn-sm" onclick="copyMeta()">Copy meta description</button>
+            <button class="btn btn-ghost btn-sm" onclick="generateArticle()">Generate another</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="panel" id="panel-history">
+      <h1 class="page-title">Article history</h1>
+      <p class="page-subtitle">All articles you've generated this session and in previous sessions.</p>
+      <div class="card">
+        <div class="row">
+          <div class="card-title" style="margin:0;" id="history-count">0 articles</div>
+          <button class="btn btn-ghost btn-sm" onclick="clearHistory()">Clear all</button>
+        </div>
+        <div id="history-list"></div>
+      </div>
+    </div>
+
+    <!-- SETUP -->
+    <div class="panel" id="panel-setup">
+      <h1 class="page-title">API setup</h1>
+      <p class="page-subtitle">Connect your Anthropic API key to start generating articles. Takes about 5 minutes.</p>
+
+      <div class="card">
+        <div class="card-title"><div class="step-badge">1</div> Create an Anthropic account</div>
+        <p style="font-size:13px; color:var(--text2); line-height:1.6; margin-bottom:14px;">
+          Go to <strong style="color:var(--text);">console.anthropic.com</strong> and sign up for free. You only pay for what you use — typically $0.05–0.10 per article.
+        </p>
+        <a href="https://console.anthropic.com" target="_blank" class="setup-link">Open Anthropic Console ↗</a>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="step-badge">2</div> Set a monthly spend limit first</div>
+        <div class="notice">
+          Before generating any API key: in the Console go to <strong>Settings → Limits</strong> and set your monthly spend cap to <strong>$5</strong>. This is your safety net — no surprise bills possible. You can raise it any time.
+        </div>
+        <p style="font-size:13px; color:var(--text2); line-height:1.6;">
+          At $0.08/article, $5 covers roughly 60 articles per month. More than enough to build traffic.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="step-badge">3</div> Create your API key</div>
+        <p style="font-size:13px; color:var(--text2); line-height:1.6; margin-bottom:14px;">
+          In the Console: <strong style="color:var(--text);">API Keys → Create Key</strong>. Name it <em>refined-autos</em>. The key starts with <code style="background:var(--bg3); padding:2px 6px; border-radius:4px; font-size:12px; color:var(--gold);">sk-ant-</code>
+        </p>
+        <div class="notice">
+          The key is shown <strong>only once</strong>. Copy it before closing the window.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="step-badge">4</div> Paste your API key here</div>
+        <label>API key</label>
+        <input type="password" id="api-key-input" placeholder="sk-ant-api03-...">
+        <p style="font-size:12px; color:var(--text3); margin-bottom:14px;">
+          Stored in your browser only. Never sent anywhere except Anthropic's servers when generating articles.
+        </p>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <button class="btn btn-gold" onclick="saveKey()">Save & verify</button>
+          <span id="key-msg" style="font-size:13px;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="panel" id="panel-roadmap">
+      <h1 class="page-title">$1,000/month roadmap</h1>
+      <p class="page-subtitle">Your realistic path from 0 articles to $1k/month in ad revenue.</p>
+
+      <div class="card">
+        <div class="notice notice-info" style="margin-bottom:1.5rem;">
+          <strong>Target network:</strong> Journey by Mediavine (1,000 sessions / 30 days). Once approved, expect $15–25 RPM. To hit $1k/month consistently you need roughly 50,000–70,000 monthly pageviews.
+        </div>
+
+        <div class="phase">
+          <div class="phase-title">Phase 1 — Months 1–2: Build the foundation</div>
+          <div class="phase-body">
+            • Publish 3–4 articles per week using this tool<br>
+            • Focus on "true cost of ownership" and "used car guides" — highest commercial intent<br>
+            • Target long-tail keywords: "how much does a used Audi A4 cost to maintain"<br>
+            • Aim for 25–30 published articles before month 2 ends<br>
+            • Apply for Google AdSense at 20+ articles for early revenue while you grow
+          </div>
+        </div>
+
+        <div class="phase">
+          <div class="phase-title">Phase 2 — Months 3–4: Chase 1,000 sessions</div>
+          <div class="phase-body">
+            • Scale to 5–6 articles per week<br>
+            • Add internal links between every article<br>
+            • Submit sitemap to Google Search Console (free) to speed up indexing<br>
+            • Write 3–5 "pillar" articles (3,000+ words) on broad topics<br>
+            • Apply for Journey by Mediavine once you hit 800+ sessions
+          </div>
+        </div>
+
+        <div class="phase">
+          <div class="phase-title">Phase 3 — Months 5–8: Scale to $1k/month</div>
+          <div class="phase-body">
+            • Upgrade to Mediavine full (50k sessions) or Raptive (100k pageviews)<br>
+            • Identify your top 10 performing articles and expand/update them<br>
+            • Add comparison tables and pros/cons — increases time on page = higher RPM<br>
+            • At $20 RPM × 50,000 sessions: <strong style="color:var(--gold);">$1,000/month achieved</strong>
+          </div>
+        </div>
+
+        <hr>
+
+        <div style="font-size:14px; font-weight:500; margin-bottom:0.75rem;">Highest-RPM content for refined.autos</div>
+        <div class="rpm-grid">
+          <div class="rpm-card">
+            <div class="rpm-name">True cost of ownership</div>
+            <div class="rpm-val">RPM $20–40 · Commercial intent: very high</div>
+          </div>
+          <div class="rpm-card">
+            <div class="rpm-name">Used car buying guides</div>
+            <div class="rpm-val">RPM $18–35 · Commercial intent: very high</div>
+          </div>
+          <div class="rpm-card">
+            <div class="rpm-name">Reliability & common issues</div>
+            <div class="rpm-val">RPM $15–28 · Search volume: high</div>
+          </div>
+          <div class="rpm-card">
+            <div class="rpm-name">Head-to-head comparisons</div>
+            <div class="rpm-val">RPM $15–25 · Shareable & linkable</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const TOPICS = {
+  cost: [
+    { title: "How much does it really cost to own a Porsche 911?", kw: "porsche 911 ownership cost", diff: "low", rpm: "$28–38" },
+    { title: "True cost of owning a used BMW 3 Series — honest breakdown", kw: "used bmw 3 series cost", diff: "low", rpm: "$22–32" },
+    { title: "Mercedes C-Class maintenance costs: the full picture", kw: "mercedes c class maintenance cost", diff: "low", rpm: "$25–35" },
+    { title: "Is a used Audi A4 expensive to maintain? Full breakdown", kw: "used audi a4 maintenance cost", diff: "low", rpm: "$20–30" },
+    { title: "How much does it cost to insure a sports car under 30?", kw: "sports car insurance cost under 30", diff: "medium", rpm: "$18–28" },
+    { title: "5 luxury cars with surprisingly cheap running costs", kw: "cheap to run luxury cars", diff: "low", rpm: "$20–30" },
+  ],
+  compare: [
+    { title: "BMW M3 vs Mercedes-AMG C63: which is better value in 2024?", kw: "bmw m3 vs amg c63", diff: "medium", rpm: "$18–25" },
+    { title: "Porsche Macan vs Cayenne: which should you actually buy?", kw: "porsche macan vs cayenne", diff: "low", rpm: "$22–30" },
+    { title: "Audi Q5 vs BMW X3: the definitive comparison guide", kw: "audi q5 vs bmw x3", diff: "low", rpm: "$20–28" },
+    { title: "Lexus IS vs BMW 3 Series: reliability vs driving enjoyment", kw: "lexus is vs bmw 3 series", diff: "low", rpm: "$18–26" },
+    { title: "Tesla Model 3 vs BMW 3 Series: which wins in 2024?", kw: "tesla model 3 vs bmw 3 series", diff: "medium", rpm: "$18–25" },
+    { title: "Used Jaguar F-Type vs Porsche Boxster: which to buy?", kw: "used jaguar f type vs porsche boxster", diff: "low", rpm: "$20–28" },
+  ],
+  used: [
+    { title: "Best used luxury sedans under $20,000 in 2024", kw: "best used luxury sedan under 20000", diff: "low", rpm: "$22–32" },
+    { title: "5 best used sports cars under $30,000 right now", kw: "best used sports cars under 30000", diff: "low", rpm: "$20–30" },
+    { title: "The best used German cars to buy in 2024", kw: "best used german cars 2024", diff: "low", rpm: "$18–26" },
+    { title: "Best used SUVs under $25,000: a complete buyer's guide", kw: "best used suv under 25000", diff: "low", rpm: "$20–30" },
+    { title: "Should you buy a used Lexus or a used BMW?", kw: "used lexus vs used bmw", diff: "low", rpm: "$18–24" },
+    { title: "10 used cars that hold their value better than new", kw: "used cars that hold value", diff: "low", rpm: "$16–24" },
+  ],
+  problems: [
+    { title: "BMW N54 engine problems: what every buyer must know", kw: "bmw n54 problems", diff: "low", rpm: "$16–22" },
+    { title: "Mercedes diesel reliability: the complete honest guide", kw: "mercedes diesel reliability", diff: "low", rpm: "$18–24" },
+    { title: "Are used Audis reliable? The truth after 100,000 miles", kw: "are used audis reliable", diff: "low", rpm: "$18–26" },
+    { title: "Most common Porsche Cayenne problems — and how to avoid them", kw: "porsche cayenne common problems", diff: "low", rpm: "$18–24" },
+    { title: "Is the VW Golf GTI reliable? An owner's honest verdict", kw: "volkswagen golf gti reliability", diff: "low", rpm: "$15–22" },
+    { title: "Range Rover reliability: is it really that bad?", kw: "range rover reliability problems", diff: "low", rpm: "$20–28" },
+  ],
+  review: [
+    { title: "2023 BMW M2 review: is this the last great driver's BMW?", kw: "2023 bmw m2 review", diff: "medium", rpm: "$16–22" },
+    { title: "Porsche 718 Cayman review: the sports car benchmark", kw: "porsche 718 cayman review", diff: "low", rpm: "$18–25" },
+    { title: "Audi RS6 review: the ultimate practical supercar?", kw: "audi rs6 review", diff: "low", rpm: "$20–28" },
+    { title: "Mercedes-AMG A45 review: hot hatch taken to extremes", kw: "mercedes amg a45 review", diff: "low", rpm: "$16–22" },
+    { title: "Lexus LC500 review: the most beautiful car you can buy?", kw: "lexus lc500 review", diff: "low", rpm: "$18–24" },
+    { title: "BMW iX review: the electric BMW that changes everything", kw: "bmw ix review", diff: "medium", rpm: "$16–22" },
+  ],
+};
+
+let state = {
+  apiKey: localStorage.getItem('ra_key') || '',
+  count: parseInt(localStorage.getItem('ra_count') || '0'),
+  words: parseInt(localStorage.getItem('ra_words') || '0'),
+  cost: parseFloat(localStorage.getItem('ra_cost') || '0'),
+  history: JSON.parse(localStorage.getItem('ra_history') || '[]'),
+  currentArticle: '',
+  currentMeta: '',
+  selectedTopic: null,
+  shownTopics: [],
+};
+
+function save() {
+  localStorage.setItem('ra_key', state.apiKey);
+  localStorage.setItem('ra_count', state.count);
+  localStorage.setItem('ra_words', state.words);
+  localStorage.setItem('ra_cost', state.cost.toFixed(4));
+  localStorage.setItem('ra_history', JSON.stringify(state.history));
+}
+
+function updateSidebar() {
+  document.getElementById('s-count').textContent = state.count;
+  document.getElementById('s-words').textContent = state.words >= 1000 ? (state.words / 1000).toFixed(1) + 'k' : state.words;
+  document.getElementById('s-cost').textContent = '$' + state.cost.toFixed(2);
+}
+
+function updateApiStatus() {
+  const dot = document.getElementById('api-dot');
+  const lbl = document.getElementById('api-label');
+  if (state.apiKey) {
+    dot.className = 'api-dot connected';
+    lbl.textContent = 'API connected';
+  } else {
+    dot.className = 'api-dot';
+    lbl.textContent = 'Not connected';
+  }
+}
+
+function switchPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  if (name === 'history') renderHistory();
+}
+
+function onAngleChange() {
+  const val = document.getElementById('angle-select').value;
+  document.getElementById('custom-wrap').style.display = val === 'custom' ? 'block' : 'none';
+  state.selectedTopic = null;
+  renderTopics();
+}
+
+function renderTopics() {
+  const angle = document.getElementById('angle-select').value;
+  if (angle === 'custom') { document.getElementById('topic-grid').innerHTML = ''; return; }
+  const pool = TOPICS[angle] || TOPICS.cost;
+  const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, 4);
+  state.shownTopics = shuffled;
+  state.selectedTopic = null;
+
+  document.getElementById('topic-grid').innerHTML = shuffled.map((t, i) => `
+    <div class="topic-card" id="tc${i}" onclick="selectTopic(${i})">
+      <div class="topic-title">${t.title}</div>
+      <div class="topic-pills">
+        <span class="pill pill-green">kw: ${t.diff} diff</span>
+        <span class="pill pill-gold">RPM ${t.rpm}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectTopic(i) {
+  document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('tc' + i).classList.add('selected');
+  state.selectedTopic = state.shownTopics[i];
+}
+
+async function saveKey() {
+  const key = document.getElementById('api-key-input').value.trim();
+  const msg = document.getElementById('key-msg');
+
+  if (!key.startsWith('sk-ant-')) {
+    msg.innerHTML = '<span style="color:var(--danger);">Key should start with sk-ant-</span>';
+    return;
+  }
+
+  msg.textContent = 'Verifying...';
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 5,
+        messages: [{ role: 'user', content: 'Hi' }]
+      })
+    });
+
+    if (res.ok) {
+      state.apiKey = key;
+      save();
+      updateApiStatus();
+      msg.innerHTML = '<span style="color:#4caf6e;">Connected successfully!</span>';
+    } else {
+      msg.innerHTML = '<span style="color:var(--danger);">Invalid key — please check and try again</span>';
+    }
+  } catch (e) {
+    msg.innerHTML = '<span style="color:var(--danger);">Connection error</span>';
+  }
+}
+
+async function generateArticle() {
+  if (!state.apiKey) {
+    alert('Please save your API key in the API Setup section first.');
+    switchPanel('setup');
+    return;
+  }
+
+  const angle = document.getElementById('angle-select').value;
+  const audience = document.getElementById('audience-select').value;
+  const length = document.getElementById('length-select').value;
+
+  let topic, keyword;
+
+  if (angle === 'custom') {
+    topic = document.getElementById('custom-topic').value.trim();
+    keyword = topic;
+    if (!topic) { alert('Please enter a topic.'); return; }
+  } else if (state.selectedTopic) {
+    topic = state.selectedTopic.title;
+    keyword = state.selectedTopic.kw;
+  } else if (state.shownTopics.length) {
+    topic = state.shownTopics[0].title;
+    keyword = state.shownTopics[0].kw;
+  } else {
+    alert('Please select a topic first.');
+    return;
+  }
+
+  const wordTarget = length === 'long' ? '1800 to 2200' : '1000 to 1400';
+  const audienceMap = {
+    buyer: 'someone actively researching buying this car',
+    owner: 'a current or prospective owner focused on costs',
+    enthusiast: 'a car enthusiast who loves the subject',
+  };
+
+  const prompt = `You are an expert automotive journalist writing for refined.autos, a premium English-language car website. Write a high-quality, SEO-optimised article.
+
+ARTICLE REQUIREMENTS:
+- Title: ${topic}
+- Primary keyword: ${keyword}
+- Target word count: ${wordTarget} words
+- Audience: ${audienceMap[audience]}
+- Tone: authoritative, knowledgeable, helpful — like a trusted friend who is a car expert
+- Style: conversational but intelligent. No filler. Real facts, real figures, real advice.
+
+STRUCTURE:
+1. H1: The article title (include primary keyword naturally)
+2. Introduction (150–200 words): hook the reader, state what they'll learn
+3. 4–6 H2 sections with detailed, useful content under each
+4. A "Bottom line" summary section
+5. Clear final recommendation
+
+SEO RULES:
+- Use primary keyword in H1, first paragraph, one H2, and naturally 3–4 more times throughout
+- Include semantically related terms naturally
+- Short paragraphs, occasional bullet lists where genuinely useful
+- Include real-world numbers, costs, model years where relevant
+
+OUTPUT FORMAT — start your response with exactly these two lines, then the article:
+META DESCRIPTION: [155 chars max meta description]
+SLUG: [url-slug-from-title]
+
+Then write the full article starting with the H1.`;
+
+  const btn = document.getElementById('gen-btn');
+  btn.disabled = true;
+  document.getElementById('gen-state').style.display = 'block';
+  document.getElementById('output-wrap').style.display = 'none';
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': state.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || 'API error ' + res.status);
+    }
+
+    const data = await res.json();
+    const raw = data.content[0].text;
+
+    const metaMatch = raw.match(/META DESCRIPTION:\s*(.+)/);
+    const slugMatch = raw.match(/SLUG:\s*(.+)/);
+    state.currentMeta = metaMatch ? metaMatch[1].trim() : '';
+    const slug = slugMatch ? slugMatch[1].trim() : keyword.replace(/\s+/g, '-');
+
+    state.currentArticle = raw
+      .replace(/META DESCRIPTION:.+\n?/, '')
+      .replace(/SLUG:.+\n?/, '')
+      .trim();
+
+    const wc = state.currentArticle.split(/\s+/).length;
+    const cost = (data.usage.input_tokens * 0.000003) + (data.usage.output_tokens * 0.000015);
+
+    state.count++;
+    state.words += wc;
+    state.cost += cost;
+
+    state.history.unshift({
+      title: topic,
+      date: new Date().toLocaleDateString('en-GB'),
+      words: wc,
+      slug,
+      meta: state.currentMeta,
+      article: state.currentArticle,
+    });
+
+    if (state.history.length > 100) state.history = state.history.slice(0, 100);
+    save();
+    updateSidebar();
+
+    document.getElementById('article-chips').innerHTML = `
+      <span class="meta-chip">${wc.toLocaleString()} words</span>
+      <span class="meta-chip">/${slug}</span>
+      <span class="meta-chip">Cost $${cost.toFixed(4)}</span>
+      <span class="meta-chip">Meta ${state.currentMeta.length} chars</span>
+    `;
+
+    if (state.currentMeta) {
+      document.getElementById('meta-box').style.display = 'block';
+      document.getElementById('meta-box').textContent = 'Meta: ' + state.currentMeta;
+    }
+
+    document.getElementById('output-box').textContent = state.currentArticle;
+    document.getElementById('output-wrap').style.display = 'block';
+    document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  } catch (e) {
+    alert('Generation error: ' + e.message + '\n\nCheck your API key in the Setup section.');
+  } finally {
+    btn.disabled = false;
+    document.getElementById('gen-state').style.display = 'none';
+  }
+}
+
+function copyFull() {
+  navigator.clipboard.writeText(state.currentArticle).then(() => {
+    const btns = document.querySelectorAll('.output-actions .btn-ghost');
+    const b = btns[0];
+    b.textContent = 'Copied!';
+    setTimeout(() => b.textContent = 'Copy article', 1500);
+  });
+}
+
+function copyMeta() {
+  navigator.clipboard.writeText(state.currentMeta).then(() => {
+    const btns = document.querySelectorAll('.output-actions .btn-ghost');
+    const b = btns[1];
+    b.textContent = 'Copied!';
+    setTimeout(() => b.textContent = 'Copy meta description', 1500);
+  });
+}
+
+function renderHistory() {
+  const el = document.getElementById('history-list');
+  document.getElementById('history-count').textContent = state.history.length + ' article' + (state.history.length !== 1 ? 's' : '');
+
+  if (!state.history.length) {
+    el.innerHTML = '<p style="font-size:13px; color:var(--text3); padding:1rem 0; text-align:center;">No articles generated yet</p>';
+    return;
+  }
+
+  el.innerHTML = state.history.map((h, i) => `
+    <div class="history-item">
+      <div style="flex:1; min-width:0;">
+        <div class="history-title">${h.title}</div>
+        <div class="history-meta">${h.date} &bull; ${h.words?.toLocaleString() || '—'} words &bull; /${h.slug}</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="viewHistoryItem(${i})">View</button>
+    </div>
+  `).join('');
+}
+
+function viewHistoryItem(i) {
+  const h = state.history[i];
+  state.currentArticle = h.article;
+  state.currentMeta = h.meta || '';
+
+  document.getElementById('article-chips').innerHTML = `
+    <span class="meta-chip">${h.words?.toLocaleString()} words</span>
+    <span class="meta-chip">/${h.slug}</span>
+    <span class="meta-chip">${h.date}</span>
+  `;
+
+  if (h.meta) {
+    document.getElementById('meta-box').style.display = 'block';
+    document.getElementById('meta-box').textContent = 'Meta: ' + h.meta;
+  }
+
+  document.getElementById('output-box').textContent = h.article;
+  document.getElementById('output-wrap').style.display = 'block';
+  switchPanel('generate');
+  document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function clearHistory() {
+  if (!state.history.length) return;
+  if (confirm('Clear all article history? This cannot be undone.')) {
+    state.history = [];
+    save();
+    renderHistory();
+  }
+}
+
+updateSidebar();
+updateApiStatus();
+renderTopics();
+</script>
+</body>
+</html>
