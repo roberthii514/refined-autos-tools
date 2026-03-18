@@ -167,7 +167,37 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .setup-a{display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-size:13px;text-decoration:none;border:1px solid rgba(201,168,76,0.3);padding:8px 14px;border-radius:var(--radius);transition:all 0.15s}
 .setup-a:hover{background:rgba(201,168,76,0.07)}
 
-@media(max-width:640px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:1.25rem}.threshold-grid,.kw-fields,.sc-checks,.rpm-grid{grid-template-columns:1fr}}
+/* BATCH QUEUE */
+.bq-add-row{display:grid;grid-template-columns:1fr 80px 80px 80px auto;gap:8px;align-items:end;margin-bottom:1rem}
+.bq-add-row input{margin-bottom:0}
+.bq-add-row label{font-size:11px;color:var(--text3);margin-bottom:3px}
+.queue-empty{font-size:13px;color:var(--text3);text-align:center;padding:2rem 0}
+.q-item{display:grid;grid-template-columns:1fr auto;align-items:start;gap:12px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;transition:border-color 0.2s}
+.q-item.qi-running{border-color:var(--gold);background:rgba(201,168,76,0.05)}
+.q-item.qi-done{border-color:rgba(76,175,110,0.35);background:rgba(76,175,110,0.04)}
+.q-item.qi-error{border-color:rgba(224,85,85,0.35);background:rgba(224,85,85,0.04)}
+.q-item.qi-skipped{opacity:0.45}
+.q-kw{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.q-meta{font-size:11px;color:var(--text2);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.q-status{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;flex-shrink:0}
+.qs-wait{color:var(--text3)}.qs-run{color:var(--gold)}.qs-done{color:var(--green)}.qs-err{color:var(--danger)}.qs-skip{color:var(--text3)}
+.q-progress{background:var(--bg4);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem}
+.q-progress-label{font-size:13px;color:var(--text2);margin-bottom:8px}
+.q-bar-wrap{height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
+.q-bar{height:100%;background:var(--gold);border-radius:2px;transition:width 0.5s;width:0%}
+.q-controls{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+.q-settings{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.q-settings select{margin-bottom:0}
+.q-warn{font-size:12px;color:var(--gold-text);background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.18);border-radius:var(--radius);padding:10px 14px;line-height:1.6;margin-bottom:1rem}
+.bq-title-pick{margin-top:8px;padding:10px 12px;background:var(--bg4);border-radius:8px}
+.bq-title-pick-label{font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em}
+.bq-title-opt{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);cursor:pointer;font-size:12px;color:var(--text2);transition:color 0.15s}
+.bq-title-opt:last-child{border-bottom:none;padding-bottom:0}
+.bq-title-opt:hover{color:var(--text)}
+.bq-title-opt.chosen-t{color:var(--gold-text);font-weight:500}
+.bto-num{width:16px;height:16px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:2px}
+.bq-title-opt.chosen-t .bto-num{background:var(--gold);border-color:var(--gold);color:#000}
+@media(max-width:640px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:1.25rem}.threshold-grid,.kw-fields,.sc-checks,.rpm-grid,.bq-add-row,.q-settings{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -184,6 +214,7 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
   <nav class="sidebar">
     <div class="nav-sep">Workflow</div>
     <button class="nb active" onclick="go('generate')" id="nav-generate"><span class="nb-icon">✦</span> Write Article</button>
+    <button class="nb" onclick="go('batch')" id="nav-batch"><span class="nb-icon">⚡</span> Batch Queue</button>
     <button class="nb" onclick="go('history')" id="nav-history"><span class="nb-icon">◷</span> History</button>
     <div class="nav-sep">Setup</div>
     <button class="nb" onclick="go('setup')" id="nav-setup"><span class="nb-icon">⚙</span> API Setup</button>
@@ -324,6 +355,72 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
       </div>
 
     </div><!-- /generate -->
+
+    <!-- ═══ BATCH QUEUE ═══ -->
+    <div class="panel" id="panel-batch">
+      <h1 class="pg-title">Batch queue</h1>
+      <p class="pg-sub">Add keywords you've already verified in Mangools. The tool will generate titles for each, you pick one per keyword, then hit Run All to generate all articles automatically — one by one.</p>
+
+      <!-- ADD KEYWORD -->
+      <div class="card">
+        <div class="card-head">Add a verified keyword to the queue</div>
+        <div class="bq-add-row">
+          <div><label>Keyword (verified in Mangools)</label><input type="text" id="bq-kw" placeholder="e.g. used bmw 3 series ownership cost" onkeydown="if(event.key==='Enter')bqAdd()"></div>
+          <div><label>Vol / mo</label><input type="number" id="bq-vol" placeholder="320" min="0"></div>
+          <div><label>KD score</label><input type="number" id="bq-kd" placeholder="28" min="0" max="100"></div>
+          <div><label>Lowest DA</label><input type="number" id="bq-da" placeholder="18" min="0" max="100"></div>
+          <div style="padding-bottom:0;"><button class="btn bg" onclick="bqAdd()" style="height:42px;margin-top:17px;">Add</button></div>
+        </div>
+        <p style="font-size:12px;color:var(--text3);">Add as many keywords as you want. Generate titles for each, pick your preferred one, then run the whole batch.</p>
+      </div>
+
+      <!-- QUEUE LIST -->
+      <div class="card">
+        <div class="row">
+          <div class="card-head" style="margin:0;">Queue <span id="bq-count-label" style="color:var(--text3);font-weight:400;font-size:12px;margin-left:6px;">0 keywords</span></div>
+          <button class="btn bo bsm" onclick="bqClear()">Clear queue</button>
+        </div>
+
+        <!-- PROGRESS BAR (shown while running) -->
+        <div class="q-progress" id="bq-progress">
+          <div class="q-progress-label" id="bq-progress-label">Preparing...</div>
+          <div class="q-bar-wrap"><div class="q-bar" id="bq-bar"></div></div>
+        </div>
+
+        <!-- SETTINGS ROW -->
+        <div class="q-settings">
+          <div>
+            <label>Target reader</label>
+            <select id="bq-audience">
+              <option value="buyer">Car buyer researching a purchase</option>
+              <option value="owner">Owner focused on running costs</option>
+              <option value="enthusiast">Car enthusiast</option>
+            </select>
+          </div>
+          <div>
+            <label>Article length</label>
+            <select id="bq-length">
+              <option value="long">Long-form — 1,800–2,200 words (best)</option>
+              <option value="medium">Medium — 1,000–1,400 words</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="q-warn">
+          Keep this browser tab open and active while the queue runs. On your dedicated PC: open Chrome settings and turn off <strong>Memory Saver</strong> to prevent tabs from sleeping mid-run. Each article takes ~25–35 seconds.
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="q-controls">
+          <button class="btn bg" id="bq-run-btn" onclick="bqRunAll()">Run all</button>
+          <button class="btn bo bsm" id="bq-pause-btn" onclick="bqPause()" style="display:none;">Pause after current</button>
+          <button class="btn bo bsm" onclick="bqGenAllTitles()">Generate titles for all</button>
+        </div>
+
+        <!-- QUEUE ITEMS -->
+        <div id="bq-list"><div class="queue-empty">No keywords in the queue yet. Add some above.</div></div>
+      </div>
+    </div>
 
     <!-- ═══ HISTORY ═══ -->
     <div class="panel" id="panel-history">
@@ -907,7 +1004,306 @@ async function saveKey(){
   }catch(e){msg.innerHTML='<span style="color:var(--danger);">Connection error</span>';}
 }
 
-updStats();updApi();
+/* ══════════════════════════════
+   BATCH QUEUE
+══════════════════════════════ */
+let BQ = JSON.parse(localStorage.getItem('ra_bq') || '[]');
+let bqRunning = false;
+let bqPauseFlag = false;
+
+function bqSave() {
+  localStorage.setItem('ra_bq', JSON.stringify(BQ));
+}
+
+function bqAdd() {
+  const kw = document.getElementById('bq-kw').value.trim();
+  const vol = parseInt(document.getElementById('bq-vol').value) || 0;
+  const kd = parseInt(document.getElementById('bq-kd').value) || 0;
+  const da = parseInt(document.getElementById('bq-da').value) || 0;
+  if (!kw) { alert('Please enter a keyword.'); return; }
+  BQ.push({ id: Date.now(), kw, vol, kd, da, status: 'wait', titles: null, chosenTitle: null, article: null, error: null });
+  bqSave();
+  document.getElementById('bq-kw').value = '';
+  document.getElementById('bq-vol').value = '';
+  document.getElementById('bq-kd').value = '';
+  document.getElementById('bq-da').value = '';
+  document.getElementById('bq-kw').focus();
+  renderBQ();
+}
+
+function bqClear() {
+  if (bqRunning) { alert('Please pause the queue before clearing.'); return; }
+  if (!BQ.length) return;
+  if (confirm('Clear the entire queue? Completed articles are already saved in History.')) {
+    BQ = []; bqSave(); renderBQ();
+  }
+}
+
+function bqRemove(id) {
+  if (bqRunning) return;
+  BQ = BQ.filter(i => i.id !== id);
+  bqSave(); renderBQ();
+}
+
+function renderBQ() {
+  const list = document.getElementById('bq-list');
+  const countLabel = document.getElementById('bq-count-label');
+  countLabel.textContent = BQ.length + ' keyword' + (BQ.length !== 1 ? 's' : '');
+
+  if (!BQ.length) {
+    list.innerHTML = '<div class="queue-empty">No keywords in the queue yet. Add some above.</div>';
+    return;
+  }
+
+  list.innerHTML = BQ.map((item, idx) => {
+    const statusMap = {
+      wait: `<span class="q-status qs-wait">⏸ Waiting</span>`,
+      titles: `<span class="q-status qs-run">↺ Fetching titles...</span>`,
+      pick: `<span class="q-status qs-run" style="color:var(--blue);">✎ Pick a title</span>`,
+      running: `<span class="q-status qs-run">⚡ Writing article...</span>`,
+      done: `<span class="q-status qs-done">✓ Done</span>`,
+      error: `<span class="q-status qs-err">✗ Error</span>`,
+      skipped: `<span class="q-status qs-skip">— Skipped</span>`,
+    };
+
+    const cls = item.status === 'running' ? 'qi-running' : item.status === 'done' ? 'qi-done' : item.status === 'error' ? 'qi-error' : item.status === 'skipped' ? 'qi-skipped' : '';
+    const kdColor = item.kd <= 25 ? 'var(--green)' : item.kd <= 39 ? 'var(--gold)' : 'var(--danger)';
+    const volColor = item.vol >= 100 ? 'var(--green)' : 'var(--danger)';
+
+    let titlesHtml = '';
+    if (item.status === 'pick' && item.titles) {
+      titlesHtml = `<div class="bq-title-pick">
+        <div class="bq-title-pick-label">Pick a title to use — then it will generate automatically</div>
+        ${item.titles.map((t, ti) => `
+          <div class="bq-title-opt ${item.chosenTitle === t.title ? 'chosen-t' : ''}" onclick="bqPickTitle(${item.id}, '${t.title.replace(/'/g, "\\'").replace(/"/g, '\\"')}')">
+            <div class="bto-num">${ti + 1}</div>
+            <div>
+              <div style="line-height:1.4;margin-bottom:2px;">${t.title}</div>
+              <div style="font-size:11px;opacity:0.7;">${t.why}</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+    }
+
+    if (item.status === 'done' && item.chosenTitle) {
+      titlesHtml = `<div style="font-size:11px;color:var(--green);margin-top:4px;">✓ "${item.chosenTitle}"</div>`;
+    }
+
+    if (item.status === 'error' && item.error) {
+      titlesHtml = `<div style="font-size:11px;color:var(--danger);margin-top:4px;">Error: ${item.error}</div>`;
+    }
+
+    return `<div class="q-item ${cls}" id="qi-${item.id}">
+      <div>
+        <div class="q-kw">${item.kw}</div>
+        <div class="q-meta">
+          <span style="color:${volColor};">Vol: ${item.vol || '—'}/mo</span>
+          <span style="color:${kdColor};">KD: ${item.kd || '—'}</span>
+          <span style="color:var(--text3);">Lowest DA: ${item.da || '—'}</span>
+        </div>
+        ${titlesHtml}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+        ${statusMap[item.status] || ''}
+        ${item.status === 'wait' || item.status === 'pick' ? `<button class="btn bo bsm" style="font-size:11px;" onclick="bqRemove(${item.id})">Remove</button>` : ''}
+        ${item.status === 'wait' ? `<button class="btn bo bsm" style="font-size:11px;" onclick="bqGenTitlesFor(${item.id})">Get titles</button>` : ''}
+        ${item.status === 'done' ? `<button class="btn bo bsm" style="font-size:11px;" onclick="bqViewArticle(${item.id})">View</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function bqPickTitle(id, title) {
+  const item = BQ.find(i => i.id === id);
+  if (!item) return;
+  item.chosenTitle = title;
+  bqSave();
+  renderBQ();
+  // if queue is running, it'll be picked up automatically
+  if (!bqRunning) {
+    // allow manual proceed
+    const readyToRun = BQ.filter(i => i.status === 'pick' && i.chosenTitle).length;
+    if (readyToRun > 0 && !bqRunning) {
+      // silently ready - user can hit Run All
+    }
+  }
+}
+
+async function bqGenTitlesFor(id) {
+  const item = BQ.find(i => i.id === id);
+  if (!item || !S.apiKey) return;
+  item.status = 'titles';
+  bqSave(); renderBQ();
+  try {
+    const titles = await fetchTitles(item.kw, item.vol, item.kd, item.da);
+    item.titles = titles;
+    item.status = 'pick';
+    bqSave(); renderBQ();
+  } catch (e) {
+    item.status = 'error';
+    item.error = e.message;
+    bqSave(); renderBQ();
+  }
+}
+
+async function bqGenAllTitles() {
+  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  const waiting = BQ.filter(i => i.status === 'wait');
+  if (!waiting.length) { alert('No waiting keywords to generate titles for.'); return; }
+  for (const item of waiting) {
+    await bqGenTitlesFor(item.id);
+    await sleep(800);
+  }
+}
+
+async function bqRunAll() {
+  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  const eligible = BQ.filter(i => i.status === 'wait' || (i.status === 'pick' && i.chosenTitle));
+  if (!eligible.length) { alert('No keywords ready to run. Add keywords and pick titles first, or use "Generate titles for all".'); return; }
+  bqRunning = true;
+  bqPauseFlag = false;
+  document.getElementById('bq-run-btn').disabled = true;
+  document.getElementById('bq-run-btn').textContent = 'Running...';
+  document.getElementById('bq-pause-btn').style.display = 'inline-flex';
+  document.getElementById('bq-progress').style.display = 'block';
+
+  const audience = document.getElementById('bq-audience').value;
+  const length = document.getElementById('bq-length').value;
+
+  const total = BQ.filter(i => i.status !== 'done' && i.status !== 'skipped').length;
+  let done = 0;
+
+  for (let i = 0; i < BQ.length; i++) {
+    if (bqPauseFlag) break;
+    const item = BQ[i];
+    if (item.status === 'done' || item.status === 'skipped') continue;
+
+    // Step A: Get titles if not done
+    if (!item.titles) {
+      bqSetProgress(`Getting titles for "${item.kw}"... (${done + 1} of ${total})`, done, total);
+      item.status = 'titles';
+      bqSave(); renderBQ();
+      try {
+        item.titles = await fetchTitles(item.kw, item.vol, item.kd, item.da);
+        item.status = 'pick';
+        bqSave(); renderBQ();
+        await sleep(400);
+      } catch (e) {
+        item.status = 'error'; item.error = e.message;
+        bqSave(); renderBQ(); done++;
+        continue;
+      }
+    }
+
+    // Step B: Auto-pick first title if none chosen
+    if (!item.chosenTitle) {
+      item.chosenTitle = item.titles[0].title;
+      bqSave(); renderBQ();
+      await sleep(300);
+    }
+
+    // Step C: Generate article
+    bqSetProgress(`Writing article ${done + 1} of ${total}: "${item.chosenTitle}"...`, done, total);
+    item.status = 'running';
+    bqSave(); renderBQ();
+
+    try {
+      const article = await fetchArticle(item.chosenTitle, item.kw, item.vol, item.kd, item.da, audience, length);
+      item.article = article.text;
+      item.meta = article.meta;
+      item.slug = article.slug;
+      item.words = article.words;
+      item.status = 'done';
+
+      // Save to history
+      S.count++; S.words += article.words; S.cost += 0.09;
+      S.history.unshift({ title: item.chosenTitle, date: new Date().toLocaleDateString('en-GB'), words: article.words, slug: article.slug, meta: article.meta, article: article.text, kw: item.kw, kwData: { vol: item.vol, kd: item.kd, da: item.da } });
+      if (S.history.length > 100) S.history = S.history.slice(0, 100);
+      persist(); updStats();
+      bqSave(); renderBQ();
+      done++;
+      bqSetProgress(`Done ${done} of ${total}`, done, total);
+      await sleep(1500); // brief pause between articles
+    } catch (e) {
+      item.status = 'error'; item.error = e.message;
+      bqSave(); renderBQ(); done++;
+    }
+  }
+
+  bqRunning = false;
+  document.getElementById('bq-run-btn').disabled = false;
+  document.getElementById('bq-run-btn').textContent = 'Run all';
+  document.getElementById('bq-pause-btn').style.display = 'none';
+  const allDone = BQ.filter(i => i.status === 'done').length;
+  bqSetProgress(`Batch complete — ${allDone} article${allDone !== 1 ? 's' : ''} written and saved to History.`, total, total);
+}
+
+function bqPause() {
+  bqPauseFlag = true;
+  document.getElementById('bq-pause-btn').textContent = 'Pausing after current article...';
+  document.getElementById('bq-pause-btn').disabled = true;
+}
+
+function bqSetProgress(label, done, total) {
+  document.getElementById('bq-progress-label').textContent = label;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('bq-bar').style.width = pct + '%';
+}
+
+function bqViewArticle(id) {
+  const item = BQ.find(i => i.id === id);
+  if (!item || !item.article) return;
+  S.article = item.article;
+  S.meta = item.meta || '';
+  document.getElementById('art-chips').innerHTML = `<span class="chip">${(item.words || 0).toLocaleString()} words</span><span class="chip">/${item.slug}</span><span class="chip">Batch generated</span>`;
+  if (item.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + item.meta; }
+  document.getElementById('output-box').textContent = item.article;
+  document.getElementById('output-wrap').style.display = 'block';
+  renderScorecard(item.article, item.words || 0, item.meta || '', item.slug || '');
+  go('generate');
+  setTimeout(() => document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+async function fetchTitles(kw, vol, kd, da) {
+  const prompt = `You are an SEO content strategist for refined.autos, a premium automotive blog.
+Keyword: "${kw}" — Vol: ~${vol}/mo, KD: ${kd}, Lowest competitor DA: ${da}.
+Generate exactly 5 compelling article titles for this keyword. Each title must include the keyword naturally, be 45–65 characters ideally, and use a different angle.
+Respond ONLY with valid JSON, no other text:
+{"titles":[{"title":"...","why":"one sentence why this angle works"},...]}`; 
+  const raw = await callClaude(prompt, 500);
+  const clean = raw.replace(/```json|```/g, '').trim();
+  const data = JSON.parse(clean);
+  return data.titles;
+}
+
+async function fetchArticle(title, kw, vol, kd, da, audience, length) {
+  const wordTarget = length === 'long' ? '1,800 to 2,200' : '1,000 to 1,400';
+  const audienceMap = { buyer: 'someone actively researching buying this car', owner: 'a current or prospective owner focused on costs and value', enthusiast: 'a car enthusiast who loves the subject and wants depth' };
+  const prompt = `You are an expert automotive journalist for refined.autos. Write a high-quality SEO-optimised article.
+BRIEF: Title: ${title} | Keyword: ${kw} | Words: ${wordTarget} | Reader: ${audienceMap[audience]}
+RULES: Max 2–3 sentences per paragraph. 3–4 [IMAGE: description] placeholders. H2 every major section. Real facts, real figures, real model years. No filler.
+FORMAT — first two lines exactly:
+META DESCRIPTION: [150–155 char meta with keyword]
+SLUG: [slug-max-6-words]
+
+Then full article starting with # ${title}
+Write it now.`;
+  const raw = await callClaude(prompt, 4500);
+  const metaM = raw.match(/META DESCRIPTION:\s*(.+)/);
+  const slugM = raw.match(/SLUG:\s*(.+)/);
+  const meta = metaM ? metaM[1].trim() : '';
+  const slug = slugM ? slugM[1].trim() : kw.replace(/\s+/g, '-').slice(0, 40);
+  const text = raw.replace(/META DESCRIPTION:.+\n?/, '').replace(/SLUG:.+\n?/, '').trim();
+  const words = text.split(/\s+/).length;
+  return { text, meta, slug, words };
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// Init batch queue on load
+renderBQ();
+
+updStats(); updApi();
 </script>
 </body>
 </html>
