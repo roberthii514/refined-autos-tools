@@ -225,6 +225,26 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .gsc-stats{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap}
 .gsc-stat{font-size:11px;color:var(--text3)}
 .gsc-stat strong{color:var(--text2)}
+/* INTERNAL LINKING */
+.il-suggestion{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;transition:border-color 0.15s}
+.il-suggestion.approved{border-color:rgba(76,175,110,0.4);background:rgba(76,175,110,0.04)}
+.il-suggestion.skipped{opacity:0.4}
+.il-context{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px}
+.il-context mark{background:rgba(201,168,76,0.25);color:var(--gold-text);padding:1px 3px;border-radius:3px;font-style:normal}
+.il-link-target{font-size:12px;color:var(--blue);margin-bottom:8px;word-break:break-all}
+.il-reason{font-size:11px;color:var(--text3);margin-bottom:10px;line-height:1.5}
+.il-actions{display:flex;gap:8px}
+.il-post-row{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);gap:12px}
+.il-post-row:last-child{border-bottom:none}
+.il-post-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.il-post-meta{font-size:11px;color:var(--text3)}
+.il-post-status{font-size:11px;padding:2px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0}
+.ils-pending{background:rgba(201,168,76,0.12);color:var(--gold-text)}
+.ils-done{background:rgba(76,175,110,0.12);color:var(--green)}
+.ils-running{background:rgba(99,179,237,0.12);color:var(--blue)}
+.ils-error{background:rgba(224,85,85,0.12);color:var(--danger)}
+.il-bulk-prog{background:var(--bg4);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem}
+.il-bulk-label{font-size:13px;color:var(--text2);margin-bottom:8px}
 @media(max-width:700px){.pillar-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -243,6 +263,7 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
     <button class="nb" onclick="go('history')" id="nav-history"><span class="nb-icon">◷</span> History</button>
     <div class="nav-sep">Optimise</div>
     <button class="nb" onclick="go('gsc')" id="nav-gsc"><span class="nb-icon">📈</span> GSC Refinement</button>
+    <button class="nb" onclick="go('linking')" id="nav-linking"><span class="nb-icon">🔗</span> Internal Linking</button>
     <div class="nav-sep">Setup</div>
     <button class="nb" onclick="go('setup')" id="nav-setup"><span class="nb-icon">⚙</span> API Setup</button>
     <div class="nav-sep">Reference</div>
@@ -685,6 +706,102 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
       </div>
 
       <div id="gsc-output" style="display:none;"></div>
+    </div>
+
+    <!-- ═══ INTERNAL LINKING ═══ -->
+    <div class="panel" id="panel-linking">
+      <h1 class="pg-title">Internal linking</h1>
+      <p class="pg-sub">Add internal links to your published WordPress articles. Run one article at a time with manual approval, or bulk-process your entire site automatically.</p>
+
+      <!-- MODE TABS -->
+      <div style="display:flex;gap:8px;margin-bottom:1.5rem;">
+        <button class="btn bg bsm" id="il-tab-single" onclick="ilSetMode('single')">Single article</button>
+        <button class="btn bo bsm" id="il-tab-bulk" onclick="ilSetMode('bulk')">Bulk — whole site</button>
+      </div>
+
+      <!-- SINGLE MODE -->
+      <div id="il-single-wrap">
+        <div class="card">
+          <div class="card-head"><div class="badge">1</div> Pick an article to add links to</div>
+          <label>WordPress post URL or ID</label>
+          <div style="display:flex;gap:8px;margin-bottom:1rem;">
+            <input type="text" id="il-url-in" placeholder="https://refined.autos/best-used-bmw-california/ or post ID e.g. 42" style="margin-bottom:0;flex:1;">
+            <button class="btn bg" onclick="ilFetchSingle()" style="flex-shrink:0;">Fetch article</button>
+          </div>
+          <div class="spin-wrap" id="il-fetch-spin" style="padding:1rem 0;"><div class="spinner" style="width:24px;height:24px;border-width:2px;"></div></div>
+          <div id="il-fetched-info" style="display:none;">
+            <div style="background:var(--bg3);border-radius:var(--radius);padding:12px 14px;">
+              <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;" id="il-fetched-title"></div>
+              <div style="font-size:11px;color:var(--text3);" id="il-fetched-meta"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="il-analyse-card" style="display:none;">
+          <div class="card-head"><div class="badge">2</div> Find internal link opportunities</div>
+          <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:1rem;">The tool scans your WordPress site for published articles, then uses AI to find natural anchor text in this article that should link to them.</p>
+          <button class="btn bg bfull" id="il-analyse-btn" onclick="ilAnalyseSingle()">Find link opportunities</button>
+          <div class="spin-wrap" id="il-analyse-spin"><div class="spinner"></div><div class="spin-label">Scanning your site and finding opportunities...</div><div class="spin-sub">~20 seconds</div></div>
+        </div>
+
+        <div id="il-suggestions-wrap" style="display:none;">
+          <div class="card">
+            <div class="row">
+              <div class="card-head" style="margin:0;" id="il-suggestions-head">Link suggestions</div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn bg bsm" onclick="ilApproveAll()">Approve all</button>
+                <button class="btn bo bsm" onclick="ilApplyApproved()">Apply approved links</button>
+              </div>
+            </div>
+            <div class="notice notice-info" style="margin-bottom:1rem;" id="il-suggestions-note"></div>
+            <div id="il-suggestions-list"></div>
+          </div>
+          <div class="card" id="il-apply-result-card" style="display:none;">
+            <div class="card-head">Result</div>
+            <div id="il-apply-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BULK MODE -->
+      <div id="il-bulk-wrap" style="display:none;">
+        <div class="card">
+          <div class="card-head">Bulk internal linking — whole site</div>
+          <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:1rem;">The tool fetches all your published posts from WordPress, processes them one by one, and automatically adds internal links. All changes are applied directly — no manual approval in bulk mode.</p>
+          <div class="notice" style="margin-bottom:1rem;">This will edit your live published posts directly. Make sure you have a WordPress backup before running. Recommended: run on a small batch first.</div>
+          <div class="two-col" style="margin-bottom:1rem;">
+            <div>
+              <label>How many posts to process</label>
+              <select id="il-bulk-limit" style="margin-bottom:0;">
+                <option value="10">Last 10 posts</option>
+                <option value="25">Last 25 posts</option>
+                <option value="50">Last 50 posts</option>
+                <option value="100">Last 100 posts</option>
+              </select>
+            </div>
+            <div>
+              <label>Min links to add per article</label>
+              <select id="il-bulk-min" style="margin-bottom:0;">
+                <option value="2">2 links minimum</option>
+                <option value="3" selected>3 links minimum</option>
+                <option value="5">5 links minimum</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn bg bfull" id="il-bulk-btn" onclick="ilRunBulk()">Run bulk linking</button>
+          <button class="btn bo bsm" id="il-bulk-pause-btn" onclick="ilPauseBulk()" style="display:none;margin-top:8px;">Pause after current</button>
+        </div>
+
+        <div class="il-bulk-prog" id="il-bulk-prog" style="display:none;">
+          <div class="il-bulk-label" id="il-bulk-label">Starting...</div>
+          <div class="q-bar-wrap"><div class="q-bar" id="il-bulk-bar"></div></div>
+        </div>
+
+        <div class="card" id="il-bulk-results-card" style="display:none;">
+          <div class="card-head">Bulk results</div>
+          <div id="il-bulk-list"></div>
+        </div>
+      </div>
     </div>
 
     <!-- ═══ HISTORY ═══ -->
@@ -1803,7 +1920,33 @@ async function autoPublishToWP(article, slug, meta, title, images, categoryName)
   const statusEl = document.getElementById('fetch-img-status');
 
   try {
-    // Upload images and build a map of placeholder -> {wpSrc, id, credit}
+    // Fetch a dedicated featured image based on the article title
+    statusEl.textContent = 'Fetching featured image...';
+    let featuredMediaId = null;
+    try {
+      const featuredQuery = title || S.pickedTitle || 'luxury car';
+      const featuredPhoto = await fetchSingleImage(featuredQuery, localStorage.getItem('ra_unsplash'));
+      if (featuredPhoto) {
+        const featRes = await fetch(featuredPhoto.url);
+        const featBlob = await featRes.blob();
+        const featFilename = featuredQuery.replace(/[^a-z0-9]/gi, '-').toLowerCase().slice(0, 30) + '-featured-' + Date.now() + '.jpg';
+        const featFd = new FormData();
+        featFd.append('file', featBlob, featFilename);
+        featFd.append('alt_text', featuredQuery);
+        featFd.append('caption', 'Photo by ' + featuredPhoto.photographer + ' on Unsplash');
+        const featUpRes = await fetch(wpUrl + '/wp-json/wp/v2/media', {
+          method: 'POST',
+          headers: { 'Authorization': auth },
+          body: featFd
+        });
+        if (featUpRes.ok) {
+          const featMedia = await featUpRes.json();
+          featuredMediaId = featMedia.id;
+        }
+      }
+    } catch (e) { /* skip if featured image fails */ }
+
+    // Upload inline images and build imageMap
     const imageMap = {};
     for (const img of images) {
       if (!img.blob) continue;
@@ -1843,6 +1986,7 @@ async function autoPublishToWP(article, slug, meta, title, images, categoryName)
         status: 'draft',
         excerpt: meta || S.meta || '',
         slug: slug || '',
+        ...(featuredMediaId ? { featured_media: featuredMediaId } : {}),
         ...(categoryId ? { categories: [categoryId] } : {})
       })
     });
@@ -2386,7 +2530,430 @@ async function getOrCreateWPCategory(categoryName, auth, wpUrl) {
   return null;
 }
 
-/* ═══ DETECT PILLAR FROM ARTICLE CONTENT ═══ */
+/* ═══ INTERNAL LINKING ═══ */
+let ilMode = 'single';
+let ilCurrentPost = null; // { id, title, content, link, wordCount }
+let ilAllPosts = []; // all published posts fetched from WP
+let ilSuggestions = []; // current suggestions for single mode
+let ilBulkPause = false;
+
+function ilSetMode(mode) {
+  ilMode = mode;
+  document.getElementById('il-single-wrap').style.display = mode === 'single' ? 'block' : 'none';
+  document.getElementById('il-bulk-wrap').style.display = mode === 'bulk' ? 'block' : 'none';
+  document.getElementById('il-tab-single').className = mode === 'single' ? 'btn bg bsm' : 'btn bo bsm';
+  document.getElementById('il-tab-bulk').className = mode === 'bulk' ? 'btn bg bsm' : 'btn bo bsm';
+}
+
+function ilGetWPAuth() {
+  const wpUrl = localStorage.getItem('ra_wp_url');
+  const wpUser = localStorage.getItem('ra_wp_user');
+  const wpPass = localStorage.getItem('ra_wp_pass');
+  if (!wpUrl || !wpUser || !wpPass) {
+    alert('Please connect your WordPress site in API Setup first.');
+    go('setup');
+    return null;
+  }
+  return { wpUrl, auth: 'Basic ' + btoa(wpUser + ':' + wpPass) };
+}
+
+async function ilFetchAllPosts(wpUrl, auth, perPage = 100) {
+  const res = await fetch(wpUrl + '/wp-json/wp/v2/posts?status=publish&per_page=' + perPage + '&_fields=id,title,link,slug', {
+    headers: { 'Authorization': auth }
+  });
+  if (!res.ok) throw new Error('Could not fetch posts from WordPress');
+  return await res.json();
+}
+
+async function ilFetchPost(idOrUrl, wpUrl, auth) {
+  const trimmed = idOrUrl.trim();
+  let endpoint;
+
+  if (/^\d+$/.test(trimmed)) {
+    // Numeric ID — fetch directly
+    endpoint = wpUrl + '/wp-json/wp/v2/posts/' + trimmed + '?_fields=id,title,content,link';
+    const res = await fetch(endpoint, { headers: { 'Authorization': auth } });
+    if (!res.ok) throw new Error('Post ID ' + trimmed + ' not found in WordPress');
+    return await res.json();
+  } else {
+    // URL — extract slug properly (strip trailing slash, take last non-empty segment)
+    const parts = trimmed.replace(/\/$/, '').split('/').filter(p => p.length > 0);
+    const slug = parts[parts.length - 1];
+    if (!slug) throw new Error('Could not extract slug from URL — try using the post ID instead');
+
+    // First try by slug
+    const slugRes = await fetch(wpUrl + '/wp-json/wp/v2/posts?slug=' + encodeURIComponent(slug) + '&_fields=id,title,content,link&per_page=1', {
+      headers: { 'Authorization': auth }
+    });
+    if (slugRes.ok) {
+      const slugData = await slugRes.json();
+      if (slugData.length > 0) {
+        // If content is missing (field not fully returned), fetch full post by ID
+        if (!slugData[0].content) {
+          const fullRes = await fetch(wpUrl + '/wp-json/wp/v2/posts/' + slugData[0].id + '?_fields=id,title,content,link', {
+            headers: { 'Authorization': auth }
+          });
+          if (fullRes.ok) return await fullRes.json();
+        }
+        return slugData[0];
+      }
+    }
+    throw new Error('Post not found for slug "' + slug + '" — try using the post ID instead (find it in WP admin → Posts)');
+  }
+}
+
+async function ilFetchSingle() {
+  const creds = ilGetWPAuth();
+  if (!creds) return;
+  const { wpUrl, auth } = creds;
+  const input = document.getElementById('il-url-in').value.trim();
+  if (!input) { alert('Please enter a post URL or ID.'); return; }
+
+  document.getElementById('il-fetch-spin').style.display = 'block';
+  document.getElementById('il-fetched-info').style.display = 'none';
+  document.getElementById('il-analyse-card').style.display = 'none';
+  document.getElementById('il-suggestions-wrap').style.display = 'none';
+
+  try {
+    const post = await ilFetchPost(input, wpUrl, auth);
+    const contentRaw = post.content?.rendered || '';
+    const contentText = contentRaw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const wordCount = contentText.split(/\s+/).length;
+    ilCurrentPost = { id: post.id, title: post.title?.rendered || 'Untitled', content: contentRaw, contentText, link: post.link, wordCount };
+    document.getElementById('il-fetched-title').textContent = ilCurrentPost.title;
+    document.getElementById('il-fetched-meta').textContent = 'Post ID: ' + post.id + ' · ' + wordCount.toLocaleString() + ' words · ' + ilCurrentPost.link;
+    document.getElementById('il-fetched-info').style.display = 'block';
+    document.getElementById('il-analyse-card').style.display = 'block';
+  } catch (e) {
+    document.getElementById('il-fetched-info').style.display = 'block';
+    document.getElementById('il-fetched-title').textContent = 'Error: ' + e.message;
+    document.getElementById('il-fetched-title').style.color = 'var(--danger)';
+    document.getElementById('il-fetched-meta').textContent = 'Try entering the numeric post ID instead (find it in WP Admin → Posts → hover over the post title)';
+  } finally {
+    document.getElementById('il-fetch-spin').style.display = 'none';
+  }
+}
+
+async function ilAnalyseSingle() {
+  if (!ilCurrentPost) { alert('Please fetch an article first.'); return; }
+  const creds = ilGetWPAuth();
+  if (!creds) return;
+  const { wpUrl, auth } = creds;
+  if (!S.apiKey) { alert('Please save your Anthropic API key in API Setup.'); go('setup'); return; }
+
+  const btn = document.getElementById('il-analyse-btn');
+  btn.disabled = true;
+  document.getElementById('il-analyse-spin').style.display = 'block';
+  document.getElementById('il-suggestions-wrap').style.display = 'none';
+
+  try {
+    // Fetch all published posts for link targets
+    const allPosts = await ilFetchAllPosts(wpUrl, auth, 100);
+    ilAllPosts = allPosts.filter(p => p.id !== ilCurrentPost.id);
+
+    const postList = ilAllPosts.slice(0, 60).map(p =>
+      `ID:${p.id} | "${p.title?.rendered || ''}" | ${p.link}`
+    ).join('\n');
+
+    const prompt = `You are an SEO specialist for refined.autos, an automotive blog.
+
+ARTICLE BEING EDITED:
+Title: "${ilCurrentPost.title}"
+URL: ${ilCurrentPost.link}
+Content (first 2000 chars): ${ilCurrentPost.contentText.slice(0, 2000)}
+
+AVAILABLE ARTICLES TO LINK TO (ID | Title | URL):
+${postList}
+
+TASK: Find 4–8 natural internal linking opportunities in the article content.
+
+RULES:
+- Only suggest links where the anchor text appears NATURALLY in the existing content — do not suggest adding new text
+- The anchor text must be a phrase already in the article
+- Choose the most relevant target article for each anchor text
+- Do not suggest linking to the same target article more than once
+- Do not suggest linking to the article itself
+- Prioritise topically related articles
+- Anchor text should be 2–5 words — not single words, not full sentences
+
+Respond ONLY with valid JSON, no other text:
+{
+  "suggestions": [
+    {
+      "anchorText": "exact phrase from the article",
+      "targetId": 42,
+      "targetTitle": "Target Article Title",
+      "targetUrl": "https://refined.autos/target-slug/",
+      "context": "...the surrounding sentence containing the anchor text...",
+      "reason": "why this link makes sense for readers and SEO"
+    }
+  ]
+}`;
+
+    const raw = await callClaude(prompt, 1000);
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const data = JSON.parse(clean);
+    ilSuggestions = data.suggestions.map(s => ({ ...s, approved: true }));
+    renderILSuggestions();
+  } catch (e) {
+    alert('Error analysing article: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    document.getElementById('il-analyse-spin').style.display = 'none';
+  }
+}
+
+function renderILSuggestions() {
+  const approved = ilSuggestions.filter(s => s.approved).length;
+  document.getElementById('il-suggestions-head').textContent = ilSuggestions.length + ' link opportunities found';
+  document.getElementById('il-suggestions-note').textContent =
+    approved + ' approved · ' + (ilSuggestions.length - approved) + ' skipped · Click any suggestion to toggle approval';
+
+  document.getElementById('il-suggestions-list').innerHTML = ilSuggestions.map((s, i) => {
+    const cls = s.approved ? 'approved' : 'skipped';
+    const contextHtml = s.context.replace(
+      new RegExp(s.anchorText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'),
+      '<mark>$&</mark>'
+    );
+    return `<div class="il-suggestion ${cls}" id="ils-${i}" onclick="ilToggle(${i})">
+      <div class="il-context">"...${contextHtml}..."</div>
+      <div class="il-link-target">🔗 <strong>${s.anchorText}</strong> → ${s.targetUrl}</div>
+      <div class="il-reason">${s.reason}</div>
+      <div class="il-actions">
+        <span class="chip" style="${s.approved ? 'background:rgba(76,175,110,0.15);color:var(--green);border-color:rgba(76,175,110,0.3);' : ''}">${s.approved ? '✓ Approved' : '— Skipped'}</span>
+        <span style="font-size:11px;color:var(--text3);">Click to toggle</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('il-suggestions-wrap').style.display = 'block';
+  document.getElementById('il-suggestions-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function ilToggle(i) {
+  ilSuggestions[i].approved = !ilSuggestions[i].approved;
+  renderILSuggestions();
+}
+
+function ilApproveAll() {
+  ilSuggestions.forEach(s => s.approved = true);
+  renderILSuggestions();
+}
+
+async function ilApplyApproved() {
+  const creds = ilGetWPAuth();
+  if (!creds) return;
+  const { wpUrl, auth } = creds;
+  const approved = ilSuggestions.filter(s => s.approved);
+  if (!approved.length) { alert('No approved suggestions to apply.'); return; }
+
+  const resultCard = document.getElementById('il-apply-result-card');
+  const resultEl = document.getElementById('il-apply-result');
+  resultCard.style.display = 'block';
+  resultEl.innerHTML = '<span style="color:var(--text2);font-size:13px;">Applying links...</span>';
+
+  try {
+    let updatedContent = ilCurrentPost.content;
+    let applied = 0;
+    const alreadyLinked = new Set();
+
+    for (const s of approved) {
+      if (alreadyLinked.has(s.anchorText.toLowerCase())) continue;
+      // Find first occurrence of anchor text not already inside an <a> tag
+      const regex = new RegExp('(?<!href="[^"]*?)(?<![>])(' + s.anchorText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?![^<]*?</a>)', 'i');
+      const newContent = updatedContent.replace(regex, `<a href="${s.targetUrl}" title="${s.targetTitle}">$1</a>`);
+      if (newContent !== updatedContent) {
+        updatedContent = newContent;
+        alreadyLinked.add(s.anchorText.toLowerCase());
+        applied++;
+      }
+    }
+
+    if (applied === 0) {
+      resultEl.innerHTML = '<span style="color:var(--gold-text);font-size:13px;">Could not automatically insert links — the anchor text may already be linked or inside a heading. Try editing manually in WordPress.</span>';
+      return;
+    }
+
+    // Push updated content to WordPress
+    const res = await fetch(wpUrl + '/wp-json/wp/v2/posts/' + ilCurrentPost.id, {
+      method: 'POST',
+      headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: updatedContent })
+    });
+
+    if (res.ok) {
+      const editUrl = wpUrl + '/wp-admin/post.php?post=' + ilCurrentPost.id + '&action=edit';
+      resultEl.innerHTML = `<span style="color:var(--green);font-size:13px;">✓ ${applied} link${applied !== 1 ? 's' : ''} added successfully!</span>
+        <a href="${editUrl}" target="_blank" style="color:var(--gold);font-size:12px;margin-left:10px;">Open in WP editor ↗</a>
+        <a href="${ilCurrentPost.link}" target="_blank" style="color:var(--blue);font-size:12px;margin-left:10px;">View live post ↗</a>`;
+      // Update stored content
+      ilCurrentPost.content = updatedContent;
+    } else {
+      const err = await res.json();
+      resultEl.innerHTML = '<span style="color:var(--danger);font-size:13px;">WordPress error: ' + (err.message || 'Could not update post') + '</span>';
+    }
+  } catch (e) {
+    resultEl.innerHTML = '<span style="color:var(--danger);font-size:13px;">Error: ' + e.message + '</span>';
+  }
+}
+
+/* ─── BULK MODE ─── */
+let ilBulkResults = [];
+
+async function ilRunBulk() {
+  const creds = ilGetWPAuth();
+  if (!creds) return;
+  if (!S.apiKey) { alert('Please save your Anthropic API key in API Setup.'); go('setup'); return; }
+  const { wpUrl, auth } = creds;
+  const limit = parseInt(document.getElementById('il-bulk-limit').value);
+  const minLinks = parseInt(document.getElementById('il-bulk-min').value);
+
+  const btn = document.getElementById('il-bulk-btn');
+  btn.disabled = true;
+  ilBulkPause = false;
+  document.getElementById('il-bulk-pause-btn').style.display = 'inline-flex';
+  document.getElementById('il-bulk-prog').style.display = 'block';
+  document.getElementById('il-bulk-results-card').style.display = 'block';
+  ilBulkResults = [];
+  document.getElementById('il-bulk-list').innerHTML = '';
+
+  try {
+    ilBulkSetProgress('Fetching posts from WordPress...', 0, 1);
+    // Fetch all posts for both processing and link targeting
+    const allPosts = await ilFetchAllPosts(wpUrl, auth, Math.max(limit, 100));
+    const toProcess = allPosts.slice(0, limit);
+    const total = toProcess.length;
+
+    for (let i = 0; i < toProcess.length; i++) {
+      if (ilBulkPause) break;
+      const post = toProcess[i];
+      const title = post.title?.rendered || 'Untitled';
+      ilBulkSetProgress('Processing "' + title.slice(0, 40) + '"... (' + (i + 1) + '/' + total + ')', i, total);
+      ilBulkResults.push({ id: post.id, title, link: post.link, status: 'running', linksAdded: 0, error: null });
+      renderBulkResults();
+
+      try {
+        // Fetch full content
+        const fullPost = await ilFetchPost(String(post.id), wpUrl, auth);
+        const contentRaw = fullPost.content?.rendered || '';
+        const contentText = contentRaw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+
+        if (contentText.split(/\s+/).length < 200) {
+          ilBulkResults[i].status = 'skipped';
+          ilBulkResults[i].error = 'Too short to link';
+          renderBulkResults(); continue;
+        }
+
+        const otherPosts = allPosts.filter(p => p.id !== post.id);
+        const postList = otherPosts.slice(0, 50).map(p =>
+          `ID:${p.id} | "${p.title?.rendered || ''}" | ${p.link}`
+        ).join('\n');
+
+        const prompt = `SEO specialist for refined.autos. Find ${minLinks}–6 natural internal links for this article.
+
+Article: "${title}" (${post.link})
+Content: ${contentText.slice(0, 1500)}
+
+Available targets:
+${postList}
+
+Rules: Only use phrases ALREADY in the content. 2–5 word anchor text. No duplicate targets. No self-links.
+
+JSON only: {"suggestions":[{"anchorText":"...","targetId":0,"targetUrl":"...","targetTitle":"..."}]}`;
+
+        const raw = await callClaude(prompt, 600);
+        const data = JSON.parse(raw.replace(/```json|```/g, '').trim());
+        const suggestions = data.suggestions || [];
+
+        if (!suggestions.length) {
+          ilBulkResults[i].status = 'done';
+          ilBulkResults[i].linksAdded = 0;
+          renderBulkResults(); await sleep(500); continue;
+        }
+
+        // Apply links automatically
+        let updatedContent = contentRaw;
+        let applied = 0;
+        const alreadyLinked = new Set();
+
+        for (const s of suggestions) {
+          if (alreadyLinked.has(s.anchorText.toLowerCase())) continue;
+          const regex = new RegExp('(?<![>])(' + s.anchorText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?![^<]*?</a>)', 'i');
+          const newContent = updatedContent.replace(regex, `<a href="${s.targetUrl}" title="${s.targetTitle}">$1</a>`);
+          if (newContent !== updatedContent) {
+            updatedContent = newContent;
+            alreadyLinked.add(s.anchorText.toLowerCase());
+            applied++;
+          }
+        }
+
+        if (applied > 0) {
+          const updateRes = await fetch(wpUrl + '/wp-json/wp/v2/posts/' + post.id, {
+            method: 'POST',
+            headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: updatedContent })
+          });
+          if (updateRes.ok) {
+            ilBulkResults[i].status = 'done';
+            ilBulkResults[i].linksAdded = applied;
+          } else {
+            ilBulkResults[i].status = 'error';
+            ilBulkResults[i].error = 'WP update failed';
+          }
+        } else {
+          ilBulkResults[i].status = 'done';
+          ilBulkResults[i].linksAdded = 0;
+        }
+        renderBulkResults();
+        await sleep(1500); // pause between articles to respect rate limits
+      } catch (e) {
+        ilBulkResults[i].status = 'error';
+        ilBulkResults[i].error = e.message.slice(0, 60);
+        renderBulkResults();
+      }
+    }
+
+    const totalLinks = ilBulkResults.reduce((sum, r) => sum + (r.linksAdded || 0), 0);
+    const processed = ilBulkResults.filter(r => r.status === 'done').length;
+    ilBulkSetProgress('Done — ' + processed + ' articles updated, ' + totalLinks + ' links added total.', total, total);
+  } catch (e) {
+    ilBulkSetProgress('Error: ' + e.message, 0, 1);
+  } finally {
+    btn.disabled = false;
+    document.getElementById('il-bulk-pause-btn').style.display = 'none';
+    document.getElementById('il-bulk-pause-btn').disabled = false;
+    document.getElementById('il-bulk-pause-btn').textContent = 'Pause after current';
+    ilBulkPause = false;
+  }
+}
+
+function ilPauseBulk() {
+  ilBulkPause = true;
+  document.getElementById('il-bulk-pause-btn').textContent = 'Pausing...';
+  document.getElementById('il-bulk-pause-btn').disabled = true;
+}
+
+function ilBulkSetProgress(label, done, total) {
+  document.getElementById('il-bulk-label').textContent = label;
+  document.getElementById('il-bulk-bar').style.width = (total > 0 ? Math.round((done / total) * 100) : 0) + '%';
+}
+
+function renderBulkResults() {
+  const statusMap = {
+    running: '<span class="il-post-status ils-running">Processing...</span>',
+    done: r => `<span class="il-post-status ils-done">✓ ${r.linksAdded} link${r.linksAdded !== 1 ? 's' : ''} added</span>`,
+    error: r => `<span class="il-post-status ils-error">✗ ${r.error || 'Error'}</span>`,
+    skipped: r => `<span class="il-post-status ils-pending">${r.error || 'Skipped'}</span>`,
+  };
+  document.getElementById('il-bulk-list').innerHTML = ilBulkResults.map(r => `
+    <div class="il-post-row">
+      <div style="flex:1;min-width:0;">
+        <div class="il-post-title">${r.title}</div>
+        <div class="il-post-meta"><a href="${r.link}" target="_blank" style="color:var(--text3);">${r.link}</a></div>
+      </div>
+      ${typeof statusMap[r.status] === 'function' ? statusMap[r.status](r) : statusMap[r.status]}
+    </div>`).join('');
+}
 function detectPillarFromArticle(articleText, title) {
   const text = (articleText + ' ' + title).toLowerCase();
   const signals = {
