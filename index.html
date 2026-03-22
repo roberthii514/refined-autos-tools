@@ -186,7 +186,46 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .two-col select,.two-col input{margin-bottom:0}
 .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .three-col input,.three-col select{margin-bottom:0}
-@media(max-width:700px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:1.25rem}.threshold-grid,.kw-fields,.sc-checks,.rpm-grid,.q-settings,.two-col,.three-col{grid-template-columns:1fr}}
+/* CONTENT STRATEGY */
+.pillar-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.pillar-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px;cursor:pointer;transition:all 0.15s;position:relative}
+.pillar-card:hover{border-color:var(--border2);background:var(--bg4)}
+.pillar-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.07)}
+.pillar-card.selected::after{content:'✓';position:absolute;top:10px;right:12px;color:var(--gold);font-size:13px;font-weight:600}
+.pillar-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.pillar-angle{font-size:11px;color:var(--gold-text);margin-bottom:4px}
+.pillar-desc{font-size:11px;color:var(--text2);line-height:1.5}
+.plan-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.plan-item:last-child{border-bottom:none}
+.plan-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;line-height:1.4}
+.plan-meta{font-size:11px;color:var(--text2);display:flex;gap:10px;flex-wrap:wrap}
+.plan-pillar-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+.p-charging{background:rgba(99,179,237,0.15);color:var(--blue)}
+.p-maintenance{background:rgba(76,175,110,0.15);color:var(--green)}
+.p-intelligence{background:rgba(159,122,234,0.15);color:#9f7aea}
+.p-detailing{background:rgba(237,137,54,0.15);color:#ed8936}
+.p-california{background:rgba(224,85,85,0.15);color:var(--danger)}
+.p-finance{background:rgba(201,168,76,0.15);color:var(--gold)}
+.p-builds{background:rgba(72,187,120,0.15);color:#48bb78}
+.sc-guide-step{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.sc-guide-step:last-child{border-bottom:none}
+.sc-step-num{width:26px;height:26px;border-radius:50%;background:var(--gold);color:#000;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.sc-step-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.sc-step-desc{font-size:12px;color:var(--text2);line-height:1.6}
+/* GSC REFINEMENT */
+.gsc-row{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.gsc-row:last-child{border-bottom:none}
+.gsc-rank{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:2px}
+.gsc-r1{background:rgba(201,168,76,0.2);color:var(--gold);border:1px solid rgba(201,168,76,0.4)}
+.gsc-r2{background:rgba(99,179,237,0.15);color:var(--blue);border:1px solid rgba(99,179,237,0.3)}
+.gsc-r3{background:var(--bg4);color:var(--text2);border:1px solid var(--border2)}
+.gsc-url{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;word-break:break-all}
+.gsc-action{font-size:12px;color:var(--gold-text);margin-bottom:4px;font-weight:500}
+.gsc-why{font-size:12px;color:var(--text2);line-height:1.55}
+.gsc-stats{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap}
+.gsc-stat{font-size:11px;color:var(--text3)}
+.gsc-stat strong{color:var(--text2)}
+@media(max-width:700px){.pillar-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -198,9 +237,12 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
   <nav class="sidebar">
     <div class="nav-sep">Workflow</div>
     <button class="nb active" onclick="go('generate')" id="nav-generate"><span class="nb-icon">✦</span> Write Article</button>
+    <button class="nb" onclick="go('pillars')" id="nav-pillars"><span class="nb-icon">⬡</span> Content Strategy</button>
     <button class="nb" onclick="go('batch')" id="nav-batch"><span class="nb-icon">⚡</span> Batch Queue</button>
     <button class="nb" onclick="go('topical')" id="nav-topical"><span class="nb-icon">◉</span> Topical Authority</button>
     <button class="nb" onclick="go('history')" id="nav-history"><span class="nb-icon">◷</span> History</button>
+    <div class="nav-sep">Optimise</div>
+    <button class="nb" onclick="go('gsc')" id="nav-gsc"><span class="nb-icon">📈</span> GSC Refinement</button>
     <div class="nav-sep">Setup</div>
     <button class="nb" onclick="go('setup')" id="nav-setup"><span class="nb-icon">⚙</span> API Setup</button>
     <div class="nav-sep">Reference</div>
@@ -339,7 +381,7 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
           <div id="img-fetch-row" style="margin-bottom:1rem;">
             <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Found <span id="img-count">0</span> image placeholders in this article.</div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button class="btn bgreen bsm" id="fetch-imgs-btn" onclick="fetchAllImages()">Fetch images from Unsplash</button>
+              <button class="btn bgreen bsm" id="fetch-imgs-btn" onclick="autoFetchAndPublish(S.article, S.history[0]?.slug||'', S.meta, S.pickedTitle)">Fetch images from Unsplash</button>
               <span id="fetch-img-status" style="font-size:12px;color:var(--text2);align-self:center;"></span>
             </div>
             <div id="img-preview-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:12px;"></div>
@@ -368,6 +410,144 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
             <button onclick="closePreview()" style="background:transparent;border:1px solid #444;color:#aaa;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;">Close</button>
           </div>
           <div id="preview-content" style="padding:2.5rem;font-family:Georgia,serif;font-size:18px;line-height:1.75;color:#1a1a1a;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONTENT STRATEGY ═══ -->
+    <div class="panel" id="panel-pillars">
+      <h1 class="pg-title">Content strategy</h1>
+      <p class="pg-sub">Pick a pillar and a state. The tool generates a full article plan. Add to Batch Queue and publish everything — no keyword research needed. Let Google Search Console tell you what works, then optimise later.</p>
+
+      <!-- PILLAR SELECTION -->
+      <div class="card">
+        <div class="card-head"><div class="badge">1</div> Choose a Refined pillar</div>
+        <div class="pillar-grid" id="pillar-grid">
+          <div class="pillar-card" id="pc-charging" onclick="selectPillar('charging')">
+            <div class="pillar-name">Refined Charging</div>
+            <div class="pillar-angle">Home EV infrastructure</div>
+            <div class="pillar-desc">Level 2 charger reviews, NEMA guides, renter EV rights, rebate trackers</div>
+          </div>
+          <div class="pillar-card" id="pc-maintenance" onclick="selectPillar('maintenance')">
+            <div class="pillar-name">Refined Maintenance</div>
+            <div class="pillar-angle">Precision ICE car care</div>
+            <div class="pillar-desc">100k mile survival guides, model-specific fix encyclopedias, service cost breakdowns</div>
+          </div>
+          <div class="pillar-card" id="pc-intelligence" onclick="selectPillar('intelligence')">
+            <div class="pillar-name">Refined Intelligence</div>
+            <div class="pillar-angle">Software-defined vehicles</div>
+            <div class="pillar-desc">OTA update logs, FSD vs BlueCruise, car SaaS subscriptions, ADAS comparisons</div>
+          </div>
+          <div class="pillar-card" id="pc-detailing" onclick="selectPillar('detailing')">
+            <div class="pillar-name">Refined Detailing</div>
+            <div class="pillar-angle">The Gloss Lab</div>
+            <div class="pillar-desc">Ceramic coating face-offs, PPF guides, deionized water systems, leather restoration</div>
+          </div>
+          <div class="pillar-card" id="pc-california" onclick="selectPillar('california')">
+            <div class="pillar-name">Refined California</div>
+            <div class="pillar-angle">Hyper-local high-RPM</div>
+            <div class="pillar-desc">CA rebate trackers, local EV mechanics, lemon law guides, PG&amp;E/SCE rate guides</div>
+          </div>
+          <div class="pillar-card" id="pc-finance" onclick="selectPillar('finance')">
+            <div class="pillar-name">Refined Finance</div>
+            <div class="pillar-angle">The Auto Equity play</div>
+            <div class="pillar-desc">TCO calculators, pay-per-mile insurance, interest rate hacks, fleet cost guides</div>
+          </div>
+          <div class="pillar-card" id="pc-builds" onclick="selectPillar('builds')">
+            <div class="pillar-name">Refined Builds</div>
+            <div class="pillar-angle">Modification &amp; lifestyle</div>
+            <div class="pillar-desc">Overlander setups, van-life builds, classic electrification, high-end audio installs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REGION + SETTINGS -->
+      <div class="card" id="strat-step2" style="display:none;">
+        <div class="card-head"><div class="badge">2</div> Target state &amp; settings</div>
+        <div class="two-col">
+          <div>
+            <label>Target state / region</label>
+            <select id="strat-region">
+              <option value="California">California</option>
+              <option value="Texas">Texas</option>
+              <option value="Florida">Florida</option>
+              <option value="New York">New York</option>
+              <option value="Washington State">Washington State</option>
+              <option value="Colorado">Colorado</option>
+              <option value="Arizona">Arizona</option>
+              <option value="Nevada">Nevada</option>
+              <option value="Georgia">Georgia</option>
+              <option value="North Carolina">North Carolina</option>
+              <option value="Illinois">Illinois</option>
+              <option value="Ohio">Ohio</option>
+              <option value="Michigan">Michigan</option>
+              <option value="Pennsylvania">Pennsylvania</option>
+              <option value="Oregon">Oregon</option>
+              <option value="Massachusetts">Massachusetts</option>
+              <option value="Virginia">Virginia</option>
+              <option value="Maryland">Maryland</option>
+              <option value="Minnesota">Minnesota</option>
+              <option value="New Jersey">New Jersey</option>
+              <option value="USA">United States (general)</option>
+            </select>
+          </div>
+          <div>
+            <label>Article length</label>
+            <select id="strat-length">
+              <option value="long">Long-form — 1,800–2,200 words (best)</option>
+              <option value="medium">Medium — 1,000–1,400 words</option>
+            </select>
+          </div>
+        </div>
+        <div class="notice" id="strat-pillar-notice" style="margin-bottom:0;"></div>
+      </div>
+
+      <!-- GENERATE PLAN -->
+      <div class="card" id="strat-step3" style="display:none;">
+        <div class="card-head"><div class="badge">3</div> Generate content plan</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:1rem;line-height:1.6;">The tool will generate 20 article ideas for this pillar × state combination. These are ready to add to your Batch Queue and generate — no keyword research needed. Cast the wide net first, optimise with Search Console later.</p>
+        <button class="btn bg bfull" id="strat-gen-btn" onclick="generateStrategyPlan()">Generate content plan</button>
+        <div class="spin-wrap" id="strat-spin"><div class="spinner"></div><div class="spin-label">Generating content plan...</div><div class="spin-sub">~15 seconds</div></div>
+      </div>
+
+      <!-- PLAN OUTPUT -->
+      <div id="strat-output" style="display:none;">
+        <div class="card">
+          <div class="row">
+            <div class="card-head" style="margin:0;" id="strat-plan-title">Content plan</div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn bg bsm" onclick="addAllPlanToQueue()">Add all to Batch Queue</button>
+              <button class="btn bo bsm" onclick="clearStratOutput()">New plan</button>
+            </div>
+          </div>
+          <div class="notice notice-info" style="margin-bottom:1rem;" id="strat-strategy-note"></div>
+          <div id="strat-plan-list"></div>
+        </div>
+
+        <!-- SEARCH CONSOLE GUIDE -->
+        <div class="card">
+          <div class="card-head">Phase 2: Search Console refinement loop</div>
+          <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:1rem;">After publishing, wait 3–4 months then use Google Search Console to find your winners and optimise them. Here's the exact process:</p>
+          <div class="sc-guide-step">
+            <div class="sc-step-num">1</div>
+            <div><div class="sc-step-title">Open Search Console → Performance → Pages</div><div class="sc-step-desc">Sort by Impressions. Any page with 100+ impressions is ranking somewhere — Google has found it and is showing it. These are your first signals.</div></div>
+          </div>
+          <div class="sc-guide-step">
+            <div class="sc-step-num">2</div>
+            <div><div class="sc-step-title">Find pages with high impressions but low CTR (under 3%)</div><div class="sc-step-desc">This means Google is showing your article but people aren't clicking. Fix: improve the title and meta description to be more compelling. The article is ranking — it just needs a better hook.</div></div>
+          </div>
+          <div class="sc-guide-step">
+            <div class="sc-step-num">3</div>
+            <div><div class="sc-step-title">Click any page → see which queries are triggering it</div><div class="sc-step-desc">These are the real keywords Google thinks your article is about. If they don't match what you wrote, update the article to target those queries more specifically. This is free keyword research based on real data.</div></div>
+          </div>
+          <div class="sc-guide-step">
+            <div class="sc-step-num">4</div>
+            <div><div class="sc-step-title">Find pages ranking positions 8–20 — these are your quick wins</div><div class="sc-step-desc">Positions 8–20 means you're almost on page 1. Expand these articles, add more depth, add internal links from other articles pointing to them. A small push can move them to positions 1–5 and multiply your traffic.</div></div>
+          </div>
+          <div class="sc-guide-step">
+            <div class="sc-step-num">5</div>
+            <div><div class="sc-step-title">Double down on winning pillars</div><div class="sc-step-desc">If Refined California articles get 80% of your impressions, generate more California content. If Refined Maintenance is getting zero impressions after 3 months, that pillar may need a different angle. Let the data guide your next batch.</div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -469,6 +649,42 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
       </div>
 
       <div id="ta-output" style="display:none;"></div>
+    </div>
+
+    <!-- ═══ GSC REFINEMENT ═══ -->
+    <div class="panel" id="panel-gsc">
+      <h1 class="pg-title">GSC refinement</h1>
+      <p class="pg-sub">After 3–4 months of publishing, paste your Google Search Console data here. The tool analyses it and tells you exactly which articles to optimise first for maximum traffic gains.</p>
+
+      <div class="card">
+        <div class="card-head">How to export your GSC data</div>
+        <div class="sc-guide-step">
+          <div class="sc-step-num">1</div>
+          <div><div class="sc-step-title">Open Google Search Console</div><div class="sc-step-desc">Go to <a href="https://search.google.com/search-console" target="_blank" style="color:var(--gold);">search.google.com/search-console</a> → select your site → click <strong style="color:var(--text);">Performance</strong></div></div>
+        </div>
+        <div class="sc-guide-step">
+          <div class="sc-step-num">2</div>
+          <div><div class="sc-step-title">Click "Pages" tab → Export</div><div class="sc-step-desc">Click the Pages tab (not Queries). Set date range to Last 3 months. Click the Export button (top right) → Download CSV. Open in Excel or Google Sheets.</div></div>
+        </div>
+        <div class="sc-guide-step">
+          <div class="sc-step-num">3</div>
+          <div><div class="sc-step-title">Copy the data and paste below</div><div class="sc-step-desc">Copy the columns: Page URL, Clicks, Impressions, CTR, Position. Paste all rows below — the tool will analyse them and rank your opportunities.</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">Paste your GSC data</div>
+        <label>Paste CSV data (Page, Clicks, Impressions, CTR, Position — one row per line)</label>
+        <textarea id="gsc-paste" style="min-height:160px;font-size:12px;font-family:monospace;" placeholder="https://refined.autos/best-used-bmw-california/	142	3200	4.4%	6.2&#10;https://refined.autos/porsche-cayenne-maintenance-cost/	28	1800	1.6%	11.4&#10;https://refined.autos/ev-charger-california-rebate/	8	950	0.8%	18.1&#10;...paste more rows"></textarea>
+        <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;">
+          <label style="display:inline;margin:0;">Your site DA (current)</label>
+          <input type="number" id="gsc-da" placeholder="e.g. 8" style="width:100px;margin-bottom:0;">
+        </div>
+        <button class="btn bg bfull" id="gsc-analyse-btn" onclick="analyseGSC()">Analyse &amp; prioritise</button>
+        <div class="spin-wrap" id="gsc-spin"><div class="spinner"></div><div class="spin-label">Analysing your data...</div></div>
+      </div>
+
+      <div id="gsc-output" style="display:none;"></div>
     </div>
 
     <!-- ═══ HISTORY ═══ -->
@@ -810,7 +1026,8 @@ Generate exactly 5 compelling article title options. Rules:
 - Naturally include the keyword or very close variation
 - 45–65 characters ideally
 - Use a DIFFERENT format each: one listicle ("5 best..."), one question ("Is the X worth buying?"), one year-specific using ${CY} where relevant, one comparison or "vs", one bold claim or guide
-- NEVER use years older than ${CY} — if a year is included it must be ${CY}
+- NEVER use years older than ${CY} — if a year is included in a title it must be ${CY}
+- Years are fine in titles for click-through (e.g. "Best Used BMW California (${CY} Guide)") but the slug generated later will NEVER contain a year
 - If region is specified, include it naturally in 2–3 of the titles
 - Titles must feel credible and trustworthy — no clickbait
 
@@ -904,7 +1121,7 @@ MEDIAVINE CONTENT RULES:
 
 FORMAT — first two lines exactly:
 META DESCRIPTION: [150–155 char meta with keyword]
-SLUG: [slug-lowercase-hyphens-max-6-words]
+SLUG: [slug-lowercase-hyphens-max-6-words — NEVER include any year in the slug, even if the title has a year. URLs must be evergreen.]
 
 Then the full article:
 # ${title}
@@ -930,15 +1147,6 @@ function parseArticle(raw, kw) {
   return { text, meta, slug, words };
 }
 
-function showArticleOutput(result, title) {
-  document.getElementById('art-chips').innerHTML = `<span class="chip">${result.words.toLocaleString()} words</span><span class="chip">/${result.slug}</span><span class="chip">Meta: ${result.meta.length} chars</span>`;
-  if (result.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + result.meta; }
-  document.getElementById('output-box').textContent = result.text;
-  document.getElementById('output-wrap').style.display = 'block';
-  renderScorecard(result.text, result.words, result.meta, result.slug);
-  document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
 function renderScorecard(article, wc, meta, slug) {
   const paras = article.split(/\n\n+/).filter(p => p.trim().length > 30 && !p.trim().startsWith('#'));
   const longParas = paras.filter(p => p.split(/[.!?]+/).filter(s => s.trim().length > 10).length > 3);
@@ -951,7 +1159,7 @@ function renderScorecard(article, wc, meta, slug) {
     { label: 'H2 sections: ' + h2, pass: h2 >= 4 ? 'pass' : h2 >= 2 ? 'warn' : 'fail', note: h2 >= 4 ? 'Good structure ✓' : 'Add more H2 headings' },
     { label: 'Images: ' + imgs + ' placeholders', pass: imgs >= 3 ? 'pass' : imgs >= 1 ? 'warn' : 'fail', note: imgs >= 3 ? 'Replace [IMAGE:] with real photos before publishing ✓' : 'Add more image placeholders (aim for 3–4)' },
     { label: 'Meta: ' + meta.length + ' chars', pass: meta.length >= 140 && meta.length <= 160 ? 'pass' : meta.length >= 100 ? 'warn' : 'fail', note: meta.length >= 140 && meta.length <= 160 ? 'Perfect length ✓' : meta.length > 160 ? 'Trim to under 160 chars' : 'Aim for 140–155 chars' },
-    { label: 'URL slug', pass: slug.split('-').length <= 6 ? 'pass' : 'warn', note: slug.split('-').length <= 6 ? 'Good slug length ✓' : 'Consider shortening the slug' },
+    { label: 'URL slug', pass: /20\d\d/.test(slug) ? 'fail' : slug.split('-').length <= 6 ? 'pass' : 'warn', note: /20\d\d/.test(slug) ? 'Year found in slug — remove it. Slugs must be evergreen. Years belong in titles only.' : slug.split('-').length <= 6 ? 'Good evergreen slug ✓' : 'Consider shortening the slug' },
     { label: 'Lists', pass: hasList >= 2 ? 'pass' : 'warn', note: hasList >= 2 ? 'Good use of lists ✓' : 'Consider adding 1–2 bullet lists' },
     { label: 'Year reference', pass: !article.includes('2023') && !article.includes('2024') ? 'pass' : 'warn', note: !article.includes('2023') && !article.includes('2024') ? 'No outdated years found ✓' : 'Check for outdated year references — update to ' + CY },
   ];
@@ -1070,8 +1278,10 @@ function renderBQ() {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
         ${statusMap[item.status] || ''}
+        ${item.pillarName ? `<span class="plan-pillar-tag ${item.cssClass || 'p-finance'}" style="font-size:9px;">${item.pillarName}</span>` : ''}
         ${item.status === 'wait' || item.status === 'pick' ? `<button class="btn bo bsm" style="font-size:11px;" onclick="bqRemove(${item.id})">Remove</button>` : ''}
         ${item.status === 'wait' ? `<button class="btn bo bsm" style="font-size:11px;" onclick="bqGenTitlesFor(${item.id})">Get titles</button>` : ''}
+        ${item.status === 'wait' || item.status === 'pick' ? `<button class="btn bg bsm" style="font-size:11px;" onclick="bqRunAll(${item.id})">Run this one</button>` : ''}
         ${item.status === 'done' ? `<button class="btn bo bsm" style="font-size:11px;" onclick="bqViewArticle(${item.id})">View</button>` : ''}
       </div>
     </div>`;
@@ -1100,10 +1310,15 @@ async function bqGenAllTitles() {
   for (const item of waiting) { await bqGenTitlesFor(item.id); await sleep(600); }
 }
 
-async function bqRunAll() {
+async function bqRunAll(singleId) {
   if (!S.apiKey) { alert('Please save your API key first.'); go('setup'); return; }
-  const eligible = BQ.filter(i => i.status === 'wait' || (i.status === 'pick' && i.chosenTitle));
-  if (!eligible.length) { alert('No keywords ready. Add keywords first or use "Generate titles for all".'); return; }
+
+  // If singleId provided, run only that item
+  const itemsToRun = singleId
+    ? BQ.filter(i => i.id === singleId)
+    : BQ.filter(i => i.status === 'wait' || (i.status === 'pick' && i.chosenTitle));
+
+  if (!itemsToRun.length) { alert('No keywords ready. Add keywords first.'); return; }
   bqRunning = true; bqPauseFlag = false;
   document.getElementById('bq-run-btn').disabled = true;
   document.getElementById('bq-run-btn').textContent = 'Running...';
@@ -1112,31 +1327,47 @@ async function bqRunAll() {
   const audience = document.getElementById('bq-audience').value;
   const length = document.getElementById('bq-length').value;
   const region = document.getElementById('bq-region').value;
-  const total = BQ.filter(i => i.status !== 'done').length;
+  const total = itemsToRun.length;
   let done = 0;
-  for (let i = 0; i < BQ.length; i++) {
+
+  for (const item of itemsToRun) {
     if (bqPauseFlag) break;
-    const item = BQ[i];
     if (item.status === 'done') continue;
     bqSetProgress(`Getting titles for "${item.kw}"... (${done + 1}/${total})`, done, total);
-    if (!item.titles) { await bqGenTitlesFor(item.id); await sleep(400); }
+    if (!item.titles || !item.titles.length) { await bqGenTitlesFor(item.id); await sleep(400); }
     if (item.status === 'error') { done++; continue; }
     if (!item.chosenTitle) { item.chosenTitle = item.titles[0].title; bqSave(); renderBQ(); await sleep(300); }
     bqSetProgress(`Writing "${item.chosenTitle}"... (${done + 1}/${total})`, done, total);
     item.status = 'running'; bqSave(); renderBQ();
     try {
-      const prompt = buildArticlePrompt(item.chosenTitle, item.kw, item.vol, item.kd, item.da, audience, length, region);
+      const itemRegion = item.region || region;
+      const prompt = buildArticlePrompt(item.chosenTitle, item.kw, item.vol, item.kd, item.da, audience, length, itemRegion);
       const rawText = await callClaude(prompt, 4500);
       const result = parseArticle(rawText, item.kw);
-      item.article = result.text; item.meta = result.meta; item.slug = result.slug; item.words = result.words; item.status = 'done';
+      item.article = result.text; item.meta = result.meta;
+      item.slug = item.slug || result.slug; // prefer pre-set slug from strategy plan
+      item.words = result.words; item.status = 'done';
       S.count++; S.words += result.words; S.cost += 0.09;
-      S.history.unshift({ title: item.chosenTitle, date: new Date().toLocaleDateString('en-GB'), words: result.words, slug: result.slug, meta: result.meta, article: result.text, kw: item.kw, region, kwData: { vol: item.vol, kd: item.kd, da: item.da } });
+      S.history.unshift({
+        title: item.chosenTitle, date: new Date().toLocaleDateString('en-GB'),
+        words: result.words, slug: item.slug, meta: result.meta, article: result.text,
+        kw: item.kw, region: itemRegion,
+        pillarCategory: item.pillarCategory || null,
+        kwData: { vol: item.vol, kd: item.kd, da: item.da }
+      });
       if (S.history.length > 100) S.history = S.history.slice(0, 100);
       persist(); updStats(); bqSave(); renderBQ(); done++;
       bqSetProgress(`Done ${done}/${total}`, done, total);
+
+      // Auto-fetch images and publish to WP with pillar category
+      if (localStorage.getItem('ra_wp_url')) {
+        bqSetProgress(`Publishing "${item.chosenTitle}" to WordPress...`, done, total);
+        await autoFetchAndPublish(result.text, item.slug, result.meta, item.chosenTitle, item.pillarCategory || null);
+      }
       await sleep(1500);
     } catch (e) { item.status = 'error'; item.error = e.message; bqSave(); renderBQ(); done++; }
   }
+
   bqRunning = false;
   document.getElementById('bq-run-btn').disabled = false;
   document.getElementById('bq-run-btn').textContent = 'Run all';
@@ -1144,7 +1375,7 @@ async function bqRunAll() {
   document.getElementById('bq-pause-btn').disabled = false;
   document.getElementById('bq-pause-btn').textContent = 'Pause after current';
   const allDone = BQ.filter(i => i.status === 'done').length;
-  bqSetProgress(`Batch complete — ${allDone} article${allDone !== 1 ? 's' : ''} saved to History.`, total, total);
+  bqSetProgress(`Batch complete — ${allDone} article${allDone !== 1 ? 's' : ''} saved to History${localStorage.getItem('ra_wp_url') ? ' and published to WordPress' : ''}.`, total, total);
 }
 
 function bqPause() { bqPauseFlag = true; document.getElementById('bq-pause-btn').textContent = 'Pausing...'; document.getElementById('bq-pause-btn').disabled = true; }
@@ -1182,7 +1413,7 @@ function bqViewArticle(id) {
 async function fetchTitles(kw, vol, kd, da) {
   const region = document.getElementById('bq-region').value;
   const prompt = `SEO content strategist for refined.autos. Keyword: "${kw}"${region ? ' — region: ' + region : ''} Vol:${vol} KD:${kd} DA:${da}. Current year: ${CY}.
-Generate 5 article titles. Natural keyword inclusion, 45–65 chars, different formats, NEVER use years older than ${CY}.
+Generate 5 article titles. Natural keyword inclusion, 45–65 chars, different formats, NEVER use years older than ${CY}. Years are allowed in titles but NEVER in slugs — slugs must be evergreen.
 Respond ONLY with valid JSON: {"titles":[{"title":"...","why":"..."},...]}`; 
   const raw = await callClaude(prompt, 500);
   return JSON.parse(raw.replace(/```json|```/g, '').trim()).titles;
@@ -1454,64 +1685,285 @@ async function saveWPCreds() {
   }
 }
 
-/* ═══ IMAGE FETCHING ═══ */
-let fetchedImages = []; // [{placeholder, query, url, photographer, unsplashLink, blob}]
+/* ═══ IMAGE FETCHING — AUTO, RETRY, FALLBACK ═══ */
+let fetchedImages = [];
+const FALLBACK_QUERIES = ['luxury car', 'sports car road', 'automobile highway', 'car dealership', 'vehicle driving', 'car interior dashboard', 'car engine', 'modern car exterior'];
 
 function countImagePlaceholders(article) {
-  const matches = [...article.matchAll(/\[IMAGE:\s*([^\]]+)\]/gi)];
-  return matches;
+  return [...article.matchAll(/\[IMAGE:\s*([^\]]+)\]/gi)];
 }
 
-async function fetchAllImages() {
+async function fetchSingleImage(query, unsplashKey) {
+  // Try specific query first, then fallbacks
+  const queries = [
+    'car ' + query,
+    'automobile ' + query,
+    query,
+    FALLBACK_QUERIES[Math.floor(Math.random() * FALLBACK_QUERIES.length)],
+    FALLBACK_QUERIES[Math.floor(Math.random() * FALLBACK_QUERIES.length)],
+  ];
+  for (const q of queries) {
+    try {
+      const res = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(q)}&per_page=3&orientation=landscape`, {
+        headers: { 'Authorization': 'Client-ID ' + unsplashKey }
+      });
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (data.results && data.results.length > 0) {
+        // Pick a random result from the top 3 for variety
+        const photo = data.results[Math.floor(Math.random() * data.results.length)];
+        return {
+          url: photo.urls.regular,
+          thumb: photo.urls.small,
+          photographer: photo.user.name,
+          unsplashLink: photo.links.html,
+        };
+      }
+    } catch (e) { /* try next query */ }
+    await sleep(200);
+  }
+  return null;
+}
+
+async function autoFetchAndPublish(article, slug, meta, title, categoryName) {
   const unsplashKey = localStorage.getItem('ra_unsplash');
-  if (!unsplashKey) {
-    alert('Please add your Unsplash API key in API Setup first.');
-    go('setup');
+  const wpUrl = localStorage.getItem('ra_wp_url');
+  const wpUser = localStorage.getItem('ra_wp_user');
+  const wpPass = localStorage.getItem('ra_wp_pass');
+  const hasWP = wpUrl && wpUser && wpPass;
+
+  const matches = countImagePlaceholders(article);
+  if (!matches.length) {
+    document.getElementById('fetch-img-status').textContent = 'No image placeholders found.';
+    if (hasWP) autoPublishToWP(article, slug, meta, title, []);
     return;
   }
-  const matches = countImagePlaceholders(S.article);
-  if (!matches.length) { alert('No image placeholders found in this article.'); return; }
 
-  const btn = document.getElementById('fetch-imgs-btn');
-  btn.disabled = true;
-  btn.textContent = 'Fetching images...';
-  document.getElementById('fetch-img-status').textContent = '0/' + matches.length + ' fetched';
   fetchedImages = [];
   document.getElementById('img-preview-grid').innerHTML = '';
+  document.getElementById('fetch-img-status').textContent = 'Fetching images...';
+  document.getElementById('fetch-imgs-btn').textContent = 'Fetching...';
+  document.getElementById('fetch-imgs-btn').disabled = true;
 
+  if (!unsplashKey) {
+    document.getElementById('fetch-img-status').textContent = 'No Unsplash key — add one in API Setup to get images.';
+    document.getElementById('fetch-imgs-btn').disabled = false;
+    document.getElementById('fetch-imgs-btn').textContent = 'Fetch images from Unsplash';
+    if (hasWP) autoPublishToWP(article, slug, meta, title, []);
+    return;
+  }
+
+  // Fetch all images — keep retrying failed ones up to 3 times
   for (let i = 0; i < matches.length; i++) {
     const placeholder = matches[i][0];
     const query = matches[i][1].trim();
-    const searchQuery = 'car automobile ' + query;
-    try {
-      const res = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`, {
-        headers: { 'Authorization': 'Client-ID ' + unsplashKey }
-      });
-      const data = await res.json();
-      if (data.results && data.results.length > 0) {
-        const photo = data.results[0];
-        const imgUrl = photo.urls.regular;
-        const photographer = photo.user.name;
-        const unsplashLink = photo.links.html;
-        // Fetch blob for embedding
-        const imgRes = await fetch(imgUrl);
+    let photoData = null;
+    let attempts = 0;
+    while (!photoData && attempts < 3) {
+      attempts++;
+      photoData = await fetchSingleImage(query, unsplashKey);
+      if (!photoData) await sleep(500);
+    }
+    if (photoData) {
+      // Fetch blob for WP upload and doc embed
+      try {
+        const imgRes = await fetch(photoData.url);
         const blob = await imgRes.blob();
         const base64 = await blobToBase64(blob);
-        fetchedImages.push({ placeholder, query, url: imgUrl, photographer, unsplashLink, base64, blob });
-        renderImagePreview(fetchedImages);
-        document.getElementById('fetch-img-status').textContent = (i + 1) + '/' + matches.length + ' fetched';
-      } else {
-        fetchedImages.push({ placeholder, query, url: null, photographer: null, unsplashLink: null, base64: null, blob: null });
+        fetchedImages.push({ placeholder, query, ...photoData, base64, blob });
+      } catch (e) {
+        fetchedImages.push({ placeholder, query, ...photoData, base64: null, blob: null });
       }
-    } catch (e) {
-      fetchedImages.push({ placeholder, query, url: null, error: e.message });
+    } else {
+      // Should never happen due to fallbacks, but handle gracefully
+      fetchedImages.push({ placeholder, query, url: null, photographer: null, unsplashLink: null, base64: null, blob: null });
     }
-    await sleep(300); // respect rate limits
+    renderImagePreview(fetchedImages);
+    document.getElementById('fetch-img-status').textContent = (i + 1) + '/' + matches.length + ' images ready';
+    document.getElementById('img-count').textContent = matches.length;
+    await sleep(300);
   }
 
-  btn.disabled = false;
-  btn.textContent = 'Refetch images';
-  document.getElementById('fetch-img-status').textContent = fetchedImages.filter(i => i.url).length + '/' + matches.length + ' images ready';
+  const ready = fetchedImages.filter(i => i.url).length;
+  document.getElementById('fetch-img-status').textContent = ready + '/' + matches.length + ' images fetched' + (hasWP ? ' — publishing to WordPress...' : ' — ready');
+  document.getElementById('fetch-imgs-btn').disabled = false;
+  document.getElementById('fetch-imgs-btn').textContent = 'Refetch images';
+
+  // Auto-publish if WP is connected
+  if (hasWP) {
+    await autoPublishToWP(article, slug, meta, title, fetchedImages, categoryName);
+  }
+}
+
+async function autoPublishToWP(article, slug, meta, title, images, categoryName) {
+  const wpUrl = localStorage.getItem('ra_wp_url');
+  const wpUser = localStorage.getItem('ra_wp_user');
+  const wpPass = localStorage.getItem('ra_wp_pass');
+  const auth = 'Basic ' + btoa(wpUser + ':' + wpPass);
+  const statusEl = document.getElementById('fetch-img-status');
+
+  try {
+    // Upload images and build a map of placeholder -> {wpSrc, id, credit}
+    const imageMap = {};
+    for (const img of images) {
+      if (!img.blob) continue;
+      statusEl.textContent = 'Uploading image: ' + img.query.slice(0, 30) + '...';
+      try {
+        const filename = img.query.replace(/[^a-z0-9]/gi, '-').toLowerCase().slice(0, 30) + '-' + Date.now() + '.jpg';
+        const fd = new FormData();
+        fd.append('file', img.blob, filename);
+        fd.append('alt_text', img.query);
+        fd.append('caption', 'Photo by ' + img.photographer + ' on Unsplash');
+        const upRes = await fetch(wpUrl + '/wp-json/wp/v2/media', {
+          method: 'POST',
+          headers: { 'Authorization': auth },
+          body: fd
+        });
+        if (upRes.ok) {
+          const med = await upRes.json();
+          imageMap[img.placeholder] = { src: med.source_url, id: med.id, credit: img.photographer, link: img.unsplashLink };
+        }
+      } catch (e) { /* skip failed uploads */ }
+      await sleep(300);
+    }
+
+    // Build WordPress post content — replace [IMAGE:...] placeholders with WP image blocks at the EXACT position
+    statusEl.textContent = 'Building post content...';
+    let postContent = articleToWPBlocks(article, imageMap);
+
+    // Create draft post
+    statusEl.textContent = 'Creating WordPress draft...';
+    const categoryId = categoryName ? await getOrCreateWPCategory(categoryName, auth, wpUrl) : null;
+    const postRes = await fetch(wpUrl + '/wp-json/wp/v2/posts', {
+      method: 'POST',
+      headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: title || S.pickedTitle || 'New Article',
+        content: postContent,
+        status: 'draft',
+        excerpt: meta || S.meta || '',
+        slug: slug || '',
+        ...(categoryId ? { categories: [categoryId] } : {})
+      })
+    });
+
+    if (postRes.ok) {
+      const postData = await postRes.json();
+      const editUrl = wpUrl + '/wp-admin/post.php?post=' + postData.id + '&action=edit';
+      statusEl.innerHTML = '<span style="color:var(--green);">✓ Published as draft in WordPress!</span> <a href="' + editUrl + '" target="_blank" style="color:var(--gold);font-size:12px;margin-left:8px;">Open in WP editor ↗</a>';
+      // Update the publish button
+      const btn = document.getElementById('wp-publish-btn');
+      if (btn) {
+        btn.textContent = 'Published ✓';
+        btn.style.background = 'var(--green)';
+        setTimeout(() => { btn.textContent = 'Publish to WordPress'; btn.style.background = ''; }, 5000);
+      }
+    } else {
+      const err = await postRes.json();
+      statusEl.textContent = 'WP error: ' + (err.message || 'Could not create post');
+    }
+  } catch (e) {
+    statusEl.textContent = 'WordPress error: ' + e.message;
+  }
+}
+
+function articleToWPBlocks(article, imageMap) {
+  // Process the article line by line, converting markdown to WP blocks
+  // and replacing [IMAGE:...] placeholders with proper WP image blocks
+  const lines = article.split('\n');
+  let blocks = [];
+  let paraBuffer = [];
+
+  const flushPara = () => {
+    if (paraBuffer.length) {
+      const text = paraBuffer.join('\n').trim();
+      if (text) {
+        const html = text
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.+?)\*/g, '<em>$1</em>')
+          .replace(/\n/g, '<br>');
+        blocks.push('<!-- wp:paragraph -->\n<p>' + html + '</p>\n<!-- /wp:paragraph -->');
+      }
+      paraBuffer = [];
+    }
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // H1
+    if (/^# (.+)/.test(line)) {
+      flushPara();
+      const text = line.replace(/^# /, '');
+      blocks.push('<!-- wp:heading {"level":1} -->\n<h1>' + text + '</h1>\n<!-- /wp:heading -->');
+      continue;
+    }
+    // H2
+    if (/^## (.+)/.test(line)) {
+      flushPara();
+      const text = line.replace(/^## /, '');
+      blocks.push('<!-- wp:heading {"level":2} -->\n<h2>' + text + '</h2>\n<!-- /wp:heading -->');
+      continue;
+    }
+    // H3
+    if (/^### (.+)/.test(line)) {
+      flushPara();
+      const text = line.replace(/^### /, '');
+      blocks.push('<!-- wp:heading {"level":3} -->\n<h3>' + text + '</h3>\n<!-- /wp:heading -->');
+      continue;
+    }
+    // Image placeholder
+    const imgMatch = line.match(/\[IMAGE:\s*([^\]]+)\]/i);
+    if (imgMatch) {
+      flushPara();
+      const placeholder = imgMatch[0];
+      if (imageMap[placeholder]) {
+        const img = imageMap[placeholder];
+        blocks.push(
+          '<!-- wp:image {"id":' + img.id + '} -->\n' +
+          '<figure class="wp-block-image">' +
+          '<img src="' + img.src + '" alt="' + imgMatch[1].trim() + '" class="wp-image-' + img.id + '"/>' +
+          '<figcaption>Photo by <a href="' + img.link + '?utm_source=refined_autos&utm_medium=referral" rel="noopener" target="_blank">' + img.credit + '</a> on <a href="https://unsplash.com?utm_source=refined_autos&utm_medium=referral" rel="noopener" target="_blank">Unsplash</a></figcaption>' +
+          '</figure>\n<!-- /wp:image -->'
+        );
+      }
+      // If no image found for this placeholder, just skip it (don't insert broken block)
+      continue;
+    }
+    // Bullet list item
+    if (/^[-•*] (.+)/.test(line)) {
+      flushPara();
+      const items = [];
+      while (i < lines.length && /^[-•*] (.+)/.test(lines[i])) {
+        items.push('<li>' + lines[i].replace(/^[-•*] /, '') + '</li>');
+        i++;
+      }
+      i--;
+      blocks.push('<!-- wp:list -->\n<ul>' + items.join('') + '</ul>\n<!-- /wp:list -->');
+      continue;
+    }
+    // Numbered list
+    if (/^\d+\. (.+)/.test(line)) {
+      flushPara();
+      const items = [];
+      while (i < lines.length && /^\d+\. (.+)/.test(lines[i])) {
+        items.push('<li>' + lines[i].replace(/^\d+\. /, '') + '</li>');
+        i++;
+      }
+      i--;
+      blocks.push('<!-- wp:list {"ordered":true} -->\n<ol>' + items.join('') + '</ol>\n<!-- /wp:list -->');
+      continue;
+    }
+    // Empty line — flush paragraph buffer
+    if (!line.trim()) {
+      flushPara();
+      continue;
+    }
+    // Regular text — accumulate into paragraph
+    paraBuffer.push(line);
+  }
+  flushPara();
+  return blocks.join('\n\n');
 }
 
 function blobToBase64(blob) {
@@ -1561,60 +2013,70 @@ function closePreview() {
 
 function markdownToHtml(md) {
   let html = md
-    .replace(/^# (.+)$/gm, '<h1 style="font-family:Georgia,serif;font-size:2rem;font-weight:600;color:#1a1a1a;margin:0 0 1rem;line-height:1.25;">$1</h1>')
-    .replace(/^## (.+)$/gm, '<h2 style="font-family:Georgia,serif;font-size:1.4rem;font-weight:600;color:#1a1a1a;margin:2rem 0 0.75rem;line-height:1.3;">$1</h2>')
-    .replace(/^### (.+)$/gm, '<h3 style="font-size:1.1rem;font-weight:600;color:#1a1a1a;margin:1.5rem 0 0.5rem;">$1</h3>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/^[-•*] (.+)$/gm, '<li style="margin-bottom:6px;">$1</li>')
-    .replace(/(<li.*<\/li>\n?)+/g, '<ul style="margin:0.75rem 0 0.75rem 1.5rem;color:#1a1a1a;">$&</ul>')
-    .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom:6px;">$1</li>')
+    .replace(/^[-•*] (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
     .replace(/\[IMAGE:[^\]]+\]/gi, '')
     .split(/\n\n+/)
     .map(p => {
       p = p.trim();
       if (!p) return '';
-      if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<figure')) return p;
-      return '<p style="margin:0 0 1.25rem;color:#1a1a1a;">' + p.replace(/\n/g, ' ') + '</p>';
+      if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<figure') || p.startsWith('<ol')) return p;
+      return '<p>' + p.replace(/\n/g, ' ') + '</p>';
     })
     .join('\n');
   return html;
 }
 
 /* ═══ DOWNLOAD .DOC ═══ */
+function markdownToDocHtml(md) {
+  // Doc-specific version with styles — only used for the downloadable .doc file
+  let html = md
+    .replace(/^# (.+)$/gm, '<h1 style="font-size:22pt;font-family:Georgia,serif;margin-bottom:12pt;">$1</h1>')
+    .replace(/^## (.+)$/gm, '<h2 style="font-size:16pt;font-family:Georgia,serif;margin-top:20pt;margin-bottom:8pt;">$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3 style="font-size:13pt;margin-top:14pt;margin-bottom:6pt;">$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^[-•*] (.+)$/gm, '<li style="margin-bottom:4pt;">$1</li>')
+    .replace(/(<li.*<\/li>\n?)+/g, '<ul style="margin:8pt 0 8pt 18pt;">$&</ul>')
+    .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom:4pt;">$1</li>')
+    .replace(/\[IMAGE:[^\]]+\]/gi, '')
+    .split(/\n\n+/)
+    .map(p => {
+      p = p.trim();
+      if (!p) return '';
+      if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<figure')) return p;
+      return '<p style="margin-bottom:10pt;line-height:1.6;">' + p.replace(/\n/g, ' ') + '</p>';
+    })
+    .join('\n');
+  return html;
+}
+
 function downloadDoc() {
   const title = S.pickedTitle || 'Article';
-  let content = S.article;
-
-  // Build HTML with images embedded as base64
-  let htmlBody = markdownToHtml(content);
+  let htmlBody = markdownToDocHtml(S.article);
   fetchedImages.forEach(img => {
     if (img.base64) {
       const escaped = img.placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       htmlBody = htmlBody.replace(
         new RegExp(escaped.replace(/\[/g,'\\[').replace(/\]/g,'\\]'), 'gi'),
-        `<img src="${img.base64}" style="max-width:100%;margin:1rem 0;" alt="${img.query}"><br><small>Photo by ${img.photographer} on Unsplash</small>`
+        `<img src="${img.base64}" style="max-width:100%;margin:10pt 0;display:block;" alt="${img.query}"><p style="font-size:9pt;color:#666;margin-top:3pt;">Photo by ${img.photographer} on Unsplash</p>`
       );
     }
   });
-
-  const docHtml = `
-    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
-    <head><meta charset="utf-8">
-    <style>
-      body{font-family:Georgia,serif;font-size:12pt;line-height:1.6;color:#1a1a1a;margin:2cm;}
-      h1{font-size:22pt;margin-bottom:12pt;}
-      h2{font-size:16pt;margin-top:24pt;margin-bottom:8pt;}
-      h3{font-size:13pt;margin-top:18pt;}
-      p{margin-bottom:10pt;}
-      img{max-width:100%;}
-    </style>
-    </head>
-    <body>
-    <p style="font-size:10pt;color:#888;">Meta description: ${S.meta}</p>
-    ${htmlBody}
-    </body></html>`;
-
+  const docHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+<head><meta charset="utf-8">
+<style>body{font-family:Georgia,serif;font-size:12pt;line-height:1.6;color:#1a1a1a;margin:2cm;}img{max-width:100%;}</style>
+</head>
+<body>
+<p style="font-size:9pt;color:#888;margin-bottom:14pt;">Meta description: ${S.meta}</p>
+${htmlBody}
+</body></html>`;
   const blob = new Blob(['\ufeff', docHtml], { type: 'application/msword' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1626,107 +2088,21 @@ function downloadDoc() {
   URL.revokeObjectURL(url);
 }
 
-/* ═══ WORDPRESS PUBLISH ═══ */
+/* ═══ WORDPRESS PUBLISH (manual button fallback) ═══ */
 async function publishToWP() {
+  if (!S.article) { alert('No article loaded.'); return; }
   const wpUrl = localStorage.getItem('ra_wp_url');
   const wpUser = localStorage.getItem('ra_wp_user');
   const wpPass = localStorage.getItem('ra_wp_pass');
-
-  if (!wpUrl || !wpUser || !wpPass) {
-    alert('Please set up your WordPress connection in API Setup first.');
-    go('setup');
-    return;
-  }
-
+  if (!wpUrl || !wpUser || !wpPass) { alert('Please set up WordPress in API Setup first.'); go('setup'); return; }
   const btn = document.getElementById('wp-publish-btn');
-  btn.disabled = true;
-  btn.textContent = 'Publishing...';
-
-  try {
-    // Step 1: Upload images to WP media library
-    const imageMap = {}; // placeholder -> WP image URL
-    for (const img of fetchedImages) {
-      if (!img.blob || !img.url) continue;
-      btn.textContent = 'Uploading images...';
-      try {
-        const filename = img.query.replace(/\s+/g, '-').toLowerCase().slice(0, 30) + '.jpg';
-        const formData = new FormData();
-        formData.append('file', img.blob, filename);
-        formData.append('alt_text', img.query);
-        formData.append('caption', `Photo by ${img.photographer} on Unsplash`);
-
-        const uploadRes = await fetch(wpUrl + '/wp-json/wp/v2/media', {
-          method: 'POST',
-          headers: { 'Authorization': 'Basic ' + btoa(wpUser + ':' + wpPass) },
-          body: formData
-        });
-
-        if (uploadRes.ok) {
-          const mediaData = await uploadRes.json();
-          imageMap[img.placeholder] = { src: mediaData.source_url, id: mediaData.id, credit: img.photographer };
-        }
-      } catch (e) { /* skip failed image */ }
-    }
-
-    // Step 2: Convert article markdown to WordPress HTML with uploaded images
-    btn.textContent = 'Creating post...';
-    let postContent = markdownToHtml(S.article);
-
-    // Replace image placeholders with WP image blocks
-    fetchedImages.forEach(img => {
-      if (imageMap[img.placeholder]) {
-        const wpImg = imageMap[img.placeholder];
-        const block = `<!-- wp:image -->
-<figure class="wp-block-image"><img src="${wpImg.src}" alt="${img.query}"/><figcaption>Photo by ${wpImg.credit} on <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></figcaption></figure>
-<!-- /wp:image -->`;
-        postContent = postContent.replace(img.placeholder, block);
-      } else {
-        postContent = postContent.replace(img.placeholder, '');
-      }
-    });
-
-    // Step 3: Create post as draft
-    const postRes = await fetch(wpUrl + '/wp-json/wp/v2/posts', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Basic ' + btoa(wpUser + ':' + wpPass),
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: S.pickedTitle || 'New Article',
-        content: postContent,
-        status: 'draft',
-        excerpt: S.meta,
-        slug: S.history[0]?.slug || '',
-        meta: { _yoast_wpseo_metadesc: S.meta }
-      })
-    });
-
-    if (postRes.ok) {
-      const postData = await postRes.json();
-      const editUrl = wpUrl + '/wp-admin/post.php?post=' + postData.id + '&action=edit';
-      btn.textContent = 'Published as draft ✓';
-      btn.style.background = 'var(--green)';
-      setTimeout(() => {
-        if (confirm('Article published as draft in WordPress! Click OK to open it in your WordPress editor.')) {
-          window.open(editUrl, '_blank');
-        }
-        btn.disabled = false;
-        btn.textContent = 'Publish to WordPress';
-        btn.style.background = '';
-      }, 500);
-    } else {
-      const err = await postRes.json();
-      throw new Error(err.message || 'Failed to create post');
-    }
-  } catch (e) {
-    alert('WordPress publish error: ' + e.message + '\n\nCheck your connection settings in API Setup.');
-    btn.disabled = false;
-    btn.textContent = 'Publish to WordPress';
-  }
+  btn.disabled = true; btn.textContent = 'Publishing...';
+  const slug = S.history[0]?.slug || '';
+  await autoPublishToWP(S.article, slug, S.meta, S.pickedTitle, fetchedImages);
+  btn.disabled = false;
 }
 
-/* ═══ SHOW ARTICLE OUTPUT (updated) ═══ */
+/* ═══ SHOW ARTICLE OUTPUT — auto-triggers fetch + publish ═══ */
 function showArticleOutput(result, title) {
   document.getElementById('art-chips').innerHTML = `<span class="chip">${result.words.toLocaleString()} words</span><span class="chip">/${result.slug}</span><span class="chip">Meta: ${result.meta.length} chars</span>`;
   if (result.meta) {
@@ -1735,17 +2111,413 @@ function showArticleOutput(result, title) {
   } else {
     document.getElementById('meta-box').style.display = 'none';
   }
-  // Count image placeholders
-  const matches = countImagePlaceholders(result.text);
-  document.getElementById('img-count').textContent = matches.length;
   fetchedImages = [];
   document.getElementById('img-preview-grid').innerHTML = '';
-  document.getElementById('fetch-img-status').textContent = '';
-  document.getElementById('fetch-imgs-btn').disabled = false;
-  document.getElementById('fetch-imgs-btn').textContent = 'Fetch images from Unsplash';
+  const matches = countImagePlaceholders(result.text);
+  document.getElementById('img-count').textContent = matches.length;
+  document.getElementById('fetch-img-status').textContent = matches.length + ' image placeholder' + (matches.length !== 1 ? 's' : '') + ' found — fetching...';
+  document.getElementById('fetch-imgs-btn').textContent = 'Fetching...';
+  document.getElementById('fetch-imgs-btn').disabled = true;
   document.getElementById('output-wrap').style.display = 'block';
   renderScorecard(result.text, result.words, result.meta, result.slug);
   document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Auto-detect pillar category from article content
+  let detectedCategory = null;
+  if (S.confirmedData?.pillarCategory) {
+    detectedCategory = S.confirmedData.pillarCategory;
+  }
+  // Auto-fetch images and auto-publish with category
+  autoFetchAndPublish(result.text, result.slug, result.meta, title, detectedCategory);
+}
+/* ═══ CONTENT STRATEGY ═══ */
+const PILLARS = {
+  charging: {
+    name: 'Refined Charging',
+    wpCategory: 'Refined Charging',
+    angle: 'Home EV infrastructure and charging guides',
+    target: 'California homeowners and new EV buyers in their 20s–40s',
+    contentTypes: 'Level 2 charger reviews, NEMA 14-50 vs hardwired guides, renter EV charging rights, utility rebate trackers, charger installation cost guides, home charging setup tutorials',
+    toneNote: 'Practical and empowering — readers are navigating a new technology and need clear, honest guidance. Reference local utility companies, local electrician costs, and local rebate programs.',
+    cssClass: 'p-charging'
+  },
+  maintenance: {
+    name: 'Refined Maintenance',
+    wpCategory: 'Refined Maintenance',
+    angle: 'Precision care for high-mileage ICE vehicles',
+    target: 'Owners keeping their ICE cars for 10+ years and DIY enthusiasts',
+    contentTypes: 'Model-specific 100k mile survival guides, common repair cost encyclopedias, preventive maintenance schedules, best independent mechanic guides by city, fluid and filter guides, timing belt vs chain guides',
+    toneNote: 'Trusted mechanic friend tone — knowledgeable, no-nonsense, saves the reader money. Include real parts costs, labor estimates, and which repairs are DIY-able.',
+    cssClass: 'p-maintenance'
+  },
+  intelligence: {
+    name: 'Refined Intelligence',
+    wpCategory: 'Refined Intelligence',
+    angle: 'Software-defined vehicles and automotive technology',
+    target: 'Tech-savvy buyers, early adopters, and Tesla/Rivian/BMW iX owners',
+    contentTypes: 'OTA update logs and what changed, FSD vs BlueCruise vs SuperCruise comparisons, car SaaS subscription reviews (heated seats, autopilot tiers), Level 2+ ADAS system guides, connected car privacy guides, EV software update trackers',
+    toneNote: 'Tech journalist tone — precise, analytical, slightly skeptical of marketing claims. Readers are sophisticated and hate being talked down to.',
+    cssClass: 'p-intelligence'
+  },
+  detailing: {
+    name: 'Refined Detailing',
+    wpCategory: 'Refined Detailing',
+    angle: 'Professional-grade car care and appearance preservation',
+    target: 'Luxury European car owners, BMW/Porsche/Mercedes enthusiasts, detailing hobbyists',
+    contentTypes: 'Ceramic coating brand face-offs, PPF vs ceramic coating guides, paint correction tutorials, deionized water system reviews, Alcantara and leather restoration guides, best detailing shops by city, carwash damage prevention, wheel and tire dressing guides',
+    toneNote: 'Connoisseur tone — this audience takes their cars seriously and appreciates depth. Use proper detailing terminology. Be specific about products, application methods, and longevity claims.',
+    cssClass: 'p-detailing'
+  },
+  california: {
+    name: 'Refined California',
+    wpCategory: 'Refined California',
+    angle: 'Hyper-local California automotive guides',
+    target: 'California residents — the highest car-spending state in the US',
+    contentTypes: 'PG&E and SCE EV rebate trackers, CA-specific lemon law guides, smog check guides by county, best EV-certified mechanic directories by city, CARB regulation guides, HOV lane sticker guides, CA EV incentive stacking guides, DMV registration cost guides',
+    toneNote: 'Hyper-local and authoritative — readers want California-specific information, not generic US advice. Reference specific California utilities, agencies (CARB, DMV, CPUC), cities, and neighborhoods.',
+    cssClass: 'p-california'
+  },
+  finance: {
+    name: 'Refined Finance',
+    wpCategory: 'Refined Finance',
+    angle: 'Automotive financial strategy and total cost of ownership',
+    target: 'Budget-conscious buyers, first-time car buyers, fleet managers, and lease vs buy decision-makers',
+    contentTypes: 'Total Cost of Ownership calculators by model, pay-per-mile insurance reviews, interest rate negotiation guides, lease vs buy vs finance comparisons, depreciation curve guides by model, GAP insurance explainers, extended warranty reviews, credit score and car loan guides',
+    toneNote: 'Financial advisor tone — clear, numbers-driven, and empowering. Readers want to save money and make smarter decisions. Include real numbers, real rates, and real examples.',
+    cssClass: 'p-finance'
+  },
+  builds: {
+    name: 'Refined Builds',
+    wpCategory: 'Refined Builds',
+    angle: 'Automotive modification, overlanding, and lifestyle builds',
+    target: 'Overlanders, van-lifers, restomod enthusiasts, and weekend warriors',
+    contentTypes: 'Off-grid power setups for trucks and SUVs, van conversion guides, classic car electrification projects, Tacoma and 4Runner overlander builds, high-end audio integration guides, lift kit and suspension guides, roof tent and camp setup reviews, EV skateboard platform modding',
+    toneNote: 'Enthusiast and builder tone — passionate, detailed, community-oriented. Readers are doers who want to learn from someone who has actually built something. Include build lists, part numbers, and real costs.',
+    cssClass: 'p-builds'
+  }
+};
+
+let selectedPillar = null;
+let strategyPlan = [];
+
+function selectPillar(key) {
+  document.querySelectorAll('.pillar-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('pc-' + key).classList.add('selected');
+  selectedPillar = key;
+  const p = PILLARS[key];
+  document.getElementById('strat-pillar-notice').textContent = p.name + ' — ' + p.angle + '. Target: ' + p.target;
+  document.getElementById('strat-step2').style.display = 'block';
+  document.getElementById('strat-step3').style.display = 'block';
+  document.getElementById('strat-output').style.display = 'none';
+}
+
+async function generateStrategyPlan() {
+  if (!selectedPillar) { alert('Please select a pillar first.'); return; }
+  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+
+  const p = PILLARS[selectedPillar];
+  const region = document.getElementById('strat-region').value;
+  const btn = document.getElementById('strat-gen-btn');
+  btn.disabled = true;
+  document.getElementById('strat-spin').style.display = 'block';
+  document.getElementById('strat-output').style.display = 'none';
+
+  const prompt = `You are a content strategist for refined.autos, an automotive blog with 7 content pillars.
+
+PILLAR: ${p.name}
+Angle: ${p.angle}
+Target audience: ${p.target}
+Content types: ${p.contentTypes}
+Target region: ${region}
+Current year: ${CY}
+
+Generate exactly 20 unique article ideas for this pillar targeting ${region}. 
+
+RULES:
+- Each article must fit naturally within the "${p.name}" pillar angle
+- Mix different content formats: listicles, how-to guides, comparisons, local directories, cost guides, reviews
+- Make them hyper-specific to ${region} where relevant — reference local cities, local utilities, local regulations, local businesses
+- Titles should be compelling and search-friendly — the kind people actually search for
+- Include a variety of car makes, models, and price points
+- Some articles should target very specific niches (e.g. "Best Level 2 Charger for Apartments in Los Angeles") and some broader (e.g. "California EV Rebates: Complete ${CY} Guide")
+- NEVER include years in slugs — slugs must be evergreen
+- Titles can include ${CY} where it adds click value
+
+Respond ONLY with valid JSON, no other text:
+{
+  "planTitle": "short descriptive title for this content plan",
+  "strategyNote": "2 sentence explanation of the content strategy for this pillar × region combination",
+  "articles": [
+    {
+      "title": "Article title here",
+      "slug": "evergreen-slug-no-year-max-6-words",
+      "angle": "one sentence on the specific angle of this article",
+      "targetReader": "who specifically will search for this"
+    }
+  ]
+}`;
+
+  try {
+    const raw = await callClaude(prompt, 2500);
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const data = JSON.parse(clean);
+    strategyPlan = data.articles.map(a => ({ ...a, pillar: selectedPillar, pillarName: p.name, pillarCategory: p.wpCategory, cssClass: p.cssClass, region }));
+    renderStrategyPlan(data, p, region);
+  } catch (e) {
+    alert('Error generating plan: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    document.getElementById('strat-spin').style.display = 'none';
+  }
+}
+
+function renderStrategyPlan(data, pillar, region) {
+  document.getElementById('strat-plan-title').textContent = data.planTitle || (pillar.name + ' × ' + region);
+  document.getElementById('strat-strategy-note').textContent = data.strategyNote || '';
+
+  const list = document.getElementById('strat-plan-list');
+  list.innerHTML = data.articles.map((a, i) => `
+    <div class="plan-item">
+      <div style="flex:1;min-width:0;">
+        <div class="plan-title">${a.title}</div>
+        <div class="plan-meta">
+          <span class="plan-pillar-tag ${pillar.cssClass}">${pillar.name}</span>
+          <span style="color:var(--text3);">/${a.slug}</span>
+          <span style="color:var(--text2);">${a.angle}</span>
+        </div>
+      </div>
+      <button class="btn bo bsm" style="flex-shrink:0;font-size:11px;" onclick="addPlanItemToQueue(${i})">Add to queue</button>
+    </div>`).join('');
+
+  document.getElementById('strat-output').style.display = 'block';
+  document.getElementById('strat-output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function addPlanItemToQueue(i) {
+  const a = strategyPlan[i];
+  if (!a) return;
+  if (BQ.find(item => item.kw.toLowerCase() === a.title.toLowerCase())) {
+    alert('This article is already in the queue.');
+    return;
+  }
+  BQ.push({
+    id: Date.now() + Math.random(),
+    kw: a.title,
+    vol: 0, kd: 0, da: 0,
+    status: 'wait',
+    titles: [{ title: a.title, why: a.angle }],
+    chosenTitle: a.title,
+    slug: a.slug,
+    pillar: a.pillar,
+    pillarName: a.pillarName,
+    pillarCategory: a.pillarCategory,
+    region: a.region,
+    article: null, meta: null, words: 0, error: null
+  });
+  bqSave();
+  const btn = event.currentTarget;
+  btn.textContent = 'Added ✓';
+  btn.style.color = 'var(--green)';
+  btn.disabled = true;
+}
+
+function addAllPlanToQueue() {
+  let added = 0;
+  strategyPlan.forEach((a, i) => {
+    if (!BQ.find(item => item.kw.toLowerCase() === a.title.toLowerCase())) {
+      BQ.push({
+        id: Date.now() + Math.random(),
+        kw: a.title,
+        vol: 0, kd: 0, da: 0,
+        status: 'wait',
+        titles: [{ title: a.title, why: a.angle }],
+        chosenTitle: a.title,
+        slug: a.slug,
+        pillar: a.pillar,
+        pillarName: a.pillarName,
+        pillarCategory: a.pillarCategory,
+        region: a.region,
+        article: null, meta: null, words: 0, error: null
+      });
+      added++;
+    }
+  });
+  bqSave();
+  if (added > 0) {
+    alert(added + ' articles added to Batch Queue. Go to Batch Queue to generate and publish them.');
+    go('batch');
+  } else {
+    alert('All articles are already in the queue.');
+  }
+}
+
+function clearStratOutput() {
+  document.getElementById('strat-output').style.display = 'none';
+  strategyPlan = [];
+  document.querySelectorAll('.pillar-card').forEach(c => c.classList.remove('selected'));
+  selectedPillar = null;
+  document.getElementById('strat-step2').style.display = 'none';
+  document.getElementById('strat-step3').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══ UPDATED bqRunAll — supports single article + pillar category auto-assign ═══ */
+async function getOrCreateWPCategory(categoryName, auth, wpUrl) {
+  try {
+    // Check if category exists
+    const res = await fetch(wpUrl + '/wp-json/wp/v2/categories?search=' + encodeURIComponent(categoryName) + '&per_page=10', {
+      headers: { 'Authorization': auth }
+    });
+    if (res.ok) {
+      const cats = await res.json();
+      const existing = cats.find(c => c.name.toLowerCase() === categoryName.toLowerCase());
+      if (existing) return existing.id;
+    }
+    // Create it
+    const createRes = await fetch(wpUrl + '/wp-json/wp/v2/categories', {
+      method: 'POST',
+      headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: categoryName })
+    });
+    if (createRes.ok) {
+      const cat = await createRes.json();
+      return cat.id;
+    }
+  } catch (e) { /* return null if category operations fail */ }
+  return null;
+}
+
+/* ═══ DETECT PILLAR FROM ARTICLE CONTENT ═══ */
+function detectPillarFromArticle(articleText, title) {
+  const text = (articleText + ' ' + title).toLowerCase();
+  const signals = {
+    'Refined Charging': ['charger','charging','level 2','nema','ev charging','home charging','charge station','kwh','kilowatt','plug-in','utility rebate','pge','sce','chargepoint','wallbox'],
+    'Refined Maintenance': ['maintenance','oil change','service cost','repair cost','100k mile','100,000 mile','common problems','fault','reliability','mechanic','brake','transmission','timing belt','coolant','filter'],
+    'Refined Intelligence': ['ota update','over-the-air','fsd','full self-driving','autopilot','bluecruise','super cruise','adas','lane assist','software update','car subscription','sdv','autonomous'],
+    'Refined Detailing': ['ceramic coat','detailing','ppf','paint protection','clay bar','polish','wax','swirl','deionized water','alcantara','leather conditioning','gloss','clear coat','opti-coat'],
+    'Refined California': ['california','pge','pg&e','sce','southern california','northern california','los angeles','san francisco','san diego','bay area','carvana california','dmv california','carb','carb compliant'],
+    'Refined Finance': ['total cost of ownership','tco','insurance cost','depreciation','car loan','interest rate','monthly payment','finance','lease','residual value','pay-per-mile','fleet','gap insurance'],
+    'Refined Builds': ['modification','mod ','tuning','overlander','overland','van life','vanlife','off-road','lift kit','roof rack','suspension upgrade','restomod','classic car','electrification','audio install','subwoofer'],
+  };
+  let best = null, bestScore = 0;
+  Object.entries(signals).forEach(([pillar, keywords]) => {
+    const score = keywords.filter(kw => text.includes(kw)).length;
+    if (score > bestScore) { bestScore = score; best = pillar; }
+  });
+  return bestScore >= 1 ? best : null;
+}
+
+/* ═══ GSC REFINEMENT ANALYSER ═══ */
+async function analyseGSC() {
+  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  const raw = document.getElementById('gsc-paste').value.trim();
+  const da = parseInt(document.getElementById('gsc-da').value) || 0;
+  if (!raw) { alert('Please paste your GSC data first.'); return; }
+
+  const btn = document.getElementById('gsc-analyse-btn');
+  btn.disabled = true;
+  document.getElementById('gsc-spin').style.display = 'block';
+  document.getElementById('gsc-output').style.display = 'none';
+
+  const prompt = `You are an SEO analyst for refined.autos, an automotive blog. Analyse this Google Search Console data and identify the top 10 optimisation opportunities.
+
+Site DA: ${da || 'unknown'}
+Current year: ${CY}
+
+GSC DATA (Page URL, Clicks, Impressions, CTR, Position):
+${raw.slice(0, 3000)}
+
+ANALYSIS RULES:
+- "Quick wins" = pages ranking positions 8–20 with decent impressions — a small push moves them to page 1
+- "CTR fixes" = pages with high impressions but CTR under 3% — good ranking, bad title/meta
+- "Dead weight" = pages with 0 clicks and under 50 impressions after 3+ months — may need rewriting or consolidating
+- "Stars" = pages already getting clicks — double down with more internal links and content expansion
+- Consider the pillar system: Refined Charging, Maintenance, Intelligence, Detailing, California, Finance, Builds
+
+For each opportunity, give:
+1. The page URL (shortened to just the slug part)
+2. The opportunity type: "Quick Win", "CTR Fix", "Star — expand it", or "Rewrite needed"
+3. Specific action to take (be precise — not vague)
+4. Why this is the priority
+
+Also give an overall summary of what the data tells you about which pillars are working.
+
+Respond ONLY with valid JSON, no other text:
+{
+  "summary": "2-3 sentence overall assessment of the data",
+  "winningPillar": "which pillar/topic is getting the most traction",
+  "opportunities": [
+    {
+      "slug": "/the-page-slug/",
+      "type": "Quick Win",
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": "0%",
+      "position": 0,
+      "action": "specific action to take",
+      "why": "why this is a priority"
+    }
+  ]
+}`;
+
+  try {
+    const raw_resp = await callClaude(prompt, 1500);
+    const clean = raw_resp.replace(/```json|```/g, '').trim();
+    const data = JSON.parse(clean);
+    renderGSCOutput(data);
+  } catch (e) {
+    document.getElementById('gsc-output').innerHTML = '<div class="card"><p style="color:var(--danger);font-size:13px;">Error: ' + e.message + '. Make sure your data is formatted correctly.</p></div>';
+    document.getElementById('gsc-output').style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    document.getElementById('gsc-spin').style.display = 'none';
+  }
+}
+
+function renderGSCOutput(data) {
+  const typeColors = {
+    'Quick Win': 'var(--gold)',
+    'CTR Fix': 'var(--blue)',
+    'Star — expand it': 'var(--green)',
+    'Rewrite needed': 'var(--danger)',
+  };
+  let html = `<div class="card">
+    <div class="card-head">Analysis results</div>
+    <div class="notice notice-info" style="margin-bottom:1rem;">${data.summary}</div>
+    ${data.winningPillar ? `<div style="font-size:13px;margin-bottom:1.25rem;"><span style="color:var(--text2);">Winning pillar: </span><strong style="color:var(--gold);">${data.winningPillar}</strong> — generate more content in this pillar.</div>` : ''}
+    <div style="font-size:13px;font-weight:500;margin-bottom:0.75rem;">Top ${data.opportunities.length} opportunities — prioritised</div>`;
+
+  data.opportunities.forEach((op, i) => {
+    const rankCls = i === 0 ? 'gsc-r1' : i <= 2 ? 'gsc-r2' : 'gsc-r3';
+    const typeColor = typeColors[op.type] || 'var(--text2)';
+    html += `<div class="gsc-row">
+      <div class="gsc-rank ${rankCls}">${i + 1}</div>
+      <div style="flex:1;">
+        <div class="gsc-url">${op.slug}</div>
+        <div class="gsc-action" style="color:${typeColor};">${op.type}</div>
+        <div class="gsc-why">${op.action}</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px;">${op.why}</div>
+        <div class="gsc-stats">
+          <span class="gsc-stat"><strong>${op.clicks}</strong> clicks</span>
+          <span class="gsc-stat"><strong>${op.impressions.toLocaleString()}</strong> impressions</span>
+          <span class="gsc-stat"><strong>${op.ctr}</strong> CTR</span>
+          <span class="gsc-stat">Position <strong>${op.position}</strong></span>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  html += `</div>
+  <div class="card">
+    <div class="card-head">What to do next</div>
+    <div class="sc-guide-step"><div class="sc-step-num">1</div><div><div class="sc-step-title">Fix CTR issues first — easiest wins</div><div class="sc-step-desc">Update the title and meta description of every "CTR Fix" page. Make them more specific and compelling. Test: would you click this if you saw it in Google? If not, rewrite it.</div></div></div>
+    <div class="sc-guide-step"><div class="sc-step-num">2</div><div><div class="sc-step-title">Push your Quick Wins to page 1</div><div class="sc-step-desc">For every page ranking positions 8–20: expand the content by 300–500 words, add 3 more internal links pointing to it from other articles, and make sure the H1 exactly matches the query people are using to find it.</div></div></div>
+    <div class="sc-guide-step"><div class="sc-step-num">3</div><div><div class="sc-step-title">Double down on your Stars</div><div class="sc-step-desc">Pages already getting clicks are proven winners. Write 3–5 more articles on the same sub-topic, link them all to the star article, and expand the star article itself. More content around a winner amplifies it.</div></div></div>
+    <div class="sc-guide-step"><div class="sc-step-num">4</div><div><div class="sc-step-title">Generate more content in your winning pillar</div><div class="sc-step-desc">Go to Content Strategy, select the winning pillar, and generate a new content plan. Your winning pillar is your beachhead — establish dominance there before expanding to others.</div></div></div>
+  </div>`;
+
+  document.getElementById('gsc-output').innerHTML = html;
+  document.getElementById('gsc-output').style.display = 'block';
+  document.getElementById('gsc-output').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 updStats(); updApi(); renderBQ();
