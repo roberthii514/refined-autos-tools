@@ -18,17 +18,13 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
-
-/* HEADER */
 .header{position:sticky;top:0;z-index:100;background:rgba(14,14,14,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);letter-spacing:0.03em;text-decoration:none}
 .logo em{color:var(--text);font-style:normal;font-weight:400}
 .api-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);transition:background 0.3s;flex-shrink:0}
 .api-dot.on{background:var(--green);box-shadow:0 0 6px #4caf6e44}
 .api-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2)}
-
-/* LAYOUT */
-.app{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 60px)}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 60px)}
 .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:1.25rem 0.75rem;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;display:flex;flex-direction:column;gap:2px}
 .nav-sep{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);padding:1rem 0.75rem 0.4rem;margin-top:4px}
 .nav-sep:first-child{padding-top:0}
@@ -40,28 +36,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .stat-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px}
 .stat-label{color:var(--text3)}
 .stat-val{color:var(--text);font-weight:500}
-
-/* MAIN */
-.main{padding:2rem;max-width:840px}
+.main{padding:2rem;max-width:860px}
 .panel{display:none}
 .panel.active{display:block}
 .pg-title{font-family:'Playfair Display',serif;font-size:25px;color:var(--text);margin-bottom:0.2rem}
 .pg-sub{font-size:13px;color:var(--text2);margin-bottom:2rem;line-height:1.6}
-
-/* CARDS */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem}
 .card-head{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
 .badge{width:22px;height:22px;background:var(--gold);color:#000;border-radius:50%;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .badge.done{background:var(--green);color:#fff}
-
-/* FORMS */
 label{font-size:12px;color:var(--text2);display:block;margin-bottom:5px}
 input[type=text],input[type=password],input[type=number],select,textarea{width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.15s;-webkit-appearance:none;margin-bottom:1rem}
 input:focus,select:focus,textarea:focus{border-color:var(--gold)}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23888' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 select option{background:var(--bg3)}
-
-/* BUTTONS */
+textarea{resize:vertical;min-height:80px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 20px;font-size:13.5px;font-weight:500;border-radius:var(--radius);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;border:none;text-decoration:none;white-space:nowrap}
 .bg{background:var(--gold);color:#000}.bg:hover{background:var(--gold-dark)}.bg:disabled{background:#333;color:#666;cursor:not-allowed}
 .bo{background:transparent;border:1px solid var(--border2);color:var(--text2)}.bo:hover{background:var(--bg3);color:var(--text)}
@@ -70,19 +59,16 @@ select option{background:var(--bg3)}
 .bsm{padding:6px 13px;font-size:12px}
 hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;gap:12px}
-
-/* KW IDEA CHIPS */
-.idea-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem}
-.idea-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:20px;font-size:12.5px;cursor:pointer;transition:all 0.15s;color:var(--text2)}
+/* IDEAS */
+.idea-grid{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1rem}
+.idea-chip{display:inline-flex;align-items:center;padding:5px 11px;background:var(--bg3);border:1px solid var(--border2);border-radius:20px;font-size:12px;cursor:pointer;transition:all 0.15s;color:var(--text2)}
 .idea-chip:hover{border-color:var(--gold);color:var(--text);background:rgba(201,168,76,0.06)}
 .idea-chip.picked{border-color:var(--gold);background:rgba(201,168,76,0.1);color:var(--gold-text);font-weight:500}
 .idea-cat{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);margin-bottom:6px;margin-top:1rem}
 .idea-cat:first-child{margin-top:0}
-
-/* KW VERIFY BOX */
+/* VERIFY */
 .verify-box{background:var(--bg3);border:1px solid rgba(201,168,76,0.25);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
 .verify-kw{font-size:19px;font-weight:500;color:var(--text);margin-bottom:0.5rem;word-break:break-word}
-.verify-hint{font-size:12px;color:var(--text2);margin-bottom:1rem;line-height:1.6}
 .threshold-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
 .threshold{background:var(--bg4);border-radius:8px;padding:10px 12px}
 .thr-label{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);margin-bottom:3px}
@@ -91,12 +77,11 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .kw-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:0.75rem}
 .kw-fields label{font-size:11px;color:var(--text3);margin-bottom:3px}
 .kw-fields input{margin-bottom:0;font-size:13px;padding:8px 10px}
-.verdict{font-size:13px;padding:10px 14px;border-radius:var(--radius);margin-bottom:0;line-height:1.55;display:none}
+.verdict{font-size:13px;padding:10px 14px;border-radius:var(--radius);line-height:1.55;display:none}
 .vgreen{background:rgba(76,175,110,0.1);border:1px solid rgba(76,175,110,0.2);color:var(--green);display:block}
 .vamber{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);color:var(--gold-text);display:block}
 .vred{background:rgba(224,85,85,0.08);border:1px solid rgba(224,85,85,0.2);color:var(--danger);display:block}
-
-/* TITLE OPTIONS */
+/* TITLES */
 .title-option{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:all 0.15s;display:flex;align-items:flex-start;gap:12px}
 .title-option:hover{border-color:var(--border2);background:var(--bg4)}
 .title-option.chosen{border-color:var(--gold);background:rgba(201,168,76,0.07)}
@@ -104,7 +89,6 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .title-option.chosen .title-num{background:var(--gold);border-color:var(--gold);color:#000;font-weight:600}
 .title-text{font-size:14px;font-weight:500;color:var(--text);line-height:1.45;margin-bottom:4px}
 .title-why{font-size:12px;color:var(--text2);line-height:1.5}
-
 /* OUTPUT */
 .output-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;font-size:14px;line-height:1.8;color:var(--text);white-space:pre-wrap;max-height:580px;overflow-y:auto;font-family:'DM Sans',sans-serif}
 .output-box::-webkit-scrollbar{width:4px}
@@ -112,7 +96,6 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
 .chip{font-size:12px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:20px}
 .out-actions{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap}
-
 /* SCORECARD */
 .sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .sc-score{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;flex-shrink:0}
@@ -122,71 +105,38 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .sc-checks{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .sc-check{display:flex;align-items:flex-start;gap:8px;font-size:12px;padding:8px 10px;border-radius:8px;background:var(--bg4)}
 .sc-check.pass{color:var(--green)}.sc-check.warn{color:var(--gold-text)}.sc-check.fail{color:var(--danger)}
-.sc-icon{flex-shrink:0;margin-top:1px;font-size:13px}
+.sc-icon{flex-shrink:0;margin-top:1px}
 .sc-name{font-weight:500;margin-bottom:2px}
 .sc-note{font-size:11px;opacity:0.85;line-height:1.4}
-
 /* SPINNER */
-.spinner-wrap{text-align:center;padding:2.5rem 1rem;display:none}
+.spin-wrap{text-align:center;padding:2.5rem 1rem;display:none}
 .spinner{width:34px;height:34px;border:3px solid rgba(201,168,76,0.15);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
 @keyframes spin{to{transform:rotate(360deg)}}
 .spin-label{font-size:14px;color:var(--text2)}
 .spin-sub{font-size:12px;color:var(--text3);margin-top:4px}
-
 /* NOTICES */
 .notice{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.18);border-radius:var(--radius);padding:11px 14px;font-size:13px;color:var(--gold-text);line-height:1.55;margin-bottom:1rem}
 .notice-info{background:rgba(99,179,237,0.07);border-color:rgba(99,179,237,0.18);color:var(--blue)}
 .notice-success{background:rgba(76,175,110,0.07);border-color:rgba(76,175,110,0.18);color:var(--green)}
-
-/* ROADMAP */
-.phase{border-left:2px solid var(--border2);padding-left:1.25rem;margin-bottom:1.75rem;position:relative}
-.phase::before{content:'';width:9px;height:9px;background:var(--gold);border-radius:50%;position:absolute;left:-5.5px;top:4px}
-.phase-t{font-size:14px;font-weight:500;color:var(--gold);margin-bottom:0.4rem}
-.phase-b{font-size:13px;color:var(--text2);line-height:1.85}
-.rpm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
-.rpm-c{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:13px}
-.rpm-n{font-size:13px;font-weight:500;margin-bottom:3px}
-.rpm-v{font-size:11px;color:var(--text2)}
-
-/* SEO GUIDE */
-.seo-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}
-.seo-row:last-child{border-bottom:none}
-.seo-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px}
-.si-g{background:rgba(76,175,110,0.15);color:var(--green)}
-.si-a{background:rgba(201,168,76,0.15);color:var(--gold)}
-.seo-name{font-weight:500;color:var(--text);margin-bottom:3px}
-.seo-desc{font-size:12px;color:var(--text2);line-height:1.55}
-
-/* HISTORY */
-.hist-row{display:flex;justify-content:space-between;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--border);gap:12px}
-.hist-row:last-child{border-bottom:none}
-.hist-title{font-size:13px;font-weight:500;color:var(--text)}
-.hist-meta{font-size:11px;color:var(--text3);margin-top:3px}
-
-/* SETUP */
-.setup-a{display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-size:13px;text-decoration:none;border:1px solid rgba(201,168,76,0.3);padding:8px 14px;border-radius:var(--radius);transition:all 0.15s}
-.setup-a:hover{background:rgba(201,168,76,0.07)}
-
+.notice-danger{background:rgba(224,85,85,0.07);border-color:rgba(224,85,85,0.18);color:var(--danger)}
 /* BATCH QUEUE */
-.bq-add-row{display:grid;grid-template-columns:1fr 80px 80px 80px auto;gap:8px;align-items:end;margin-bottom:1rem}
-.bq-add-row input{margin-bottom:0}
-.bq-add-row label{font-size:11px;color:var(--text3);margin-bottom:3px}
+.bq-import-area textarea{min-height:120px;font-size:13px;font-family:monospace}
 .queue-empty{font-size:13px;color:var(--text3);text-align:center;padding:2rem 0}
 .q-item{display:grid;grid-template-columns:1fr auto;align-items:start;gap:12px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;transition:border-color 0.2s}
-.q-item.qi-running{border-color:var(--gold);background:rgba(201,168,76,0.05)}
-.q-item.qi-done{border-color:rgba(76,175,110,0.35);background:rgba(76,175,110,0.04)}
-.q-item.qi-error{border-color:rgba(224,85,85,0.35);background:rgba(224,85,85,0.04)}
+.q-item.qi-running{border-color:var(--gold);background:rgba(201,168,76,0.04)}
+.q-item.qi-done{border-color:rgba(76,175,110,0.35);background:rgba(76,175,110,0.03)}
+.q-item.qi-error{border-color:rgba(224,85,85,0.35)}
 .q-item.qi-skipped{opacity:0.45}
 .q-kw{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
 .q-meta{font-size:11px;color:var(--text2);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .q-status{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;flex-shrink:0}
-.qs-wait{color:var(--text3)}.qs-run{color:var(--gold)}.qs-done{color:var(--green)}.qs-err{color:var(--danger)}.qs-skip{color:var(--text3)}
+.qs-wait{color:var(--text3)}.qs-run{color:var(--gold)}.qs-done{color:var(--green)}.qs-err{color:var(--danger)}
 .q-progress{background:var(--bg4);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem}
-.q-progress-label{font-size:13px;color:var(--text2);margin-bottom:8px}
+.q-prog-label{font-size:13px;color:var(--text2);margin-bottom:8px}
 .q-bar-wrap{height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
 .q-bar{height:100%;background:var(--gold);border-radius:2px;transition:width 0.5s;width:0%}
 .q-controls{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
-.q-settings{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.q-settings{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1rem}
 .q-settings select{margin-bottom:0}
 .q-warn{font-size:12px;color:var(--gold-text);background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.18);border-radius:var(--radius);padding:10px 14px;line-height:1.6;margin-bottom:1rem}
 .bq-title-pick{margin-top:8px;padding:10px 12px;background:var(--bg4);border-radius:8px}
@@ -197,24 +147,59 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 .bq-title-opt.chosen-t{color:var(--gold-text);font-weight:500}
 .bto-num{width:16px;height:16px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:2px}
 .bq-title-opt.chosen-t .bto-num{background:var(--gold);border-color:var(--gold);color:#000}
-@media(max-width:640px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:1.25rem}.threshold-grid,.kw-fields,.sc-checks,.rpm-grid,.bq-add-row,.q-settings{grid-template-columns:1fr}}
+/* TOPICAL AUTHORITY */
+.ta-cluster-head{font-size:14px;font-weight:500;color:var(--gold);margin-bottom:0.75rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border)}
+.ta-article-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.ta-article-row:last-child{border-bottom:none}
+.ta-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px}
+.ta-pillar{background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.3)}
+.ta-support{background:var(--bg4);color:var(--text2);border:1px solid var(--border)}
+.ta-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;line-height:1.4}
+.ta-meta{font-size:11px;color:var(--text2);line-height:1.5}
+.ta-kd-badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:500;margin-right:6px}
+.kd-easy{background:rgba(76,175,110,0.15);color:var(--green)}
+.kd-med{background:rgba(201,168,76,0.15);color:var(--gold)}
+.kd-hard{background:rgba(224,85,85,0.15);color:var(--danger)}
+/* ROADMAP */
+.phase{border-left:2px solid var(--border2);padding-left:1.25rem;margin-bottom:1.75rem;position:relative}
+.phase::before{content:'';width:9px;height:9px;background:var(--gold);border-radius:50%;position:absolute;left:-5.5px;top:4px}
+.phase-t{font-size:14px;font-weight:500;color:var(--gold);margin-bottom:0.4rem}
+.phase-b{font-size:13px;color:var(--text2);line-height:1.85}
+.rpm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+.rpm-c{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:13px}
+.rpm-n{font-size:13px;font-weight:500;margin-bottom:3px}
+.rpm-v{font-size:11px;color:var(--text2)}
+.seo-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}
+.seo-row:last-child{border-bottom:none}
+.seo-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px}
+.si-g{background:rgba(76,175,110,0.15);color:var(--green)}
+.si-a{background:rgba(201,168,76,0.15);color:var(--gold)}
+.seo-name{font-weight:500;color:var(--text);margin-bottom:3px}
+.seo-desc{font-size:12px;color:var(--text2);line-height:1.55}
+.hist-row{display:flex;justify-content:space-between;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--border);gap:12px}
+.hist-row:last-child{border-bottom:none}
+.hist-title{font-size:13px;font-weight:500;color:var(--text)}
+.hist-meta{font-size:11px;color:var(--text3);margin-top:3px}
+.setup-a{display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-size:13px;text-decoration:none;border:1px solid rgba(201,168,76,0.3);padding:8px 14px;border-radius:var(--radius);transition:all 0.15s}
+.setup-a:hover{background:rgba(201,168,76,0.07)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two-col select,.two-col input{margin-bottom:0}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.three-col input,.three-col select{margin-bottom:0}
+@media(max-width:700px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:1.25rem}.threshold-grid,.kw-fields,.sc-checks,.rpm-grid,.q-settings,.two-col,.three-col{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <header class="header">
   <a class="logo" href="#">refined<em>.autos</em></a>
-  <div class="api-row">
-    <div class="api-dot" id="api-dot"></div>
-    <span id="api-label">Not connected</span>
-  </div>
+  <div class="api-row"><div class="api-dot" id="api-dot"></div><span id="api-label">Not connected</span></div>
 </header>
-
 <div class="app">
   <nav class="sidebar">
     <div class="nav-sep">Workflow</div>
     <button class="nb active" onclick="go('generate')" id="nav-generate"><span class="nb-icon">✦</span> Write Article</button>
     <button class="nb" onclick="go('batch')" id="nav-batch"><span class="nb-icon">⚡</span> Batch Queue</button>
+    <button class="nb" onclick="go('topical')" id="nav-topical"><span class="nb-icon">◉</span> Topical Authority</button>
     <button class="nb" onclick="go('history')" id="nav-history"><span class="nb-icon">◷</span> History</button>
     <div class="nav-sep">Setup</div>
     <button class="nb" onclick="go('setup')" id="nav-setup"><span class="nb-icon">⚙</span> API Setup</button>
@@ -227,49 +212,83 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
       <div class="stat-row"><span class="stat-label">API spend</span><span class="stat-val" id="ss">$0.00</span></div>
     </div>
   </nav>
-
   <main class="main">
 
-    <!-- ═══ WRITE ARTICLE PANEL ═══ -->
+    <!-- ═══ WRITE ARTICLE ═══ -->
     <div class="panel active" id="panel-generate">
       <h1 class="pg-title">Write an article</h1>
-      <p class="pg-sub">Step 1: get keyword ideas → Step 2: check them in Mangools → Step 3: enter your verified keyword → Step 4: pick a title → Step 5: generate.</p>
+      <p class="pg-sub">Step 1: generate keyword ideas → Step 2: verify in Mangools → Step 3: pick a title → Step 4: generate.</p>
 
-      <!-- STEP 1: KEYWORD IDEAS -->
       <div class="card">
-        <div class="card-head"><div class="badge">1</div> Get keyword ideas</div>
-        <label>Content category</label>
-        <select id="cat-select">
-          <option value="cost">Running costs &amp; ownership</option>
-          <option value="compare">Car comparisons</option>
-          <option value="used">Used car buying</option>
-          <option value="problems">Reliability &amp; problems</option>
-          <option value="review">Car reviews</option>
-          <option value="general">General &amp; lifestyle</option>
-        </select>
-        <button class="btn bg bfull" id="ideas-btn" onclick="generateIdeas()">Generate keyword ideas</button>
-        <div class="spinner-wrap" id="ideas-spin">
-          <div class="spinner"></div>
-          <div class="spin-label">Thinking up keyword ideas...</div>
+        <div class="card-head"><div class="badge">1</div> Keyword ideas &amp; settings</div>
+        <div class="two-col" style="margin-bottom:1rem;">
+          <div>
+            <label>Content category</label>
+            <select id="cat-select">
+              <option value="cost">Running costs &amp; ownership</option>
+              <option value="compare">Car comparisons</option>
+              <option value="used">Used car buying</option>
+              <option value="problems">Reliability &amp; problems</option>
+              <option value="review">Car reviews</option>
+              <option value="ev">EV &amp; electric cars</option>
+              <option value="mods">Modifications &amp; tuning</option>
+              <option value="insurance">Insurance &amp; finance</option>
+              <option value="tires">Tires, wheels &amp; accessories</option>
+              <option value="general">General &amp; lifestyle</option>
+            </select>
+          </div>
+          <div>
+            <label>Target region</label>
+            <select id="region-select">
+              <option value="">Global (no region)</option>
+              <optgroup label="United States">
+                <option value="California">California</option>
+                <option value="Texas">Texas</option>
+                <option value="Florida">Florida</option>
+                <option value="New York">New York</option>
+                <option value="Illinois">Illinois</option>
+                <option value="Georgia">Georgia</option>
+                <option value="North Carolina">North Carolina</option>
+                <option value="Pennsylvania">Pennsylvania</option>
+                <option value="Ohio">Ohio</option>
+                <option value="Arizona">Arizona</option>
+                <option value="Washington">Washington State</option>
+                <option value="Colorado">Colorado</option>
+                <option value="Nevada">Nevada</option>
+                <option value="Michigan">Michigan</option>
+                <option value="USA">United States (general)</option>
+              </optgroup>
+              <optgroup label="Other countries">
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Australia">Australia</option>
+                <option value="Canada">Canada</option>
+                <option value="Malaysia">Malaysia</option>
+                <option value="Singapore">Singapore</option>
+                <option value="UAE">UAE / Dubai</option>
+                <option value="South Africa">South Africa</option>
+              </optgroup>
+            </select>
+          </div>
         </div>
+        <button class="btn bg bfull" id="ideas-btn" onclick="generateIdeas()">Generate keyword ideas</button>
+        <div class="spin-wrap" id="ideas-spin"><div class="spinner"></div><div class="spin-label">Generating keyword ideas...</div></div>
         <div id="ideas-output" style="display:none;margin-top:1.25rem;"></div>
       </div>
 
-      <!-- STEP 2: VERIFY IN MANGOOLS (shown after picking idea) -->
       <div class="card" id="step2-card" style="display:none;">
-        <div class="card-head"><div class="badge" id="b2">2</div> Check this keyword in Mangools</div>
+        <div class="card-head"><div class="badge">2</div> Verify keyword in Mangools</div>
         <div class="verify-box">
           <div class="verify-kw" id="v-kw"></div>
-          <div class="verify-hint">Copy this keyword into Mangools KWFinder. Check search volume, KD score, and the Domain Authority of the weakest site in the top 10 results. Then enter the numbers below.</div>
+          <div style="font-size:12px;color:var(--text2);margin-bottom:1rem;line-height:1.6;">Copy this into Mangools KWFinder. Enter the numbers you find below.</div>
           <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;">
             <a id="v-serp" href="#" target="_blank" class="btn bo bsm">Google SERP ↗</a>
             <a id="v-trends" href="#" target="_blank" class="btn bo bsm">Google Trends ↗</a>
-            <button class="btn bo bsm" onclick="copyVerifyKw()">Copy keyword</button>
+            <button class="btn bo bsm" onclick="copyVerifyKw(this)">Copy keyword</button>
           </div>
           <div class="threshold-grid">
-            <div class="threshold"><div class="thr-label">Search volume</div><div class="thr-val">≥ 100 / mo</div><div class="thr-note">Below 100 = too little traffic even if you rank #1</div></div>
-            <div class="threshold"><div class="thr-label">KD score</div><div class="thr-val">≤ 39</div><div class="thr-note">New sites cannot rank against KD 40+ competitors</div></div>
-            <div class="threshold"><div class="thr-label">Weakest DA in top 10</div><div class="thr-val">Some &lt; 30</div><div class="thr-note">At least 2–3 results should have DA under 30</div></div>
+            <div class="threshold"><div class="thr-label">Search volume</div><div class="thr-val">≥ 100/mo</div><div class="thr-note">Below 100 = not worth writing</div></div>
+            <div class="threshold"><div class="thr-label">KD score</div><div class="thr-val">≤ 39</div><div class="thr-note">New sites can't rank KD 40+</div></div>
+            <div class="threshold"><div class="thr-label">Weakest DA in top 10</div><div class="thr-val">Some &lt; 30</div><div class="thr-note">Means smaller sites can rank</div></div>
           </div>
           <div class="kw-fields">
             <div><label>Search volume / mo</label><input type="number" id="f-vol" placeholder="e.g. 320" oninput="judgeKw()"></div>
@@ -280,146 +299,174 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
         </div>
       </div>
 
-      <!-- STEP 3: CUSTOM KEYWORD ENTRY (alternative path) -->
       <div class="card" id="step3-card" style="display:none;">
-        <div class="card-head"><div class="badge" id="b3">3</div> Or type your own verified keyword</div>
+        <div class="card-head"><div class="badge">3</div> Or enter your own verified keyword</div>
         <label>Your keyword (already checked in Mangools)</label>
-        <input type="text" id="own-kw" placeholder="e.g. used bmw 3 series maintenance cost">
+        <input type="text" id="own-kw" placeholder="e.g. best used BMW California under 20000">
         <div class="kw-fields">
-          <div><label>Search volume / mo</label><input type="number" id="own-vol" placeholder="320"></div>
-          <div><label>KD score</label><input type="number" id="own-kd" placeholder="28"></div>
-          <div><label>Lowest DA in top 10</label><input type="number" id="own-da" placeholder="18"></div>
+          <div><label>Vol / mo</label><input type="number" id="own-vol" placeholder="320"></div>
+          <div><label>KD</label><input type="number" id="own-kd" placeholder="28"></div>
+          <div><label>Lowest DA</label><input type="number" id="own-da" placeholder="18"></div>
         </div>
         <button class="btn bg bfull" onclick="useOwnKeyword()">Use this keyword →</button>
       </div>
 
-      <!-- STEP 4: TITLE OPTIONS -->
       <div class="card" id="step4-card" style="display:none;">
-        <div class="card-head"><div class="badge" id="b4">4</div> Choose a title</div>
+        <div class="card-head"><div class="badge">4</div> Choose a title</div>
         <div class="notice notice-success" id="kw-confirmed-notice"></div>
-        <div class="spinner-wrap" id="titles-spin">
-          <div class="spinner"></div>
-          <div class="spin-label">Generating title options...</div>
-          <div class="spin-sub">Takes about 10 seconds</div>
-        </div>
+        <div class="spin-wrap" id="titles-spin"><div class="spinner"></div><div class="spin-label">Generating title options...</div><div class="spin-sub">~10 seconds</div></div>
         <div id="titles-output"></div>
       </div>
 
-      <!-- STEP 5: GENERATE -->
       <div class="card" id="step5-card" style="display:none;">
-        <div class="card-head"><div class="badge" id="b5">5</div> Generate article</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem;">
-          <div>
-            <label>Target reader</label>
-            <select id="audience-select" style="margin-bottom:0;">
-              <option value="buyer">Car buyer researching a purchase</option>
-              <option value="owner">Owner focused on running costs</option>
-              <option value="enthusiast">Car enthusiast</option>
-            </select>
-          </div>
-          <div>
-            <label>Article length</label>
-            <select id="length-select" style="margin-bottom:0;">
-              <option value="long">Long-form — 1,800–2,200 words (best)</option>
-              <option value="medium">Medium — 1,000–1,400 words</option>
-            </select>
-          </div>
+        <div class="card-head"><div class="badge">5</div> Generate article</div>
+        <div class="two-col" style="margin-bottom:1rem;">
+          <div><label>Target reader</label><select id="audience-select" style="margin-bottom:0;"><option value="buyer">Car buyer researching a purchase</option><option value="owner">Owner focused on running costs</option><option value="enthusiast">Car enthusiast</option></select></div>
+          <div><label>Article length</label><select id="length-select" style="margin-bottom:0;"><option value="long">Long-form — 1,800–2,200 words (best)</option><option value="medium">Medium — 1,000–1,400 words</option></select></div>
         </div>
         <button class="btn bg bfull" id="gen-btn" onclick="generateArticle()">Generate article</button>
       </div>
 
-      <!-- SPINNER -->
-      <div class="spinner-wrap" id="gen-spin">
-        <div class="spinner"></div>
-        <div class="spin-label">Writing your article...</div>
-        <div class="spin-sub">This takes about 20–30 seconds</div>
-      </div>
+      <div class="spin-wrap" id="gen-spin"><div class="spinner"></div><div class="spin-label">Writing your article...</div><div class="spin-sub">20–30 seconds</div></div>
 
-      <!-- OUTPUT -->
       <div id="output-wrap" style="display:none;">
         <div class="card">
-          <div class="row"><div class="card-head" style="margin:0;">Your article</div><button class="btn bo bsm" onclick="copyFull()">Copy all</button></div>
+          <div class="row"><div class="card-head" style="margin:0;">Your article</div><button class="btn bo bsm" onclick="copyFull()">Copy raw text</button></div>
           <div class="chips" id="art-chips"></div>
           <div class="notice" id="meta-box" style="display:none;"></div>
-          <div class="output-box" id="output-box"></div>
+
+          <!-- IMAGE FETCH ROW -->
+          <div id="img-fetch-row" style="margin-bottom:1rem;">
+            <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Found <span id="img-count">0</span> image placeholders in this article.</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn bgreen bsm" id="fetch-imgs-btn" onclick="fetchAllImages()">Fetch images from Unsplash</button>
+              <span id="fetch-img-status" style="font-size:12px;color:var(--text2);align-self:center;"></span>
+            </div>
+            <div id="img-preview-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:12px;"></div>
+          </div>
+
+          <!-- ACTION BUTTONS -->
           <div class="out-actions">
-            <button class="btn bo bsm" onclick="copyFull()">Copy article</button>
+            <button class="btn bg bsm" onclick="openPreview()">Preview article</button>
+            <button class="btn bg bsm" id="wp-publish-btn" onclick="publishToWP()">Publish to WordPress</button>
+            <button class="btn bo bsm" onclick="downloadDoc()">Download .doc</button>
+            <button class="btn bo bsm" onclick="copyFull()">Copy text</button>
             <button class="btn bo bsm" onclick="copyMeta()">Copy meta</button>
             <button class="btn bo bsm" onclick="resetFlow()">Start over</button>
           </div>
         </div>
-        <div class="card">
-          <div class="card-head">SEO &amp; Mediavine scorecard</div>
-          <div id="scorecard"></div>
-        </div>
+        <div class="card"><div class="card-head">SEO &amp; Mediavine scorecard</div><div id="scorecard"></div></div>
       </div>
 
-    </div><!-- /generate -->
+      <!-- PREVIEW MODAL -->
+      <div id="preview-modal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.85);overflow-y:auto;padding:2rem 1rem;">
+        <div style="max-width:780px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;">
+          <div style="background:#1a1a1a;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:'Playfair Display',serif;color:#c9a84c;font-size:16px;">Article preview</span>
+            <button onclick="closePreview()" style="background:transparent;border:1px solid #444;color:#aaa;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;">Close</button>
+          </div>
+          <div id="preview-content" style="padding:2.5rem;font-family:Georgia,serif;font-size:18px;line-height:1.75;color:#1a1a1a;"></div>
+        </div>
+      </div>
+    </div>
 
     <!-- ═══ BATCH QUEUE ═══ -->
     <div class="panel" id="panel-batch">
       <h1 class="pg-title">Batch queue</h1>
-      <p class="pg-sub">Add keywords you've already verified in Mangools. The tool will generate titles for each, you pick one per keyword, then hit Run All to generate all articles automatically — one by one.</p>
+      <p class="pg-sub">Paste all your verified keywords at once, set options, then run everything automatically while your PC stays on.</p>
 
-      <!-- ADD KEYWORD -->
       <div class="card">
-        <div class="card-head">Add a verified keyword to the queue</div>
-        <div class="bq-add-row">
-          <div><label>Keyword (verified in Mangools)</label><input type="text" id="bq-kw" placeholder="e.g. used bmw 3 series ownership cost" onkeydown="if(event.key==='Enter')bqAdd()"></div>
-          <div><label>Vol / mo</label><input type="number" id="bq-vol" placeholder="320" min="0"></div>
-          <div><label>KD score</label><input type="number" id="bq-kd" placeholder="28" min="0" max="100"></div>
-          <div><label>Lowest DA</label><input type="number" id="bq-da" placeholder="18" min="0" max="100"></div>
-          <div style="padding-bottom:0;"><button class="btn bg" onclick="bqAdd()" style="height:42px;margin-top:17px;">Add</button></div>
-        </div>
-        <p style="font-size:12px;color:var(--text3);">Add as many keywords as you want. Generate titles for each, pick your preferred one, then run the whole batch.</p>
+        <div class="card-head">Bulk import keywords</div>
+        <label>Paste keywords — one per line (from Mangools or anywhere)</label>
+        <textarea id="bq-paste" placeholder="used bmw 3 series california&#10;best electric car under 40000&#10;porsche cayenne maintenance cost&#10;honda civic type r review&#10;...paste as many as you want"></textarea>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">Keywords will be imported with blank KD/Vol data — you can fill those in per keyword after importing, or run without them (the tool will skip the verdict check and generate anyway).</p>
+        <button class="btn bg" onclick="bqImportPaste()">Import keywords</button>
+        <span id="bq-import-msg" style="font-size:13px;margin-left:12px;color:var(--green);"></span>
       </div>
 
-      <!-- QUEUE LIST -->
+      <div class="card">
+        <div class="card-head">Or add a single keyword manually</div>
+        <div style="display:grid;grid-template-columns:1fr 70px 70px 70px auto;gap:8px;align-items:end;">
+          <div><label>Keyword</label><input type="text" id="bq-kw" placeholder="e.g. used bmw 3 series california" onkeydown="if(event.key==='Enter')bqAdd()" style="margin-bottom:0;"></div>
+          <div><label>Vol</label><input type="number" id="bq-vol" placeholder="320" style="margin-bottom:0;"></div>
+          <div><label>KD</label><input type="number" id="bq-kd" placeholder="28" style="margin-bottom:0;"></div>
+          <div><label>DA</label><input type="number" id="bq-da" placeholder="18" style="margin-bottom:0;"></div>
+          <div><button class="btn bg" onclick="bqAdd()" style="height:42px;margin-top:17px;">Add</button></div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="row">
           <div class="card-head" style="margin:0;">Queue <span id="bq-count-label" style="color:var(--text3);font-weight:400;font-size:12px;margin-left:6px;">0 keywords</span></div>
-          <button class="btn bo bsm" onclick="bqClear()">Clear queue</button>
+          <button class="btn bo bsm" onclick="bqClear()">Clear all</button>
         </div>
-
-        <!-- PROGRESS BAR (shown while running) -->
-        <div class="q-progress" id="bq-progress">
-          <div class="q-progress-label" id="bq-progress-label">Preparing...</div>
+        <div class="q-progress" id="bq-progress" style="display:none;">
+          <div class="q-prog-label" id="bq-progress-label">Preparing...</div>
           <div class="q-bar-wrap"><div class="q-bar" id="bq-bar"></div></div>
         </div>
-
-        <!-- SETTINGS ROW -->
         <div class="q-settings">
-          <div>
-            <label>Target reader</label>
-            <select id="bq-audience">
-              <option value="buyer">Car buyer researching a purchase</option>
-              <option value="owner">Owner focused on running costs</option>
-              <option value="enthusiast">Car enthusiast</option>
-            </select>
-          </div>
-          <div>
-            <label>Article length</label>
-            <select id="bq-length">
-              <option value="long">Long-form — 1,800–2,200 words (best)</option>
-              <option value="medium">Medium — 1,000–1,400 words</option>
-            </select>
-          </div>
+          <div><label>Target region</label><select id="bq-region"><option value="">Global</option><optgroup label="United States"><option value="California">California</option><option value="Texas">Texas</option><option value="Florida">Florida</option><option value="New York">New York</option><option value="Illinois">Illinois</option><option value="Georgia">Georgia</option><option value="Arizona">Arizona</option><option value="Michigan">Michigan</option><option value="USA">United States (general)</option></optgroup><optgroup label="Other"><option value="United Kingdom">United Kingdom</option><option value="Australia">Australia</option><option value="Canada">Canada</option><option value="Malaysia">Malaysia</option><option value="Singapore">Singapore</option><option value="UAE">UAE / Dubai</option></optgroup></select></div>
+          <div><label>Target reader</label><select id="bq-audience"><option value="buyer">Car buyer researching</option><option value="owner">Owner focused on costs</option><option value="enthusiast">Car enthusiast</option></select></div>
+          <div><label>Article length</label><select id="bq-length"><option value="long">Long-form 1,800–2,200w</option><option value="medium">Medium 1,000–1,400w</option></select></div>
         </div>
-
-        <div class="q-warn">
-          Keep this browser tab open and active while the queue runs. On your dedicated PC: open Chrome settings and turn off <strong>Memory Saver</strong> to prevent tabs from sleeping mid-run. Each article takes ~25–35 seconds.
-        </div>
-
-        <!-- CONTROLS -->
+        <div class="q-warn">Keep this tab open and active. On your dedicated PC: Chrome Settings → Performance → turn off <strong>Memory Saver</strong>. Each article takes ~25–35 seconds.</div>
         <div class="q-controls">
           <button class="btn bg" id="bq-run-btn" onclick="bqRunAll()">Run all</button>
           <button class="btn bo bsm" id="bq-pause-btn" onclick="bqPause()" style="display:none;">Pause after current</button>
           <button class="btn bo bsm" onclick="bqGenAllTitles()">Generate titles for all</button>
         </div>
-
-        <!-- QUEUE ITEMS -->
-        <div id="bq-list"><div class="queue-empty">No keywords in the queue yet. Add some above.</div></div>
+        <div id="bq-list"><div class="queue-empty">No keywords yet — import or add some above.</div></div>
       </div>
+    </div>
+
+    <!-- ═══ TOPICAL AUTHORITY ═══ -->
+    <div class="panel" id="panel-topical">
+      <h1 class="pg-title">Topical authority planner</h1>
+      <p class="pg-sub">Enter a main topic and your site details. The tool maps out every article you need to write to dominate that topic cluster — pillar article first, then supporting articles in priority order.</p>
+
+      <div class="card">
+        <div class="card-head">Topic &amp; site details</div>
+        <label>Main topic / seed keyword</label>
+        <input type="text" id="ta-topic" placeholder="e.g. BMW 3 Series, used Porsche Cayenne, electric cars California">
+        <div class="two-col">
+          <div>
+            <label>Your current site DA (0 if brand new)</label>
+            <input type="number" id="ta-da" placeholder="0" min="0" max="100">
+          </div>
+          <div>
+            <label>Target region (optional)</label>
+            <select id="ta-region">
+              <option value="">Global</option>
+              <optgroup label="United States"><option value="California">California</option><option value="Texas">Texas</option><option value="Florida">Florida</option><option value="New York">New York</option><option value="USA">United States (general)</option></optgroup>
+              <optgroup label="Other"><option value="United Kingdom">United Kingdom</option><option value="Australia">Australia</option><option value="Canada">Canada</option><option value="Malaysia">Malaysia</option><option value="Singapore">Singapore</option><option value="UAE">UAE</option></optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="two-col">
+          <div>
+            <label>KD range you're seeing for this topic in Mangools</label>
+            <select id="ta-kd-range">
+              <option value="easy">Mostly KD 0–25 (easy)</option>
+              <option value="medium" selected>Mostly KD 26–39 (medium)</option>
+              <option value="mixed">Mixed — some easy, some harder</option>
+              <option value="hard">Mostly KD 40–55 (hard)</option>
+            </select>
+          </div>
+          <div>
+            <label>How many articles can you publish per week?</label>
+            <select id="ta-pace">
+              <option value="2">1–2 per week</option>
+              <option value="4" selected>3–4 per week</option>
+              <option value="6">5–6 per week</option>
+            </select>
+          </div>
+        </div>
+        <div class="notice notice-info" style="margin-bottom:1rem;">Don't know your site DA? Check it free at <a href="https://moz.com/domain-analysis" target="_blank" style="color:var(--blue);">moz.com/domain-analysis</a> or <a href="https://ahrefs.com/website-authority-checker" target="_blank" style="color:var(--blue);">ahrefs.com/website-authority-checker</a>. Brand new site = DA 0.</div>
+        <button class="btn bg bfull" id="ta-btn" onclick="generateTopicalPlan()">Generate topical authority plan</button>
+        <div class="spin-wrap" id="ta-spin"><div class="spinner"></div><div class="spin-label">Building your content cluster...</div><div class="spin-sub">~20 seconds</div></div>
+      </div>
+
+      <div id="ta-output" style="display:none;"></div>
     </div>
 
     <!-- ═══ HISTORY ═══ -->
@@ -435,30 +482,45 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
     <!-- ═══ SETUP ═══ -->
     <div class="panel" id="panel-setup">
       <h1 class="pg-title">API setup</h1>
-      <p class="pg-sub">Connect your Anthropic API key to start generating. Takes about 5 minutes.</p>
+      <p class="pg-sub">Connect your Anthropic API key. Takes about 5 minutes.</p>
+      <div class="card"><div class="card-head"><div class="badge">1</div> Create an Anthropic account</div><p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Go to <strong style="color:var(--text);">console.anthropic.com</strong> and sign up free. You only pay per article — typically $0.05–0.10 each.</p><a href="https://console.anthropic.com" target="_blank" class="setup-a">Open Anthropic Console ↗</a></div>
+      <div class="card"><div class="card-head"><div class="badge">2</div> Set a monthly spend limit first</div><div class="notice">Before generating any key: go to <strong>Settings → Limits</strong> and set your monthly spend cap to <strong>$5</strong>. No surprise charges. Raise any time.</div><p style="font-size:13px;color:var(--text2);">At ~$0.08/article, $5 covers ~60 articles/month.</p></div>
+      <div class="card"><div class="card-head"><div class="badge">3</div> Create your API key</div><p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px;">In the Console: <strong style="color:var(--text);">API Keys → Create Key</strong>. Name it <em>refined-autos</em>. Key starts with <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--gold);">sk-ant-</code></p><div class="notice">Shown <strong>only once</strong> — copy it before closing the window.</div></div>
+      <div class="card"><div class="card-head"><div class="badge">4</div> Paste your API key here</div><label>API key</label><input type="password" id="api-key-in" placeholder="sk-ant-api03-..."><p style="font-size:12px;color:var(--text3);margin-bottom:14px;">Stored in your browser only. Never sent anywhere except Anthropic's servers.</p><div style="display:flex;align-items:center;gap:12px;"><button class="btn bg" onclick="saveKey()">Save &amp; verify</button><span id="key-msg" style="font-size:13px;"></span></div></div>
+
+      <hr style="border-color:rgba(255,255,255,0.06);margin:1.5rem 0;">
+
       <div class="card">
-        <div class="card-head"><div class="badge">1</div> Create an Anthropic account</div>
-        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:14px;">Go to <strong style="color:var(--text);">console.anthropic.com</strong> and sign up free. You only pay per article — typically $0.05–0.10 each.</p>
-        <a href="https://console.anthropic.com" target="_blank" class="setup-a">Open Anthropic Console ↗</a>
-      </div>
-      <div class="card">
-        <div class="card-head"><div class="badge">2</div> Set a monthly spend limit first</div>
-        <div class="notice">Before generating any key: go to <strong>Settings → Limits</strong> and set your monthly spend cap to <strong>$5</strong>. This prevents any surprise charges. Raise it any time once you're comfortable.</div>
-        <p style="font-size:13px;color:var(--text2);">At ~$0.08/article, $5 covers roughly 60 articles/month.</p>
-      </div>
-      <div class="card">
-        <div class="card-head"><div class="badge">3</div> Create your API key</div>
-        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px;">In the Console: <strong style="color:var(--text);">API Keys → Create Key</strong>. Name it <em>refined-autos</em>. Key starts with <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--gold);">sk-ant-</code></p>
-        <div class="notice">The key is shown <strong>only once</strong>. Copy it before closing the window.</div>
-      </div>
-      <div class="card">
-        <div class="card-head"><div class="badge">4</div> Paste your API key here</div>
-        <label>API key</label>
-        <input type="password" id="api-key-in" placeholder="sk-ant-api03-...">
-        <p style="font-size:12px;color:var(--text3);margin-bottom:14px;">Stored in your browser only. Never sent anywhere except Anthropic's servers.</p>
+        <div class="card-head"><div class="badge" style="background:var(--blue);color:#000;">U</div> Unsplash API key (for images)</div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px;">Get a free key at <a href="https://unsplash.com/developers" target="_blank" style="color:var(--gold);">unsplash.com/developers</a> → Register as developer → Create app → copy the <strong style="color:var(--text);">Access Key</strong>. Free up to 50 requests/hour.</p>
+        <label>Unsplash Access Key</label>
+        <input type="password" id="unsplash-key-in" placeholder="paste your Unsplash access key here">
         <div style="display:flex;align-items:center;gap:12px;">
-          <button class="btn bg" onclick="saveKey()">Save &amp; verify</button>
-          <span id="key-msg" style="font-size:13px;"></span>
+          <button class="btn bg" onclick="saveUnsplashKey()">Save key</button>
+          <span id="unsplash-msg" style="font-size:13px;"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="badge" style="background:#21759b;color:#fff;">W</div> WordPress connection</div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:1rem;">Connect your self-hosted WordPress site to publish articles directly as drafts with images embedded.</p>
+        <div class="notice notice-info" style="margin-bottom:1rem;">
+          <strong>How to get your WordPress Application Password:</strong><br>
+          1. Log into your WordPress admin dashboard<br>
+          2. Go to <strong>Users → Profile</strong><br>
+          3. Scroll down to <strong>"Application Passwords"</strong><br>
+          4. Type a name (e.g. "refined-autos-tool") → click <strong>Add New Application Password</strong><br>
+          5. Copy the password shown — it looks like: <code style="background:rgba(0,0,0,0.2);padding:1px 5px;border-radius:3px;">xxxx xxxx xxxx xxxx xxxx xxxx</code>
+        </div>
+        <label>WordPress site URL</label>
+        <input type="text" id="wp-url-in" placeholder="https://refined.autos">
+        <label>WordPress username</label>
+        <input type="text" id="wp-user-in" placeholder="your WordPress login username">
+        <label>Application Password</label>
+        <input type="password" id="wp-pass-in" placeholder="xxxx xxxx xxxx xxxx xxxx xxxx">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="btn bg" onclick="saveWPCreds()">Save &amp; test connection</button>
+          <span id="wp-msg" style="font-size:13px;"></span>
         </div>
       </div>
     </div>
@@ -468,10 +530,10 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
       <h1 class="pg-title">$1,000/month roadmap</h1>
       <p class="pg-sub">Your realistic path from 0 articles to $1k/month in ad revenue.</p>
       <div class="card">
-        <div class="notice notice-info" style="margin-bottom:1.5rem;"><strong>Target:</strong> Journey by Mediavine (1,000 sessions/30 days). Expected RPM: $15–25. To hit $1k/month consistently you need ~50,000–70,000 monthly pageviews.</div>
-        <div class="phase"><div class="phase-t">Phase 1 — Months 1–2: Build the foundation</div><div class="phase-b">• Publish 3–4 articles/week using only verified keywords (KD ≤39, vol ≥100)<br>• Focus on "true cost of ownership" and "used car guides" — highest commercial intent<br>• Aim for 25–30 published articles before month 2 ends<br>• Apply for Google AdSense at 20+ articles for early revenue<br>• Submit sitemap to Google Search Console immediately</div></div>
-        <div class="phase"><div class="phase-t">Phase 2 — Months 3–4: Chase 1,000 sessions</div><div class="phase-b">• Scale to 5–6 articles/week<br>• Add 3–5 internal links per article pointing to older posts<br>• Write 3 "pillar" articles (2,500+ words) on broad topics<br>• Apply for Journey by Mediavine at 800+ sessions in 30 days</div></div>
-        <div class="phase"><div class="phase-t">Phase 3 — Months 5–8: Scale to $1k/month</div><div class="phase-b">• Graduate to Mediavine full (50k sessions) or Raptive (100k pageviews)<br>• Update and expand your top 10 performing articles<br>• At $20 RPM × 50,000 sessions = <strong style="color:var(--gold);">$1,000/month achieved</strong></div></div>
+        <div class="notice notice-info" style="margin-bottom:1.5rem;"><strong>Target:</strong> Journey by Mediavine (1,000 sessions/30 days). Expected RPM: $15–25. To hit $1k/month you need ~50,000–70,000 monthly pageviews.</div>
+        <div class="phase"><div class="phase-t">Phase 1 — Months 1–2: Build the foundation</div><div class="phase-b">• 3–4 articles/week using only verified keywords (KD ≤39, vol ≥100)<br>• Focus on "true cost of ownership" and "used car guides" — highest commercial intent<br>• Aim for 25–30 articles before month 2 ends<br>• Apply for Google AdSense at 20+ articles<br>• Submit sitemap to Google Search Console immediately</div></div>
+        <div class="phase"><div class="phase-t">Phase 2 — Months 3–4: Chase 1,000 sessions</div><div class="phase-b">• Scale to 5–6 articles/week<br>• Add 3–5 internal links per article<br>• Write 3 pillar articles (2,500+ words)<br>• Apply for Journey by Mediavine at 800+ sessions</div></div>
+        <div class="phase"><div class="phase-t">Phase 3 — Months 5–8: Scale to $1k/month</div><div class="phase-b">• Graduate to Mediavine full (50k sessions) or Raptive (100k pageviews)<br>• Expand your top 10 performing articles<br>• At $20 RPM × 50,000 sessions = <strong style="color:var(--gold);">$1,000/month achieved</strong></div></div>
         <hr>
         <div style="font-size:14px;font-weight:500;margin-bottom:0.75rem;">Highest-RPM content for refined.autos</div>
         <div class="rpm-grid">
@@ -485,29 +547,23 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 
     <!-- ═══ SEO GUIDE ═══ -->
     <div class="panel" id="panel-seoguide">
-      <h1 class="pg-title">SEO guide for refined.autos</h1>
-      <p class="pg-sub">The exact steps to follow before and after publishing every article.</p>
+      <h1 class="pg-title">SEO guide</h1>
+      <p class="pg-sub">What to check in Mangools and what to do before publishing every article.</p>
       <div class="card">
-        <div class="card-head">Keyword qualification — what to check in Mangools</div>
-        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Search volume ≥ 100/month</div><div class="seo-desc">Below 100 means almost nobody searches for it. Even ranking #1 gets you 5–20 visits/month — not worth the effort. If a keyword has 50 searches, find a broader version of it.</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">KD (Keyword Difficulty) ≤ 39</div><div class="seo-desc">KD 0–25 is ideal for a new site. KD 26–39 is acceptable. KD 40+ means established high-DA sites dominate — you cannot outrank them yet. When a keyword is too hard, search for a longer-tail version with a more specific modifier ("for sale under $20k", "2019 model", "vs [competitor]").</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">At least 2–3 results in top 10 with DA under 30</div><div class="seo-desc">This is the most important signal. If the entire top 10 is Car and Driver (DA 80+), Edmunds (DA 75+), and Motor Trend (DA 72+), you cannot break in. But if you see a random blog or forum at DA 18 ranking on page 1, that tells you Google is willing to rank smaller sites for this keyword.</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-a">!</div><div><div class="seo-name">Check the search intent by Googling the keyword yourself</div><div class="seo-desc">Are the top results articles or videos? If top results are all YouTube videos, Google prefers video for that keyword — skip it. You want keywords where the top 10 are blog articles and guides, which is where your content will compete.</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-a">!</div><div><div class="seo-name">Use long-tail variations to find lower KD opportunities</div><div class="seo-desc">If "BMW M3 review" has KD 60, try "BMW M3 review worth buying", "BMW M3 F80 review", or "BMW M3 daily driver review" in Mangools. Long-tail variations often have KD 10–25 with meaningful volume. These are your best early opportunities as a new site.</div></div></div>
+        <div class="card-head">Keyword qualification in Mangools</div>
+        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Search volume ≥ 100/month</div><div class="seo-desc">Below 100 means almost nobody searches for it. Even ranking #1 gets you 5–20 visits/month. Not worth writing. Find a broader version.</div></div></div>
+        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">KD ≤ 39</div><div class="seo-desc">KD 0–25 is ideal. KD 26–39 is acceptable. KD 40+ means huge sites dominate — you cannot outrank them yet. Add a modifier: "used", "under $X", a specific year, or a location to find a lower-KD variation.</div></div></div>
+        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">At least 2–3 results in top 10 with DA under 30</div><div class="seo-desc">If the entire top 10 is Car and Driver (DA 80), Edmunds (DA 75), Motor Trend (DA 72) — skip it. But if you see a small blog at DA 18 on page 1, Google is willing to rank smaller sites here.</div></div></div>
+        <div class="seo-row"><div class="seo-icon si-a">!</div><div><div class="seo-name">Google the keyword yourself — check the intent</div><div class="seo-desc">Are top results articles or videos? If all top 10 are YouTube videos, Google prefers video for that keyword. You want keywords where top results are blog articles and guides.</div></div></div>
+        <div class="seo-row"><div class="seo-icon si-a">!</div><div><div class="seo-name">Regional keywords are easier to rank</div><div class="seo-desc">"Best used BMW" competes globally. "Best used BMW California" competes only locally — much lower KD, same buyer intent, easier to rank. Use the region selector to append location to your keywords and article content automatically.</div></div></div>
       </div>
       <div class="card">
         <div class="card-head">Before publishing — WordPress checklist</div>
-        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Install Rank Math (free WordPress plugin)</div><div class="seo-desc">Handles meta descriptions, XML sitemap, and on-page SEO scoring. Aim for a Rank Math score of 70+ before publishing. Install once, use forever.</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Set font size to 18–20px and line height to 1.6</div><div class="seo-desc">Direct Journey by Mediavine recommendation. Larger text creates more vertical page height, which means more ad placement opportunities and higher RPM. Add to your WordPress theme CSS: body { font-size: 18px; line-height: 1.6; }</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Replace all [IMAGE:] placeholders with real images</div><div class="seo-desc">Use free licensed images from Unsplash.com or Pexels.com. Set the alt text to your primary keyword followed by a short description. Images keep readers engaged longer — which directly increases RPM.</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Add 3–5 internal links to other articles on your site</div><div class="seo-desc">Link from every new article to 3–5 older articles, and update older articles to link to new ones. This passes authority between pages and helps Google understand your site structure. It's free and highly effective.</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Submit sitemap to Google Search Console</div><div class="seo-desc">Go to search.google.com/search-console, add your site, submit sitemap.xml. Do this the day you publish your first article. Without it, Google may take weeks to find your content.</div></div></div>
-        <div class="seo-row"><div class="seo-icon si-a">!</div><div><div class="seo-name">Content container width: 728px–1024px maximum</div><div class="seo-desc">Per Mediavine guidelines. Too-wide content is harder to read and reduces ad performance. Check your WordPress theme settings and cap the content area at 1024px.</div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-head">Applying for Journey by Mediavine</div>
-        <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:12px;">Apply at <a href="https://journeybymediavine.com" target="_blank" style="color:var(--gold);">journeybymediavine.com</a> once you hit <strong style="color:var(--text);">1,000 sessions in any 30-day period</strong>.</p>
-        <div style="font-size:13px;color:var(--text2);line-height:1.9;">• Remove any other ad network (AdSense etc.) before applying<br>• Have a Privacy Policy page on your site<br>• All content must be original — no duplicates or thin articles<br>• Check your 30-day sessions in Google Analytics or Search Console</div>
+        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Install Rank Math (free)</div><div class="seo-desc">Handles meta descriptions, XML sitemap, on-page SEO scoring. Aim for Rank Math score 70+ before publishing.</div></div></div>
+        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Set font size 18–20px, line height 1.6</div><div class="seo-desc">Direct Mediavine recommendation. Larger text = more vertical height = more ad placements = higher RPM. Add to your theme CSS: body { font-size: 18px; line-height: 1.6; }</div></div></div>
+        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Replace all [IMAGE:] placeholders with real photos</div><div class="seo-desc">Use Unsplash.com or Pexels.com (free, licensed). Set alt text = primary keyword + description.</div></div></div>
+        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Add 3–5 internal links to other articles</div><div class="seo-desc">Link every new article to 3–5 older ones. Update older articles to link back. This is free and one of the most effective SEO tactics available to a new site.</div></div></div>
+        <div class="seo-row"><div class="seo-icon si-g">✓</div><div><div class="seo-name">Submit sitemap to Google Search Console</div><div class="seo-desc">Do this the day you publish your first article. Go to search.google.com/search-console and submit your sitemap.xml URL.</div></div></div>
       </div>
     </div>
 
@@ -515,504 +571,423 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
 </div>
 
 <script>
-let S={
-  apiKey:localStorage.getItem('ra_key')||'',
-  count:parseInt(localStorage.getItem('ra_count')||'0'),
-  words:parseInt(localStorage.getItem('ra_words')||'0'),
-  cost:parseFloat(localStorage.getItem('ra_cost')||'0'),
-  history:JSON.parse(localStorage.getItem('ra_history')||'[]'),
-  article:'',meta:'',
-  pickedKw:null,pickedTitle:null,confirmedData:null,
+const CY = new Date().getFullYear(); // Always current year — auto-injected everywhere
+
+let S = {
+  apiKey: localStorage.getItem('ra_key') || '',
+  count: parseInt(localStorage.getItem('ra_count') || '0'),
+  words: parseInt(localStorage.getItem('ra_words') || '0'),
+  cost: parseFloat(localStorage.getItem('ra_cost') || '0'),
+  history: JSON.parse(localStorage.getItem('ra_history') || '[]'),
+  article: '', meta: '',
+  pickedKw: null, pickedTitle: null, confirmedData: null,
 };
+let BQ = JSON.parse(localStorage.getItem('ra_bq') || '[]');
+let bqRunning = false, bqPauseFlag = false;
 
-function persist(){
-  localStorage.setItem('ra_key',S.apiKey);
-  localStorage.setItem('ra_count',S.count);
-  localStorage.setItem('ra_words',S.words);
-  localStorage.setItem('ra_cost',S.cost.toFixed(4));
-  localStorage.setItem('ra_history',JSON.stringify(S.history));
+function persist() {
+  localStorage.setItem('ra_key', S.apiKey);
+  localStorage.setItem('ra_count', S.count);
+  localStorage.setItem('ra_words', S.words);
+  localStorage.setItem('ra_cost', S.cost.toFixed(4));
+  localStorage.setItem('ra_history', JSON.stringify(S.history));
 }
-
-function updStats(){
-  document.getElementById('sc').textContent=S.count;
-  document.getElementById('sw').textContent=S.words>=1000?(S.words/1000).toFixed(1)+'k':S.words;
-  document.getElementById('ss').textContent='$'+S.cost.toFixed(2);
+function bqSave() { localStorage.setItem('ra_bq', JSON.stringify(BQ)); }
+function updStats() {
+  document.getElementById('sc').textContent = S.count;
+  document.getElementById('sw').textContent = S.words >= 1000 ? (S.words / 1000).toFixed(1) + 'k' : S.words;
+  document.getElementById('ss').textContent = '$' + S.cost.toFixed(2);
 }
-
-function updApi(){
-  const d=document.getElementById('api-dot'),l=document.getElementById('api-label');
-  if(S.apiKey){d.className='api-dot on';l.textContent='API connected';}
-  else{d.className='api-dot';l.textContent='Not connected';}
+function updApi() {
+  const d = document.getElementById('api-dot'), l = document.getElementById('api-label');
+  if (S.apiKey) { d.className = 'api-dot on'; l.textContent = 'API connected'; }
+  else { d.className = 'api-dot'; l.textContent = 'Not connected'; }
 }
-
-function go(name){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
-  document.getElementById('nav-'+name).classList.add('active');
-  if(name==='history')renderHist();
+function go(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  if (name === 'history') renderHist();
+  if (name === 'batch') renderBQ();
 }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-async function callClaude(prompt,maxTokens){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':S.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
+async function callClaude(prompt, maxTokens) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': S.apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
   });
-  if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API error '+res.status);}
-  const d=await res.json();
+  if (!res.ok) { const e = await res.json(); throw new Error(e.error?.message || 'API error ' + res.status); }
+  const d = await res.json();
   return d.content[0].text;
 }
 
-/* ── STEP 1: KEYWORD IDEAS ── */
-async function generateIdeas(){
-  if(!S.apiKey){alert('Please save your API key in API Setup first.');go('setup');return;}
-  const cat=document.getElementById('cat-select').value;
-  const catLabels={cost:'running costs and true cost of ownership',compare:'car comparisons and head-to-head articles',used:'used car buying guides and best used car lists',problems:'car reliability, common problems, and ownership issues',review:'car reviews and driving impressions',general:'general automotive lifestyle, tips, and buying advice'};
+/* ═══ STEP 1: KEYWORD IDEAS ═══ */
+async function generateIdeas() {
+  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  const cat = document.getElementById('cat-select').value;
+  const region = document.getElementById('region-select').value;
+  const regionNote = region ? ` targeting readers in ${region}` : '';
+  const catLabels = {
+    cost: 'running costs, true cost of ownership, maintenance expenses',
+    compare: 'car vs car comparisons, head-to-head battles',
+    used: 'used car buying guides, best used cars, used car advice',
+    problems: 'car reliability, common problems, fault guides, buyer warnings',
+    review: 'car reviews, first drives, ownership impressions',
+    ev: 'electric vehicles, EV buying, EV ownership, EV charging, EV running costs',
+    mods: 'car modifications, tuning, performance upgrades, aftermarket parts',
+    insurance: 'car insurance, car finance, car loans, depreciation, car costs',
+    tires: 'tires, wheels, tyres, brakes, suspension, car accessories',
+    general: 'general automotive advice, car buying tips, car lifestyle',
+  };
 
-  document.getElementById('ideas-btn').disabled=true;
-  document.getElementById('ideas-spin').style.display='block';
-  document.getElementById('ideas-output').style.display='none';
-  document.getElementById('step2-card').style.display='none';
-  document.getElementById('step3-card').style.display='none';
-  document.getElementById('step4-card').style.display='none';
-  document.getElementById('step5-card').style.display='none';
-  document.getElementById('output-wrap').style.display='none';
+  document.getElementById('ideas-btn').disabled = true;
+  document.getElementById('ideas-spin').style.display = 'block';
+  document.getElementById('ideas-output').style.display = 'none';
+  document.getElementById('step2-card').style.display = 'none';
+  document.getElementById('step3-card').style.display = 'none';
+  document.getElementById('step4-card').style.display = 'none';
+  document.getElementById('step5-card').style.display = 'none';
+  document.getElementById('output-wrap').style.display = 'none';
 
-  const prompt=`You are an SEO strategist for a new automotive blog called refined.autos. Generate keyword ideas for the category: "${catLabels[cat]}".
+  const prompt = `You are an SEO strategist for refined.autos, a new automotive blog${regionNote}.
+Generate keyword ideas for the category: "${catLabels[cat]}".
 
-IMPORTANT CONTEXT:
-- This is a brand new website with zero Domain Authority
-- Target: keywords where a new site can realistically rank within 6 months
-- Focus on keywords that suggest HIGH COMMERCIAL INTENT (people about to spend money)
-- Avoid extremely generic keywords (too competitive) and extremely niche keywords (too little traffic)
-- The sweet spot: specific enough to have low KD, broad enough to have real search volume
+CRITICAL REQUIREMENTS:
+- Brand new website, DA 0 — only suggest keywords where new sites can realistically rank
+- Keywords must have genuine search intent — real phrases people actually type
+- Include a wide VARIETY — different makes, models, price points, angles, question formats
+- Include long-tail variations that are specific enough to have low KD
+- ${region ? `Include regional keywords referencing ${region} where naturally relevant` : 'Include both global and location-specific keyword ideas'}
+- Always use the current year ${CY} where a year reference is relevant — never older years
+- Avoid overly generic 1-2 word keywords (too competitive) and ultra-niche phrases (no volume)
 
-Generate exactly 20 keyword ideas across 4 sub-groups of 5. Each keyword should be a realistic search phrase a real person types into Google.
+Generate exactly 24 keyword ideas across 4 themed sub-groups of 6. Each group should cover a DIFFERENT angle or sub-topic within the category.
 
-Respond ONLY with valid JSON in this exact format, no other text, no markdown:
+Respond ONLY with valid JSON, no markdown, no other text:
 {
   "groups": [
     {
-      "label": "Group name",
+      "label": "Group theme name",
       "keywords": [
-        {"kw": "the keyword phrase", "intent": "one sentence on why this has commercial intent and why a new site could rank"},
-        ...5 items
+        {"kw": "the exact search phrase", "intent": "why this has buyer intent and why a new site could rank"},
+        ... 6 items
       ]
     },
-    ...4 groups total
+    ... 4 groups total
   ]
 }`;
 
-  try{
-    const raw=await callClaude(prompt,1200);
-    const clean=raw.replace(/```json|```/g,'').trim();
-    const data=JSON.parse(clean);
-    renderIdeas(data);
-  }catch(e){
-    document.getElementById('ideas-output').style.display='block';
-    document.getElementById('ideas-output').innerHTML='<p style="color:var(--danger);font-size:13px;">Error generating ideas: '+e.message+'</p>';
-  }finally{
-    document.getElementById('ideas-btn').disabled=false;
-    document.getElementById('ideas-spin').style.display='none';
+  try {
+    const raw = await callClaude(prompt, 1400);
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const data = JSON.parse(clean);
+    renderIdeas(data, region);
+  } catch (e) {
+    document.getElementById('ideas-output').innerHTML = '<p style="color:var(--danger);font-size:13px;">Error: ' + e.message + '</p>';
+    document.getElementById('ideas-output').style.display = 'block';
+  } finally {
+    document.getElementById('ideas-btn').disabled = false;
+    document.getElementById('ideas-spin').style.display = 'none';
   }
 }
 
-function renderIdeas(data){
-  const out=document.getElementById('ideas-output');
-  let html='<div style="font-size:12px;color:var(--text2);margin-bottom:1rem;">Click any keyword to check it in Mangools, or scroll down to enter your own.</div>';
-  data.groups.forEach(g=>{
-    html+=`<div class="idea-cat">${g.label}</div><div class="idea-grid">`;
-    g.keywords.forEach(k=>{
-      html+=`<div class="idea-chip" onclick="pickIdea('${k.kw.replace(/'/g,"\\'")}','${k.intent.replace(/'/g,"\\'")}')">
-        <span>${k.kw}</span>
-      </div>`;
+function renderIdeas(data, region) {
+  const out = document.getElementById('ideas-output');
+  let html = `<div style="font-size:12px;color:var(--text2);margin-bottom:1rem;">Click any keyword to verify it. Or scroll down to enter your own.${region ? ' <span style="color:var(--gold-text);">Region: ' + region + '</span>' : ''}</div>`;
+  data.groups.forEach(g => {
+    html += `<div class="idea-cat">${g.label}</div><div class="idea-grid">`;
+    g.keywords.forEach(k => {
+      html += `<div class="idea-chip" onclick="pickIdea('${k.kw.replace(/'/g, "\\'")}','${k.intent.replace(/'/g, "\\'").replace(/"/g, '\\"')}')">${k.kw}</div>`;
     });
-    html+='</div>';
+    html += '</div>';
   });
-  html+=`<div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);">
-    <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Have your own keyword already? Enter it directly:</div>
-    <button class="btn bo bsm" onclick="showOwnKw()">Enter my own keyword →</button>
-  </div>`;
-  out.innerHTML=html;
-  out.style.display='block';
+  html += `<div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);"><div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Already have a keyword from Mangools?</div><button class="btn bo bsm" onclick="showOwnKw()">Enter my own keyword →</button></div>`;
+  out.innerHTML = html;
+  out.style.display = 'block';
 }
 
-function pickIdea(kw,intent){
-  document.querySelectorAll('.idea-chip').forEach(c=>c.classList.remove('picked'));
+function pickIdea(kw, intent) {
+  document.querySelectorAll('.idea-chip').forEach(c => c.classList.remove('picked'));
   event.currentTarget.classList.add('picked');
-  S.pickedKw=kw;
-  document.getElementById('v-kw').textContent=kw;
-  document.getElementById('v-serp').href='https://www.google.com/search?q='+encodeURIComponent(kw);
-  document.getElementById('v-trends').href='https://trends.google.com/trends/explore?q='+encodeURIComponent(kw);
-  document.getElementById('f-vol').value='';
-  document.getElementById('f-kd').value='';
-  document.getElementById('f-da').value='';
-  document.getElementById('v-verdict').className='verdict';
-  document.getElementById('v-verdict').style.display='none';
-  document.getElementById('step2-card').style.display='block';
-  document.getElementById('step3-card').style.display='none';
-  document.getElementById('step4-card').style.display='none';
-  document.getElementById('step5-card').style.display='none';
-  document.getElementById('output-wrap').style.display='none';
-  document.getElementById('step2-card').scrollIntoView({behavior:'smooth',block:'nearest'});
+  S.pickedKw = kw;
+  document.getElementById('v-kw').textContent = kw;
+  document.getElementById('v-serp').href = 'https://www.google.com/search?q=' + encodeURIComponent(kw);
+  document.getElementById('v-trends').href = 'https://trends.google.com/trends/explore?q=' + encodeURIComponent(kw);
+  document.getElementById('f-vol').value = '';
+  document.getElementById('f-kd').value = '';
+  document.getElementById('f-da').value = '';
+  document.getElementById('v-verdict').className = 'verdict';
+  document.getElementById('v-verdict').style.display = 'none';
+  document.getElementById('step2-card').style.display = 'block';
+  document.getElementById('step3-card').style.display = 'none';
+  document.getElementById('step4-card').style.display = 'none';
+  document.getElementById('step5-card').style.display = 'none';
+  document.getElementById('output-wrap').style.display = 'none';
+  document.getElementById('step2-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function showOwnKw(){
-  document.getElementById('step3-card').style.display='block';
-  document.getElementById('step2-card').style.display='none';
-  document.getElementById('step3-card').scrollIntoView({behavior:'smooth',block:'nearest'});
+function showOwnKw() {
+  document.getElementById('step3-card').style.display = 'block';
+  document.getElementById('step2-card').style.display = 'none';
+  document.getElementById('step3-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function copyVerifyKw(){
-  navigator.clipboard.writeText(document.getElementById('v-kw').textContent).then(()=>{
-    const b=event.currentTarget;const o=b.textContent;
-    b.textContent='Copied!';setTimeout(()=>b.textContent=o,1500);
+function copyVerifyKw(btn) {
+  navigator.clipboard.writeText(document.getElementById('v-kw').textContent).then(() => {
+    const o = btn.textContent; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = o, 1500);
   });
 }
 
-/* ── STEP 2: JUDGE KEYWORD ── */
-function judgeKw(){
-  const vol=parseInt(document.getElementById('f-vol').value)||0;
-  const kd=parseInt(document.getElementById('f-kd').value)||0;
-  const da=parseInt(document.getElementById('f-da').value)||0;
-  if(!vol||!kd||!da)return;
-
-  const v=document.getElementById('v-verdict');
-  const issues=[],passes=[];
-
-  if(vol>=100)passes.push('Volume ('+vol+'/mo) ✓');
-  else issues.push('Volume too low ('+vol+'/mo). Try a broader variation in Mangools.');
-
-  if(kd<=25){passes.push('KD '+kd+' — excellent for a new site ✓');}
-  else if(kd<=39){passes.push('KD '+kd+' — acceptable for a new site ✓');}
-  else if(kd<=49){issues.push('KD '+kd+' is borderline — risky for a brand new site. Try adding a modifier like "used", "under $X", or a specific year to find a lower-KD variation.');}
-  else{issues.push('KD '+kd+' is too high. A new site cannot rank for this. Search for a long-tail version in Mangools.');}
-
-  if(da<=29)passes.push('Lowest DA in top 10 ('+da+') — smaller sites can rank ✓');
-  else if(da<=45)issues.push('Lowest DA in top 10 is '+da+' — possible but tough. Ideal is finding keywords with at least one result under DA 30.');
-  else issues.push('All top 10 results have high DA ('+da+'+). Skip this keyword for now.');
-
-  v.style.display='block';
-  if(issues.length===0){
-    v.className='verdict vgreen';
-    v.innerHTML='<strong>✓ Go for it.</strong> All signals are positive. Proceed to generate titles.';
-    S.confirmedData={kw:S.pickedKw,vol,kd,da};
-    proceedToTitles(S.pickedKw,vol,kd,da);
-  } else if(issues.length===1){
-    v.className='verdict vamber';
-    v.innerHTML='<strong>⚠ Marginal — use with caution.</strong><br>'+issues.join('<br>')+'<br><small style="opacity:0.8;">Passes: '+passes.join(', ')+'.</small>';
-    S.confirmedData={kw:S.pickedKw,vol,kd,da};
-    setTimeout(()=>proceedToTitles(S.pickedKw,vol,kd,da),600);
+/* ═══ STEP 2: JUDGE KEYWORD ═══ */
+function judgeKw() {
+  const vol = parseInt(document.getElementById('f-vol').value) || 0;
+  const kd = parseInt(document.getElementById('f-kd').value) || 0;
+  const da = parseInt(document.getElementById('f-da').value) || 0;
+  if (!vol || !kd || !da) return;
+  const v = document.getElementById('v-verdict');
+  const issues = [], passes = [];
+  if (vol >= 100) passes.push('Volume (' + vol + '/mo) ✓');
+  else issues.push('Volume too low (' + vol + '/mo). Try a broader variation.');
+  if (kd <= 25) passes.push('KD ' + kd + ' — excellent ✓');
+  else if (kd <= 39) passes.push('KD ' + kd + ' — acceptable ✓');
+  else if (kd <= 49) issues.push('KD ' + kd + ' is borderline. Add a location, year, or modifier to lower it.');
+  else issues.push('KD ' + kd + ' is too high for a new site. Find a long-tail variation.');
+  if (da <= 29) passes.push('Lowest DA in top 10 (' + da + ') — smaller sites can rank ✓');
+  else if (da <= 45) issues.push('Lowest DA in top 10 is ' + da + ' — look for keywords where at least one result has DA under 30.');
+  else issues.push('All top 10 results have high DA (' + da + '+). Skip this keyword for now.');
+  v.style.display = 'block';
+  if (issues.length === 0) {
+    v.className = 'verdict vgreen';
+    v.innerHTML = '<strong>✓ Go ahead and write this article.</strong> All signals are positive.';
+    S.confirmedData = { kw: S.pickedKw, vol, kd, da };
+    proceedToTitles(S.pickedKw, vol, kd, da);
+  } else if (issues.length === 1) {
+    v.className = 'verdict vamber';
+    v.innerHTML = '<strong>⚠ Marginal.</strong> ' + issues[0] + '<br><small style="opacity:0.8;">Passes: ' + passes.join(', ') + '</small>';
+    S.confirmedData = { kw: S.pickedKw, vol, kd, da };
+    setTimeout(() => proceedToTitles(S.pickedKw, vol, kd, da), 500);
   } else {
-    v.className='verdict vred';
-    v.innerHTML='<strong>✗ Not recommended.</strong><br>'+issues.join('<br>')+'<br><small style="opacity:0.8;">Try a different or long-tail version of this keyword in Mangools.</small>';
-    document.getElementById('step4-card').style.display='none';
-    document.getElementById('step5-card').style.display='none';
+    v.className = 'verdict vred';
+    v.innerHTML = '<strong>✗ Not recommended.</strong><br>' + issues.join('<br>');
+    document.getElementById('step4-card').style.display = 'none';
+    document.getElementById('step5-card').style.display = 'none';
   }
 }
 
-function useOwnKeyword(){
-  const kw=document.getElementById('own-kw').value.trim();
-  const vol=parseInt(document.getElementById('own-vol').value)||0;
-  const kd=parseInt(document.getElementById('own-kd').value)||0;
-  const da=parseInt(document.getElementById('own-da').value)||0;
-  if(!kw){alert('Please enter a keyword.');return;}
-  S.pickedKw=kw;
-  S.confirmedData={kw,vol,kd,da};
-  proceedToTitles(kw,vol,kd,da);
+function useOwnKeyword() {
+  const kw = document.getElementById('own-kw').value.trim();
+  const vol = parseInt(document.getElementById('own-vol').value) || 0;
+  const kd = parseInt(document.getElementById('own-kd').value) || 0;
+  const da = parseInt(document.getElementById('own-da').value) || 0;
+  if (!kw) { alert('Please enter a keyword.'); return; }
+  S.pickedKw = kw;
+  S.confirmedData = { kw, vol, kd, da };
+  proceedToTitles(kw, vol, kd, da);
 }
 
-/* ── STEP 4: TITLE OPTIONS ── */
-async function proceedToTitles(kw,vol,kd,da){
-  if(!S.apiKey){alert('Please save your API key in API Setup first.');go('setup');return;}
-  const cat=document.getElementById('cat-select').value;
-  document.getElementById('step4-card').style.display='block';
-  document.getElementById('step5-card').style.display='none';
-  document.getElementById('output-wrap').style.display='none';
-  document.getElementById('titles-spin').style.display='block';
-  document.getElementById('titles-output').innerHTML='';
-  document.getElementById('step4-card').scrollIntoView({behavior:'smooth',block:'nearest'});
+/* ═══ STEP 4: TITLES ═══ */
+async function proceedToTitles(kw, vol, kd, da) {
+  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  const region = document.getElementById('region-select').value;
+  document.getElementById('step4-card').style.display = 'block';
+  document.getElementById('step5-card').style.display = 'none';
+  document.getElementById('output-wrap').style.display = 'none';
+  document.getElementById('titles-spin').style.display = 'block';
+  document.getElementById('titles-output').innerHTML = '';
+  document.getElementById('step4-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-  const prompt=`You are an expert SEO content strategist for refined.autos, a premium automotive blog targeting English-speaking readers.
+  const prompt = `You are an SEO content strategist for refined.autos, a premium automotive blog.
+Keyword: "${kw}"${region ? ' — targeting readers in ' + region : ''}
+Data: volume ~${vol}/month, KD ${kd}, lowest competitor DA ${da}.
+Current year: ${CY}.
 
-Keyword to target: "${kw}"
-Keyword data: search volume ~${vol}/month, KD score ${kd}, lowest competitor DA in top 10 is ${da}.
+Generate exactly 5 compelling article title options. Rules:
+- Naturally include the keyword or very close variation
+- 45–65 characters ideally
+- Use a DIFFERENT format each: one listicle ("5 best..."), one question ("Is the X worth buying?"), one year-specific using ${CY} where relevant, one comparison or "vs", one bold claim or guide
+- NEVER use years older than ${CY} — if a year is included it must be ${CY}
+- If region is specified, include it naturally in 2–3 of the titles
+- Titles must feel credible and trustworthy — no clickbait
 
-Generate exactly 5 compelling article title options for this keyword. Each title must:
-- Naturally include the keyword or a very close variation
-- Be between 45–65 characters ideally (for SEO click-through)
-- Use a different angle or format (e.g. one listicle, one question, one "vs", one "guide", one bold claim)
-- Be written for a reader who is close to making a purchase decision or researching seriously
-- Avoid clickbait — be specific and trustworthy
+Respond ONLY with valid JSON, no other text:
+{"titles":[{"title":"...","why":"one sentence on why this angle works"},...]}`; 
 
-Respond ONLY with valid JSON, no other text, no markdown:
-{
-  "titles": [
-    {"title": "The article title here", "why": "One sentence explaining why this angle works for SEO and click-through"},
-    ...5 items
-  ]
-}`;
-
-  try{
-    const raw=await callClaude(prompt,600);
-    const clean=raw.replace(/```json|```/g,'').trim();
-    const data=JSON.parse(clean);
-    renderTitles(data.titles,kw,vol,kd,da);
-  }catch(e){
-    document.getElementById('titles-output').innerHTML='<p style="color:var(--danger);font-size:13px;">Error generating titles: '+e.message+'</p>';
-  }finally{
-    document.getElementById('titles-spin').style.display='none';
+  try {
+    const raw = await callClaude(prompt, 600);
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const data = JSON.parse(clean);
+    renderTitles(data.titles, kw, vol, kd, da);
+  } catch (e) {
+    document.getElementById('titles-output').innerHTML = '<p style="color:var(--danger);font-size:13px;">Error: ' + e.message + '</p>';
+  } finally {
+    document.getElementById('titles-spin').style.display = 'none';
   }
 }
 
-function renderTitles(titles,kw,vol,kd,da){
-  const notice=document.getElementById('kw-confirmed-notice');
-  notice.textContent='Keyword: "'+kw+'" — Vol: '+vol+'/mo · KD: '+kd+' · Lowest DA: '+(da||'—');
-
-  let html='';
-  titles.forEach((t,i)=>{
-    const charLen=t.title.length;
-    const lenNote=charLen>65?'<span style="color:var(--gold-text);font-size:11px;">'+charLen+' chars — slightly long for SEO title, consider trimming</span>':'<span style="color:var(--green);font-size:11px;">'+charLen+' chars ✓</span>';
-    html+=`<div class="title-option" id="to${i}" onclick="pickTitle(${i},'${t.title.replace(/'/g,"\\'").replace(/"/g,'\\"')}','${kw.replace(/'/g,"\\'")}',${vol},${kd},${da})">
-      <div class="title-num">${i+1}</div>
-      <div style="flex:1;">
-        <div class="title-text">${t.title}</div>
-        <div class="title-why">${t.why}</div>
-        <div style="margin-top:5px;">${lenNote}</div>
-      </div>
+function renderTitles(titles, kw, vol, kd, da) {
+  const region = document.getElementById('region-select').value;
+  document.getElementById('kw-confirmed-notice').textContent = 'Keyword: "' + kw + '"' + (region ? ' · Region: ' + region : '') + (vol ? ' · Vol: ' + vol + '/mo · KD: ' + kd : '');
+  let html = '';
+  titles.forEach((t, i) => {
+    const len = t.title.length;
+    const lenNote = len > 65 ? `<span style="color:var(--gold-text);font-size:11px;">${len} chars — consider trimming to under 65</span>` : `<span style="color:var(--green);font-size:11px;">${len} chars ✓</span>`;
+    html += `<div class="title-option" id="to${i}" onclick="pickTitle(${i},'${t.title.replace(/'/g, "\\'").replace(/"/g, '\\"')}','${kw.replace(/'/g, "\\'")}',${vol},${kd},${da})">
+      <div class="title-num">${i + 1}</div>
+      <div style="flex:1;"><div class="title-text">${t.title}</div><div class="title-why">${t.why}</div><div style="margin-top:4px;">${lenNote}</div></div>
     </div>`;
   });
-  html+=`<button class="btn bo bsm" style="margin-top:8px;" onclick="proceedToTitles('${kw.replace(/'/g,"\\'")}',${vol},${kd},${da})">Regenerate titles ↺</button>`;
-  document.getElementById('titles-output').innerHTML=html;
+  html += `<button class="btn bo bsm" style="margin-top:8px;" onclick="proceedToTitles('${kw.replace(/'/g, "\\'")}',${vol},${kd},${da})">Regenerate titles ↺</button>`;
+  document.getElementById('titles-output').innerHTML = html;
 }
 
-function pickTitle(i,title,kw,vol,kd,da){
-  document.querySelectorAll('.title-option').forEach(t=>t.classList.remove('chosen'));
-  document.getElementById('to'+i).classList.add('chosen');
-  S.pickedTitle=title;
-  S.confirmedData={kw,vol,kd,da};
-  document.getElementById('step5-card').style.display='block';
-  document.getElementById('step5-card').scrollIntoView({behavior:'smooth',block:'nearest'});
+function pickTitle(i, title, kw, vol, kd, da) {
+  document.querySelectorAll('.title-option').forEach(t => t.classList.remove('chosen'));
+  document.getElementById('to' + i).classList.add('chosen');
+  S.pickedTitle = title;
+  S.confirmedData = { kw, vol, kd, da };
+  document.getElementById('step5-card').style.display = 'block';
+  document.getElementById('step5-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-/* ── STEP 5: GENERATE ARTICLE ── */
-async function generateArticle(){
-  if(!S.apiKey){alert('Please save your API key in API Setup first.');go('setup');return;}
-  if(!S.pickedTitle){alert('Please select a title first.');return;}
+/* ═══ STEP 5: GENERATE ARTICLE ═══ */
+async function generateArticle() {
+  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  if (!S.pickedTitle) { alert('Please select a title first.'); return; }
+  const audience = document.getElementById('audience-select').value;
+  const length = document.getElementById('length-select').value;
+  const region = document.getElementById('region-select').value;
+  const cd = S.confirmedData || {};
+  const raw = await buildArticlePrompt(S.pickedTitle, cd.kw || S.pickedTitle, cd.vol || 0, cd.kd || 0, cd.da || 0, audience, length, region);
 
-  const audience=document.getElementById('audience-select').value;
-  const length=document.getElementById('length-select').value;
-  const wordTarget=length==='long'?'1,800 to 2,200':'1,000 to 1,400';
-  const audienceMap={buyer:'someone actively researching buying this car',owner:'a current or prospective owner focused on costs and value',enthusiast:'a car enthusiast who loves the subject and wants depth'};
-  const cd=S.confirmedData||{};
-  const kwNote=cd.vol?`This keyword has ~${cd.vol} searches/month and a KD of ${cd.kd}, meaning readers are actively searching and competition is manageable.`:'';
+  const btn = document.getElementById('gen-btn');
+  btn.disabled = true;
+  document.getElementById('gen-spin').style.display = 'block';
+  document.getElementById('output-wrap').style.display = 'none';
 
-  const prompt=`You are an expert automotive journalist writing for refined.autos, a premium English-language car website. Write a high-quality, SEO-optimised article.
+  try {
+    const text = await callClaude(raw, 4500);
+    const result = parseArticle(text, cd.kw || S.pickedTitle);
+    S.meta = result.meta; S.article = result.text;
+    S.count++; S.words += result.words; S.cost += 0.09;
+    S.history.unshift({ title: S.pickedTitle, date: new Date().toLocaleDateString('en-GB'), words: result.words, slug: result.slug, meta: result.meta, article: result.text, kw: cd.kw || '', region, kwData: cd });
+    if (S.history.length > 100) S.history = S.history.slice(0, 100);
+    persist(); updStats();
+    showArticleOutput(result, S.pickedTitle);
+  } catch (e) { alert('Error: ' + e.message); }
+  finally { btn.disabled = false; document.getElementById('gen-spin').style.display = 'none'; }
+}
 
-ARTICLE BRIEF:
-- Title: ${S.pickedTitle}
-- Primary keyword: ${S.confirmedData?.kw||S.pickedTitle}
-- Word count target: ${wordTarget} words
-- Target reader: ${audienceMap[audience]}
-- Tone: authoritative, knowledgeable, and genuinely helpful — like a trusted friend who is a car expert. Conversational but intelligent. No filler. Real facts, real figures, real advice.
-${kwNote}
+function buildArticlePrompt(title, kw, vol, kd, da, audience, length, region) {
+  const wordTarget = length === 'long' ? '1,800 to 2,200' : '1,000 to 1,400';
+  const audienceMap = { buyer: 'someone actively researching buying this car', owner: 'a current or prospective owner focused on costs and value', enthusiast: 'a car enthusiast who loves the subject and wants depth' };
+  const regionNote = region ? `\n- Target region: ${region}. Reference local pricing, local market conditions, local regulations, and local context where relevant. Make the article feel written specifically for readers in ${region}.` : '';
+  return `You are an expert automotive journalist for refined.autos. Write a high-quality SEO-optimised article.
 
-JOURNEY BY MEDIAVINE CONTENT RULES (these directly affect ad revenue — follow exactly):
-1. PARAGRAPHS: Maximum 2–3 sentences per paragraph. Never longer. Short paragraphs create more ad placements and are easier to read on mobile.
-2. NO WALLS OF TEXT: Mix short punchy sentences with slightly longer ones.
-3. IMAGES: Place 3–4 image placeholders formatted as [IMAGE: description of ideal photo]. Space them naturally throughout — not all at once.
-4. LISTS: Use bullet or numbered lists only when genuinely useful. Never as filler.
-5. SUBHEADINGS: H2 for every major section. H3 within long sections where helpful.
-6. DEPTH: Answer follow-up questions the reader will have within the article. Every section must earn its place with real, specific information.
-7. REAL DATA: Include actual cost ranges, specific model years, real-world figures. Never vague statements.
+BRIEF:
+- Title: ${title}
+- Primary keyword: ${kw}
+- Word count: ${wordTarget} words
+- Reader: ${audienceMap[audience]}
+- Current year: ${CY} — NEVER reference years older than ${CY} in the title or opening. If a model year or data point is referenced, use ${CY} or the most recent available.${regionNote}
 
-EXACT OUTPUT FORMAT — start your response with these two lines:
-META DESCRIPTION: [compelling 150–155 character meta description containing the primary keyword]
-SLUG: [url-slug lowercase hyphens max 6 words]
+MEDIAVINE CONTENT RULES:
+1. Max 2–3 sentences per paragraph — never longer
+2. 3–4 image placeholders: [IMAGE: description of ideal photo]
+3. H2 every major section, H3 for subsections
+4. Real facts, real figures, specific model years. No vague statements.
+5. No filler — every sentence must earn its place
 
-Then write the full article:
+FORMAT — first two lines exactly:
+META DESCRIPTION: [150–155 char meta with keyword]
+SLUG: [slug-lowercase-hyphens-max-6-words]
 
-# ${S.pickedTitle}
+Then the full article:
+# ${title}
 
-[Introduction: 150–180 words max. Open with a surprising specific fact, number, or bold claim. Tell the reader exactly what they'll learn. Max 2–3 sentences per paragraph.]
-
-[IMAGE: relevant opening image]
-
-## [H2 Section 1]
-[2–3 sentence paragraphs]
-
-## [H2 Section 2]
-
-[IMAGE: mid-article image]
-
-## [H2 Section 3]
-
-## [H2 Section 4]
-
-[IMAGE: image]
-
-## [H2 Section 5 — if needed to reach word count]
-
+[Intro: 150–180 words. Open with a specific number, fact, or bold claim. Max 2–3 sentences per paragraph.]
+[IMAGE: opening image]
+## [H2]
+...
 ## The bottom line
-[150–200 word conclusion with a clear, direct recommendation. Tell the reader exactly what to do.]
+[150–200 word conclusion with a clear recommendation.]
 
-SEO: Primary keyword in H1, first 100 words, one H2, and 3–4 more times naturally. Use semantically related terms throughout.
-
+SEO: Primary keyword in H1, first 100 words, one H2, and 3–4 more times naturally.
 Write the complete article now.`;
-
-  const btn=document.getElementById('gen-btn');
-  btn.disabled=true;
-  document.getElementById('gen-spin').style.display='block';
-  document.getElementById('output-wrap').style.display='none';
-
-  try{
-    const raw=await callClaude(prompt,4500);
-    const metaM=raw.match(/META DESCRIPTION:\s*(.+)/);
-    const slugM=raw.match(/SLUG:\s*(.+)/);
-    S.meta=metaM?metaM[1].trim():'';
-    const slug=slugM?slugM[1].trim():(S.confirmedData?.kw||'article').replace(/\s+/g,'-').slice(0,40);
-    S.article=raw.replace(/META DESCRIPTION:.+\n?/,'').replace(/SLUG:.+\n?/,'').trim();
-    const wc=S.article.split(/\s+/).length;
-    const cost=(0); // cost approximation handled below
-
-    // rough cost estimate from token usage not available in simplified path, estimate:
-    const estCost=0.09;
-    S.count++;S.words+=wc;S.cost+=estCost;
-    S.history.unshift({title:S.pickedTitle,date:new Date().toLocaleDateString('en-GB'),words:wc,slug,meta:S.meta,article:S.article,kw:S.confirmedData?.kw||'',kwData:S.confirmedData});
-    if(S.history.length>100)S.history=S.history.slice(0,100);
-    persist();updStats();
-
-    document.getElementById('art-chips').innerHTML=`<span class="chip">${wc.toLocaleString()} words</span><span class="chip">/${slug}</span><span class="chip">Meta: ${S.meta.length} chars</span>`;
-    if(S.meta){document.getElementById('meta-box').style.display='block';document.getElementById('meta-box').textContent='Meta: '+S.meta;}
-    document.getElementById('output-box').textContent=S.article;
-    document.getElementById('output-wrap').style.display='block';
-    renderScorecard(S.article,wc,S.meta,slug);
-    document.getElementById('output-wrap').scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(e){
-    alert('Error generating article: '+e.message);
-  }finally{
-    btn.disabled=false;
-    document.getElementById('gen-spin').style.display='none';
-  }
 }
 
-/* ── SCORECARD ── */
-function renderScorecard(article,wc,meta,slug){
-  const paras=article.split(/\n\n+/).filter(p=>p.trim().length>30&&!p.trim().startsWith('#'));
-  const longParas=paras.filter(p=>{const sents=p.split(/[.!?]+/).filter(s=>s.trim().length>10);return sents.length>3;});
-  const h2=(article.match(/^## /gm)||[]).length;
-  const imgs=(article.match(/\[IMAGE:/gi)||[]).length;
-  const metaLen=meta.length;
-  const slugWords=slug.split('-').length;
-  const hasList=((article.match(/^[-•*] /gm)||[]).length+(article.match(/^\d+\. /gm)||[]).length);
+function parseArticle(raw, kw) {
+  const metaM = raw.match(/META DESCRIPTION:\s*(.+)/);
+  const slugM = raw.match(/SLUG:\s*(.+)/);
+  const meta = metaM ? metaM[1].trim() : '';
+  const slug = slugM ? slugM[1].trim() : kw.replace(/\s+/g, '-').slice(0, 40);
+  const text = raw.replace(/META DESCRIPTION:.+\n?/, '').replace(/SLUG:.+\n?/, '').trim();
+  const words = text.split(/\s+/).length;
+  return { text, meta, slug, words };
+}
 
-  const checks=[
-    {label:'Word count: '+wc.toLocaleString()+' words',pass:wc>=1800?'pass':wc>=1000?'warn':'fail',note:wc>=1800?'Excellent for SEO and ad revenue ✓':wc>=1000?'Good — expanding to 1,800+ improves rankings and RPM':'Too short — expand before publishing'},
-    {label:'Paragraph length',pass:longParas.length===0?'pass':longParas.length<=2?'warn':'fail',note:longParas.length===0?'All paragraphs are 2–3 sentences ✓':longParas.length+' long paragraph(s) — break them up before publishing'},
-    {label:'H2 sections: '+h2+' found',pass:h2>=4?'pass':h2>=2?'warn':'fail',note:h2>=4?'Good structure for SEO and readability ✓':'Add more H2 headings to break up content'},
-    {label:'Image placeholders: '+imgs+' found',pass:imgs>=3?'pass':imgs>=1?'warn':'fail',note:imgs>=3?'Good — replace [IMAGE:] with real photos before publishing ✓':'Add more images (aim for 3–4 per article)'},
-    {label:'Meta description: '+metaLen+' chars',pass:metaLen>=140&&metaLen<=160?'pass':metaLen>=100?'warn':'fail',note:metaLen>=140&&metaLen<=160?'Perfect length ✓':metaLen>160?'Slightly long — trim to under 160 chars':'A bit short — aim for 140–155 chars'},
-    {label:'URL slug',pass:slugWords<=6?'pass':'warn',note:slugWords<=6?'Slug length is good ✓':'Consider shortening the slug to 6 words or fewer'},
-    {label:'Lists',pass:hasList>=2?'pass':'warn',note:hasList>=2?'Good use of lists for scannability ✓':'Consider adding 1–2 bullet lists to improve readability'},
+function showArticleOutput(result, title) {
+  document.getElementById('art-chips').innerHTML = `<span class="chip">${result.words.toLocaleString()} words</span><span class="chip">/${result.slug}</span><span class="chip">Meta: ${result.meta.length} chars</span>`;
+  if (result.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + result.meta; }
+  document.getElementById('output-box').textContent = result.text;
+  document.getElementById('output-wrap').style.display = 'block';
+  renderScorecard(result.text, result.words, result.meta, result.slug);
+  document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderScorecard(article, wc, meta, slug) {
+  const paras = article.split(/\n\n+/).filter(p => p.trim().length > 30 && !p.trim().startsWith('#'));
+  const longParas = paras.filter(p => p.split(/[.!?]+/).filter(s => s.trim().length > 10).length > 3);
+  const h2 = (article.match(/^## /gm) || []).length;
+  const imgs = (article.match(/\[IMAGE:/gi) || []).length;
+  const hasList = ((article.match(/^[-•*] /gm) || []).length + (article.match(/^\d+\. /gm) || []).length);
+  const checks = [
+    { label: 'Word count: ' + wc.toLocaleString(), pass: wc >= 1800 ? 'pass' : wc >= 1000 ? 'warn' : 'fail', note: wc >= 1800 ? 'Excellent for SEO and ad revenue ✓' : wc >= 1000 ? 'Good — expanding to 1,800+ improves RPM' : 'Too short — expand before publishing' },
+    { label: 'Paragraph length', pass: longParas.length === 0 ? 'pass' : longParas.length <= 2 ? 'warn' : 'fail', note: longParas.length === 0 ? 'All paragraphs 2–3 sentences ✓' : longParas.length + ' long paragraph(s) — break up before publishing' },
+    { label: 'H2 sections: ' + h2, pass: h2 >= 4 ? 'pass' : h2 >= 2 ? 'warn' : 'fail', note: h2 >= 4 ? 'Good structure ✓' : 'Add more H2 headings' },
+    { label: 'Images: ' + imgs + ' placeholders', pass: imgs >= 3 ? 'pass' : imgs >= 1 ? 'warn' : 'fail', note: imgs >= 3 ? 'Replace [IMAGE:] with real photos before publishing ✓' : 'Add more image placeholders (aim for 3–4)' },
+    { label: 'Meta: ' + meta.length + ' chars', pass: meta.length >= 140 && meta.length <= 160 ? 'pass' : meta.length >= 100 ? 'warn' : 'fail', note: meta.length >= 140 && meta.length <= 160 ? 'Perfect length ✓' : meta.length > 160 ? 'Trim to under 160 chars' : 'Aim for 140–155 chars' },
+    { label: 'URL slug', pass: slug.split('-').length <= 6 ? 'pass' : 'warn', note: slug.split('-').length <= 6 ? 'Good slug length ✓' : 'Consider shortening the slug' },
+    { label: 'Lists', pass: hasList >= 2 ? 'pass' : 'warn', note: hasList >= 2 ? 'Good use of lists ✓' : 'Consider adding 1–2 bullet lists' },
+    { label: 'Year reference', pass: !article.includes('2023') && !article.includes('2024') ? 'pass' : 'warn', note: !article.includes('2023') && !article.includes('2024') ? 'No outdated years found ✓' : 'Check for outdated year references — update to ' + CY },
   ];
-
-  const passes=checks.filter(c=>c.pass==='pass').length;
-  const score=Math.round((passes/checks.length)*100);
-  const cls=score>=80?'sc-good':score>=60?'sc-ok':'sc-poor';
-
-  document.getElementById('scorecard').innerHTML=`
-    <div class="sc-header">
-      <div><div style="font-size:13px;font-weight:500;">Readiness score</div><div style="font-size:12px;color:var(--text2);margin-top:2px;">${passes}/${checks.length} checks passed — ${score>=80?'ready to publish':'review items below before publishing'}</div></div>
-      <div class="sc-score ${cls}">${score}</div>
-    </div>
-    <div class="sc-checks">
-      ${checks.map(c=>`<div class="sc-check ${c.pass}"><span class="sc-icon">${c.pass==='pass'?'✓':c.pass==='warn'?'⚠':'✗'}</span><div><div class="sc-name">${c.label}</div><div class="sc-note">${c.note}</div></div></div>`).join('')}
-    </div>`;
+  const passes = checks.filter(c => c.pass === 'pass').length;
+  const score = Math.round((passes / checks.length) * 100);
+  const cls = score >= 80 ? 'sc-good' : score >= 60 ? 'sc-ok' : 'sc-poor';
+  document.getElementById('scorecard').innerHTML = `
+    <div class="sc-header"><div><div style="font-size:13px;font-weight:500;">Readiness score</div><div style="font-size:12px;color:var(--text2);margin-top:2px;">${passes}/${checks.length} checks — ${score >= 80 ? 'ready to publish' : 'review before publishing'}</div></div><div class="sc-score ${cls}">${score}</div></div>
+    <div class="sc-checks">${checks.map(c => `<div class="sc-check ${c.pass}"><span class="sc-icon">${c.pass === 'pass' ? '✓' : c.pass === 'warn' ? '⚠' : '✗'}</span><div><div class="sc-name">${c.label}</div><div class="sc-note">${c.note}</div></div></div>`).join('')}</div>`;
 }
 
-function copyFull(){
-  navigator.clipboard.writeText(S.article).then(()=>{
-    const b=document.querySelector('.out-actions .btn');
-    const o=b.textContent;b.textContent='Copied!';setTimeout(()=>b.textContent=o,1500);
+function copyFull() { navigator.clipboard.writeText(S.article).then(() => { const b = document.querySelector('.out-actions .btn'); const o = b.textContent; b.textContent = 'Copied!'; setTimeout(() => b.textContent = o, 1500); }); }
+function copyMeta() { navigator.clipboard.writeText(S.meta).then(() => { const btns = document.querySelectorAll('.out-actions .btn'); btns[3] && (btns[3].textContent = 'Copied!', setTimeout(() => btns[3].textContent = 'Copy text', 1500)); }); }
+
+function resetFlow() {
+  S.pickedKw = null; S.pickedTitle = null; S.confirmedData = null;
+  ['step2-card','step3-card','step4-card','step5-card','output-wrap'].forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('ideas-output').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══ BATCH QUEUE ═══ */
+function bqImportPaste() {
+  const raw = document.getElementById('bq-paste').value.trim();
+  if (!raw) { alert('Please paste some keywords first.'); return; }
+  const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 2);
+  let added = 0;
+  lines.forEach(kw => {
+    if (!BQ.find(i => i.kw.toLowerCase() === kw.toLowerCase())) {
+      BQ.push({ id: Date.now() + Math.random(), kw, vol: 0, kd: 0, da: 0, status: 'wait', titles: null, chosenTitle: null, article: null, meta: null, slug: null, words: 0, error: null });
+      added++;
+    }
   });
-}
-function copyMeta(){
-  navigator.clipboard.writeText(S.meta).then(()=>{
-    const btns=document.querySelectorAll('.out-actions .btn');
-    const o=btns[1].textContent;btns[1].textContent='Copied!';setTimeout(()=>btns[1].textContent=o,1500);
-  });
-}
-
-function resetFlow(){
-  S.pickedKw=null;S.pickedTitle=null;S.confirmedData=null;
-  document.getElementById('step2-card').style.display='none';
-  document.getElementById('step3-card').style.display='none';
-  document.getElementById('step4-card').style.display='none';
-  document.getElementById('step5-card').style.display='none';
-  document.getElementById('output-wrap').style.display='none';
-  document.getElementById('ideas-output').style.display='none';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-/* ── HISTORY ── */
-function renderHist(){
-  const el=document.getElementById('hist-list');
-  document.getElementById('hist-count').textContent=S.history.length+' article'+(S.history.length!==1?'s':'');
-  if(!S.history.length){el.innerHTML='<p style="font-size:13px;color:var(--text3);padding:1rem 0;text-align:center;">No articles generated yet.</p>';return;}
-  el.innerHTML=S.history.map((h,i)=>`
-    <div class="hist-row">
-      <div style="flex:1;min-width:0;">
-        <div class="hist-title">${h.title}</div>
-        <div class="hist-meta">${h.date} &bull; ${(h.words||0).toLocaleString()} words${h.kw?' &bull; kw: '+h.kw:''}</div>
-      </div>
-      <button class="btn bo bsm" onclick="loadHist(${i})">View</button>
-    </div>`).join('');
-}
-
-function loadHist(i){
-  const h=S.history[i];
-  S.article=h.article;S.meta=h.meta||'';
-  document.getElementById('art-chips').innerHTML=`<span class="chip">${(h.words||0).toLocaleString()} words</span><span class="chip">/${h.slug}</span><span class="chip">${h.date}</span>`;
-  if(h.meta){document.getElementById('meta-box').style.display='block';document.getElementById('meta-box').textContent='Meta: '+h.meta;}
-  document.getElementById('output-box').textContent=h.article;
-  document.getElementById('output-wrap').style.display='block';
-  renderScorecard(h.article,h.words||0,h.meta||'',h.slug||'');
-  go('generate');
-  setTimeout(()=>document.getElementById('output-wrap').scrollIntoView({behavior:'smooth',block:'start'}),100);
-}
-
-function clearHist(){
-  if(!S.history.length)return;
-  if(confirm('Clear all article history? This cannot be undone.')){S.history=[];persist();renderHist();}
-}
-
-/* ── API KEY ── */
-async function saveKey(){
-  const key=document.getElementById('api-key-in').value.trim();
-  const msg=document.getElementById('key-msg');
-  if(!key.startsWith('sk-ant-')){msg.innerHTML='<span style="color:var(--danger);">Key should start with sk-ant-</span>';return;}
-  msg.textContent='Verifying...';
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:5,messages:[{role:'user',content:'Hi'}]})
-    });
-    if(res.ok){S.apiKey=key;persist();updApi();msg.innerHTML='<span style="color:var(--green);">Connected ✓</span>';}
-    else{msg.innerHTML='<span style="color:var(--danger);">Invalid key — check and retry</span>';}
-  }catch(e){msg.innerHTML='<span style="color:var(--danger);">Connection error</span>';}
-}
-
-/* ══════════════════════════════
-   BATCH QUEUE
-══════════════════════════════ */
-let BQ = JSON.parse(localStorage.getItem('ra_bq') || '[]');
-let bqRunning = false;
-let bqPauseFlag = false;
-
-function bqSave() {
-  localStorage.setItem('ra_bq', JSON.stringify(BQ));
+  bqSave();
+  document.getElementById('bq-paste').value = '';
+  document.getElementById('bq-import-msg').textContent = added + ' keyword' + (added !== 1 ? 's' : '') + ' added!';
+  setTimeout(() => document.getElementById('bq-import-msg').textContent = '', 3000);
+  renderBQ();
 }
 
 function bqAdd() {
@@ -1021,7 +996,7 @@ function bqAdd() {
   const kd = parseInt(document.getElementById('bq-kd').value) || 0;
   const da = parseInt(document.getElementById('bq-da').value) || 0;
   if (!kw) { alert('Please enter a keyword.'); return; }
-  BQ.push({ id: Date.now(), kw, vol, kd, da, status: 'wait', titles: null, chosenTitle: null, article: null, error: null });
+  BQ.push({ id: Date.now(), kw, vol, kd, da, status: 'wait', titles: null, chosenTitle: null, article: null, meta: null, slug: null, words: 0, error: null });
   bqSave();
   document.getElementById('bq-kw').value = '';
   document.getElementById('bq-vol').value = '';
@@ -1032,11 +1007,9 @@ function bqAdd() {
 }
 
 function bqClear() {
-  if (bqRunning) { alert('Please pause the queue before clearing.'); return; }
+  if (bqRunning) { alert('Pause the queue before clearing.'); return; }
   if (!BQ.length) return;
-  if (confirm('Clear the entire queue? Completed articles are already saved in History.')) {
-    BQ = []; bqSave(); renderBQ();
-  }
+  if (confirm('Clear entire queue? Completed articles are already saved in History.')) { BQ = []; bqSave(); renderBQ(); }
 }
 
 function bqRemove(id) {
@@ -1047,63 +1020,39 @@ function bqRemove(id) {
 
 function renderBQ() {
   const list = document.getElementById('bq-list');
-  const countLabel = document.getElementById('bq-count-label');
-  countLabel.textContent = BQ.length + ' keyword' + (BQ.length !== 1 ? 's' : '');
-
-  if (!BQ.length) {
-    list.innerHTML = '<div class="queue-empty">No keywords in the queue yet. Add some above.</div>';
-    return;
-  }
-
+  document.getElementById('bq-count-label').textContent = BQ.length + ' keyword' + (BQ.length !== 1 ? 's' : '');
+  if (!BQ.length) { list.innerHTML = '<div class="queue-empty">No keywords yet — import or add above.</div>'; return; }
+  const statusMap = {
+    wait: `<span class="q-status qs-wait">⏸ Waiting</span>`,
+    titles: `<span class="q-status qs-run">↺ Fetching titles...</span>`,
+    pick: `<span class="q-status qs-run" style="color:var(--blue);">✎ Pick a title</span>`,
+    running: `<span class="q-status qs-run">⚡ Writing...</span>`,
+    done: `<span class="q-status qs-done">✓ Done</span>`,
+    error: `<span class="q-status qs-err">✗ Error</span>`,
+  };
   list.innerHTML = BQ.map((item, idx) => {
-    const statusMap = {
-      wait: `<span class="q-status qs-wait">⏸ Waiting</span>`,
-      titles: `<span class="q-status qs-run">↺ Fetching titles...</span>`,
-      pick: `<span class="q-status qs-run" style="color:var(--blue);">✎ Pick a title</span>`,
-      running: `<span class="q-status qs-run">⚡ Writing article...</span>`,
-      done: `<span class="q-status qs-done">✓ Done</span>`,
-      error: `<span class="q-status qs-err">✗ Error</span>`,
-      skipped: `<span class="q-status qs-skip">— Skipped</span>`,
-    };
-
-    const cls = item.status === 'running' ? 'qi-running' : item.status === 'done' ? 'qi-done' : item.status === 'error' ? 'qi-error' : item.status === 'skipped' ? 'qi-skipped' : '';
-    const kdColor = item.kd <= 25 ? 'var(--green)' : item.kd <= 39 ? 'var(--gold)' : 'var(--danger)';
-    const volColor = item.vol >= 100 ? 'var(--green)' : 'var(--danger)';
-
-    let titlesHtml = '';
+    const cls = item.status === 'running' ? 'qi-running' : item.status === 'done' ? 'qi-done' : item.status === 'error' ? 'qi-error' : '';
+    const kdCol = item.kd ? (item.kd <= 25 ? 'var(--green)' : item.kd <= 39 ? 'var(--gold)' : 'var(--danger)') : 'var(--text3)';
+    const volCol = item.vol >= 100 ? 'var(--green)' : item.vol > 0 ? 'var(--danger)' : 'var(--text3)';
+    let titlePick = '';
     if (item.status === 'pick' && item.titles) {
-      titlesHtml = `<div class="bq-title-pick">
-        <div class="bq-title-pick-label">Pick a title to use — then it will generate automatically</div>
-        ${item.titles.map((t, ti) => `
-          <div class="bq-title-opt ${item.chosenTitle === t.title ? 'chosen-t' : ''}" onclick="bqPickTitle(${item.id}, '${t.title.replace(/'/g, "\\'").replace(/"/g, '\\"')}')">
-            <div class="bto-num">${ti + 1}</div>
-            <div>
-              <div style="line-height:1.4;margin-bottom:2px;">${t.title}</div>
-              <div style="font-size:11px;opacity:0.7;">${t.why}</div>
-            </div>
-          </div>`).join('')}
+      titlePick = `<div class="bq-title-pick"><div class="bq-title-pick-label">Pick a title</div>
+        ${item.titles.map((t, ti) => `<div class="bq-title-opt ${item.chosenTitle === t.title ? 'chosen-t' : ''}" onclick="bqPickTitle(${item.id},'${t.title.replace(/'/g, "\\'").replace(/"/g, '\\"')}')"><div class="bto-num">${ti + 1}</div><div>${t.title}</div></div>`).join('')}
       </div>`;
     }
-
-    if (item.status === 'done' && item.chosenTitle) {
-      titlesHtml = `<div style="font-size:11px;color:var(--green);margin-top:4px;">✓ "${item.chosenTitle}"</div>`;
-    }
-
-    if (item.status === 'error' && item.error) {
-      titlesHtml = `<div style="font-size:11px;color:var(--danger);margin-top:4px;">Error: ${item.error}</div>`;
-    }
-
+    if (item.status === 'done' && item.chosenTitle) titlePick = `<div style="font-size:11px;color:var(--green);margin-top:3px;">✓ "${item.chosenTitle}"</div>`;
+    if (item.status === 'error' && item.error) titlePick = `<div style="font-size:11px;color:var(--danger);margin-top:3px;">${item.error}</div>`;
     return `<div class="q-item ${cls}" id="qi-${item.id}">
       <div>
         <div class="q-kw">${item.kw}</div>
         <div class="q-meta">
-          <span style="color:${volColor};">Vol: ${item.vol || '—'}/mo</span>
-          <span style="color:${kdColor};">KD: ${item.kd || '—'}</span>
-          <span style="color:var(--text3);">Lowest DA: ${item.da || '—'}</span>
+          <span style="color:${volCol};">Vol: ${item.vol || '—'}/mo</span>
+          <span style="color:${kdCol};">KD: ${item.kd || '—'}</span>
+          <span style="color:var(--text3);">DA: ${item.da || '—'}</span>
         </div>
-        ${titlesHtml}
+        ${titlePick}
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
         ${statusMap[item.status] || ''}
         ${item.status === 'wait' || item.status === 'pick' ? `<button class="btn bo bsm" style="font-size:11px;" onclick="bqRemove(${item.id})">Remove</button>` : ''}
         ${item.status === 'wait' ? `<button class="btn bo bsm" style="font-size:11px;" onclick="bqGenTitlesFor(${item.id})">Get titles</button>` : ''}
@@ -1115,147 +1064,83 @@ function renderBQ() {
 
 function bqPickTitle(id, title) {
   const item = BQ.find(i => i.id === id);
-  if (!item) return;
-  item.chosenTitle = title;
-  bqSave();
-  renderBQ();
-  // if queue is running, it'll be picked up automatically
-  if (!bqRunning) {
-    // allow manual proceed
-    const readyToRun = BQ.filter(i => i.status === 'pick' && i.chosenTitle).length;
-    if (readyToRun > 0 && !bqRunning) {
-      // silently ready - user can hit Run All
-    }
-  }
+  if (item) { item.chosenTitle = title; bqSave(); renderBQ(); }
 }
 
 async function bqGenTitlesFor(id) {
   const item = BQ.find(i => i.id === id);
   if (!item || !S.apiKey) return;
-  item.status = 'titles';
-  bqSave(); renderBQ();
+  item.status = 'titles'; bqSave(); renderBQ();
   try {
-    const titles = await fetchTitles(item.kw, item.vol, item.kd, item.da);
-    item.titles = titles;
-    item.status = 'pick';
-    bqSave(); renderBQ();
-  } catch (e) {
-    item.status = 'error';
-    item.error = e.message;
-    bqSave(); renderBQ();
-  }
+    item.titles = await fetchTitles(item.kw, item.vol, item.kd, item.da);
+    item.status = 'pick'; bqSave(); renderBQ();
+  } catch (e) { item.status = 'error'; item.error = e.message; bqSave(); renderBQ(); }
 }
 
 async function bqGenAllTitles() {
-  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  if (!S.apiKey) { alert('Please save your API key first.'); go('setup'); return; }
   const waiting = BQ.filter(i => i.status === 'wait');
-  if (!waiting.length) { alert('No waiting keywords to generate titles for.'); return; }
-  for (const item of waiting) {
-    await bqGenTitlesFor(item.id);
-    await sleep(800);
-  }
+  if (!waiting.length) { alert('No waiting keywords.'); return; }
+  for (const item of waiting) { await bqGenTitlesFor(item.id); await sleep(600); }
 }
 
 async function bqRunAll() {
-  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  if (!S.apiKey) { alert('Please save your API key first.'); go('setup'); return; }
   const eligible = BQ.filter(i => i.status === 'wait' || (i.status === 'pick' && i.chosenTitle));
-  if (!eligible.length) { alert('No keywords ready to run. Add keywords and pick titles first, or use "Generate titles for all".'); return; }
-  bqRunning = true;
-  bqPauseFlag = false;
+  if (!eligible.length) { alert('No keywords ready. Add keywords first or use "Generate titles for all".'); return; }
+  bqRunning = true; bqPauseFlag = false;
   document.getElementById('bq-run-btn').disabled = true;
   document.getElementById('bq-run-btn').textContent = 'Running...';
   document.getElementById('bq-pause-btn').style.display = 'inline-flex';
   document.getElementById('bq-progress').style.display = 'block';
-
   const audience = document.getElementById('bq-audience').value;
   const length = document.getElementById('bq-length').value;
-
-  const total = BQ.filter(i => i.status !== 'done' && i.status !== 'skipped').length;
+  const region = document.getElementById('bq-region').value;
+  const total = BQ.filter(i => i.status !== 'done').length;
   let done = 0;
-
   for (let i = 0; i < BQ.length; i++) {
     if (bqPauseFlag) break;
     const item = BQ[i];
-    if (item.status === 'done' || item.status === 'skipped') continue;
-
-    // Step A: Get titles if not done
-    if (!item.titles) {
-      bqSetProgress(`Getting titles for "${item.kw}"... (${done + 1} of ${total})`, done, total);
-      item.status = 'titles';
-      bqSave(); renderBQ();
-      try {
-        item.titles = await fetchTitles(item.kw, item.vol, item.kd, item.da);
-        item.status = 'pick';
-        bqSave(); renderBQ();
-        await sleep(400);
-      } catch (e) {
-        item.status = 'error'; item.error = e.message;
-        bqSave(); renderBQ(); done++;
-        continue;
-      }
-    }
-
-    // Step B: Auto-pick first title if none chosen
-    if (!item.chosenTitle) {
-      item.chosenTitle = item.titles[0].title;
-      bqSave(); renderBQ();
-      await sleep(300);
-    }
-
-    // Step C: Generate article
-    bqSetProgress(`Writing article ${done + 1} of ${total}: "${item.chosenTitle}"...`, done, total);
-    item.status = 'running';
-    bqSave(); renderBQ();
-
+    if (item.status === 'done') continue;
+    bqSetProgress(`Getting titles for "${item.kw}"... (${done + 1}/${total})`, done, total);
+    if (!item.titles) { await bqGenTitlesFor(item.id); await sleep(400); }
+    if (item.status === 'error') { done++; continue; }
+    if (!item.chosenTitle) { item.chosenTitle = item.titles[0].title; bqSave(); renderBQ(); await sleep(300); }
+    bqSetProgress(`Writing "${item.chosenTitle}"... (${done + 1}/${total})`, done, total);
+    item.status = 'running'; bqSave(); renderBQ();
     try {
-      const article = await fetchArticle(item.chosenTitle, item.kw, item.vol, item.kd, item.da, audience, length);
-      item.article = article.text;
-      item.meta = article.meta;
-      item.slug = article.slug;
-      item.words = article.words;
-      item.status = 'done';
-
-      // Save to history
-      S.count++; S.words += article.words; S.cost += 0.09;
-      S.history.unshift({ title: item.chosenTitle, date: new Date().toLocaleDateString('en-GB'), words: article.words, slug: article.slug, meta: article.meta, article: article.text, kw: item.kw, kwData: { vol: item.vol, kd: item.kd, da: item.da } });
+      const prompt = buildArticlePrompt(item.chosenTitle, item.kw, item.vol, item.kd, item.da, audience, length, region);
+      const rawText = await callClaude(prompt, 4500);
+      const result = parseArticle(rawText, item.kw);
+      item.article = result.text; item.meta = result.meta; item.slug = result.slug; item.words = result.words; item.status = 'done';
+      S.count++; S.words += result.words; S.cost += 0.09;
+      S.history.unshift({ title: item.chosenTitle, date: new Date().toLocaleDateString('en-GB'), words: result.words, slug: result.slug, meta: result.meta, article: result.text, kw: item.kw, region, kwData: { vol: item.vol, kd: item.kd, da: item.da } });
       if (S.history.length > 100) S.history = S.history.slice(0, 100);
-      persist(); updStats();
-      bqSave(); renderBQ();
-      done++;
-      bqSetProgress(`Done ${done} of ${total}`, done, total);
-      await sleep(1500); // brief pause between articles
-    } catch (e) {
-      item.status = 'error'; item.error = e.message;
-      bqSave(); renderBQ(); done++;
-    }
+      persist(); updStats(); bqSave(); renderBQ(); done++;
+      bqSetProgress(`Done ${done}/${total}`, done, total);
+      await sleep(1500);
+    } catch (e) { item.status = 'error'; item.error = e.message; bqSave(); renderBQ(); done++; }
   }
-
   bqRunning = false;
   document.getElementById('bq-run-btn').disabled = false;
   document.getElementById('bq-run-btn').textContent = 'Run all';
   document.getElementById('bq-pause-btn').style.display = 'none';
+  document.getElementById('bq-pause-btn').disabled = false;
+  document.getElementById('bq-pause-btn').textContent = 'Pause after current';
   const allDone = BQ.filter(i => i.status === 'done').length;
-  bqSetProgress(`Batch complete — ${allDone} article${allDone !== 1 ? 's' : ''} written and saved to History.`, total, total);
+  bqSetProgress(`Batch complete — ${allDone} article${allDone !== 1 ? 's' : ''} saved to History.`, total, total);
 }
 
-function bqPause() {
-  bqPauseFlag = true;
-  document.getElementById('bq-pause-btn').textContent = 'Pausing after current article...';
-  document.getElementById('bq-pause-btn').disabled = true;
-}
-
+function bqPause() { bqPauseFlag = true; document.getElementById('bq-pause-btn').textContent = 'Pausing...'; document.getElementById('bq-pause-btn').disabled = true; }
 function bqSetProgress(label, done, total) {
   document.getElementById('bq-progress-label').textContent = label;
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-  document.getElementById('bq-bar').style.width = pct + '%';
+  document.getElementById('bq-bar').style.width = (total > 0 ? Math.round((done / total) * 100) : 0) + '%';
 }
-
 function bqViewArticle(id) {
   const item = BQ.find(i => i.id === id);
   if (!item || !item.article) return;
-  S.article = item.article;
-  S.meta = item.meta || '';
-  document.getElementById('art-chips').innerHTML = `<span class="chip">${(item.words || 0).toLocaleString()} words</span><span class="chip">/${item.slug}</span><span class="chip">Batch generated</span>`;
+  S.article = item.article; S.meta = item.meta || '';
+  document.getElementById('art-chips').innerHTML = `<span class="chip">${(item.words || 0).toLocaleString()} words</span><span class="chip">/${item.slug}</span><span class="chip">Batch</span>`;
   if (item.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + item.meta; }
   document.getElementById('output-box').textContent = item.article;
   document.getElementById('output-wrap').style.display = 'block';
@@ -1265,45 +1150,568 @@ function bqViewArticle(id) {
 }
 
 async function fetchTitles(kw, vol, kd, da) {
-  const prompt = `You are an SEO content strategist for refined.autos, a premium automotive blog.
-Keyword: "${kw}" — Vol: ~${vol}/mo, KD: ${kd}, Lowest competitor DA: ${da}.
-Generate exactly 5 compelling article titles for this keyword. Each title must include the keyword naturally, be 45–65 characters ideally, and use a different angle.
-Respond ONLY with valid JSON, no other text:
-{"titles":[{"title":"...","why":"one sentence why this angle works"},...]}`; 
+  const region = document.getElementById('bq-region').value;
+  const prompt = `SEO content strategist for refined.autos. Keyword: "${kw}"${region ? ' — region: ' + region : ''} Vol:${vol} KD:${kd} DA:${da}. Current year: ${CY}.
+Generate 5 article titles. Natural keyword inclusion, 45–65 chars, different formats, NEVER use years older than ${CY}.
+Respond ONLY with valid JSON: {"titles":[{"title":"...","why":"..."},...]}`; 
   const raw = await callClaude(prompt, 500);
-  const clean = raw.replace(/```json|```/g, '').trim();
-  const data = JSON.parse(clean);
-  return data.titles;
+  return JSON.parse(raw.replace(/```json|```/g, '').trim()).titles;
 }
 
-async function fetchArticle(title, kw, vol, kd, da, audience, length) {
-  const wordTarget = length === 'long' ? '1,800 to 2,200' : '1,000 to 1,400';
-  const audienceMap = { buyer: 'someone actively researching buying this car', owner: 'a current or prospective owner focused on costs and value', enthusiast: 'a car enthusiast who loves the subject and wants depth' };
-  const prompt = `You are an expert automotive journalist for refined.autos. Write a high-quality SEO-optimised article.
-BRIEF: Title: ${title} | Keyword: ${kw} | Words: ${wordTarget} | Reader: ${audienceMap[audience]}
-RULES: Max 2–3 sentences per paragraph. 3–4 [IMAGE: description] placeholders. H2 every major section. Real facts, real figures, real model years. No filler.
-FORMAT — first two lines exactly:
-META DESCRIPTION: [150–155 char meta with keyword]
-SLUG: [slug-max-6-words]
+/* ═══ TOPICAL AUTHORITY ═══ */
+async function generateTopicalPlan() {
+  if (!S.apiKey) { alert('Please save your API key in API Setup first.'); go('setup'); return; }
+  const topic = document.getElementById('ta-topic').value.trim();
+  const da = parseInt(document.getElementById('ta-da').value) || 0;
+  const region = document.getElementById('ta-region').value;
+  const kdRange = document.getElementById('ta-kd-range').value;
+  const pace = parseInt(document.getElementById('ta-pace').value);
+  if (!topic) { alert('Please enter a main topic.'); return; }
 
-Then full article starting with # ${title}
-Write it now.`;
-  const raw = await callClaude(prompt, 4500);
-  const metaM = raw.match(/META DESCRIPTION:\s*(.+)/);
-  const slugM = raw.match(/SLUG:\s*(.+)/);
-  const meta = metaM ? metaM[1].trim() : '';
-  const slug = slugM ? slugM[1].trim() : kw.replace(/\s+/g, '-').slice(0, 40);
-  const text = raw.replace(/META DESCRIPTION:.+\n?/, '').replace(/SLUG:.+\n?/, '').trim();
-  const words = text.split(/\s+/).length;
-  return { text, meta, slug, words };
+  const kdContext = { easy: 'KD mostly 0–25, very achievable for a new site', medium: 'KD mostly 26–39, manageable with good content', mixed: 'mixed KD from easy to moderate', hard: 'KD 40–55, will require building DA first through easier supporting articles' }[kdRange];
+  const regionNote = region ? ` in ${region}` : '';
+
+  document.getElementById('ta-btn').disabled = true;
+  document.getElementById('ta-spin').style.display = 'block';
+  document.getElementById('ta-output').style.display = 'none';
+
+  const prompt = `You are an SEO content strategist specialising in topical authority for automotive blogs.
+
+Task: Create a complete topical authority content cluster for the topic "${topic}"${regionNote}.
+
+Site context:
+- Current site DA: ${da} (${da === 0 ? 'brand new site' : da <= 10 ? 'very new site' : da <= 30 ? 'growing site' : 'established site'})
+- KD environment: ${kdContext}
+- Target region: ${region || 'global'}
+- Current year: ${CY}
+
+TOPICAL AUTHORITY STRATEGY:
+- The goal is for Google to see this site as the authority on "${topic}"
+- This requires covering the topic from multiple angles: pillar content + supporting articles
+- Start with the easiest-to-rank articles, build DA, then tackle harder ones
+- All article titles must use ${CY} where a year is relevant — never older years
+
+Generate a content cluster with:
+1. ONE pillar article (long-form, broad, targets the main topic keyword)
+2. 10–14 supporting articles (specific angles, long-tail keywords, easier to rank)
+
+For each article provide:
+- Suggested title (include year ${CY} where relevant, include region where naturally fitting)
+- Target keyword
+- Estimated KD range (easy 0–25 / medium 26–39 / hard 40+) based on site DA ${da} and the keyword
+- Priority order (which to write first — start with easiest KD that still has volume)
+- One sentence on why this article is needed for topical authority
+
+Also provide:
+- Estimated total articles needed for topical authority on this topic
+- Estimated weeks to build authority at ${pace} articles/week
+- Current DA assessment and what DA milestone to aim for
+
+Respond ONLY with valid JSON, no other text:
+{
+  "summary": {
+    "totalArticles": 12,
+    "estimatedWeeks": 8,
+    "currentDaNote": "...",
+    "targetDa": 15,
+    "strategyNote": "..."
+  },
+  "pillar": {
+    "title": "...",
+    "keyword": "...",
+    "kd": "medium",
+    "why": "..."
+  },
+  "supporting": [
+    {
+      "priority": 1,
+      "title": "...",
+      "keyword": "...",
+      "kd": "easy",
+      "why": "..."
+    }
+  ]
+}`;
+
+  try {
+    const raw = await callClaude(prompt, 2000);
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const data = JSON.parse(clean);
+    renderTopicalPlan(data, topic, region);
+  } catch (e) {
+    document.getElementById('ta-output').innerHTML = '<div class="card"><p style="color:var(--danger);font-size:13px;">Error: ' + e.message + '</p></div>';
+    document.getElementById('ta-output').style.display = 'block';
+  } finally {
+    document.getElementById('ta-btn').disabled = false;
+    document.getElementById('ta-spin').style.display = 'none';
+  }
 }
 
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function renderTopicalPlan(data, topic, region) {
+  const sum = data.summary;
+  const kdBadge = kd => {
+    const cls = kd === 'easy' ? 'kd-easy' : kd === 'medium' ? 'kd-med' : 'kd-hard';
+    return `<span class="ta-kd-badge ${cls}">${kd}</span>`;
+  };
 
-// Init batch queue on load
-renderBQ();
+  let html = `<div class="card">
+    <div class="ta-cluster-head">Content cluster: "${topic}"${region ? ' — ' + region : ''}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem;">
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:12px;text-align:center;">
+        <div style="font-size:22px;font-weight:600;color:var(--gold);font-family:'Playfair Display',serif;">${sum.totalArticles}</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:3px;text-transform:uppercase;letter-spacing:0.06em;">Total articles</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:12px;text-align:center;">
+        <div style="font-size:22px;font-weight:600;color:var(--gold);font-family:'Playfair Display',serif;">${sum.estimatedWeeks}w</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:3px;text-transform:uppercase;letter-spacing:0.06em;">Estimated time</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:12px;text-align:center;">
+        <div style="font-size:22px;font-weight:600;color:var(--gold);font-family:'Playfair Display',serif;">DA ${sum.targetDa}</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:3px;text-transform:uppercase;letter-spacing:0.06em;">DA target</div>
+      </div>
+    </div>
+    <div class="notice notice-info" style="margin-bottom:1rem;">${sum.strategyNote}</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:1rem;">${sum.currentDaNote}</div>
+  </div>`;
 
-updStats(); updApi();
+  html += `<div class="card">
+    <div class="ta-cluster-head">Pillar article — write this first (or last if KD is high)</div>
+    <div class="ta-article-row">
+      <div class="ta-num ta-pillar">P</div>
+      <div style="flex:1;">
+        <div class="ta-title">${data.pillar.title}</div>
+        <div class="ta-meta">${kdBadge(data.pillar.kd)}<span style="color:var(--text3);">Keyword: ${data.pillar.keyword}</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5;">${data.pillar.why}</div>
+      </div>
+      <button class="btn bo bsm" style="flex-shrink:0;" onclick="addTaToQueue('${data.pillar.keyword.replace(/'/g,"\\'")}','${data.pillar.title.replace(/'/g,"\\'").replace(/"/g,'\\"')}')">Add to queue</button>
+    </div>
+  </div>`;
+
+  html += `<div class="card">
+    <div class="ta-cluster-head">Supporting articles — write in priority order</div>`;
+  data.supporting.forEach((a, i) => {
+    html += `<div class="ta-article-row">
+      <div class="ta-num ta-support">${a.priority}</div>
+      <div style="flex:1;">
+        <div class="ta-title">${a.title}</div>
+        <div class="ta-meta">${kdBadge(a.kd)}<span style="color:var(--text3);">Keyword: ${a.keyword}</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5;">${a.why}</div>
+      </div>
+      <button class="btn bo bsm" style="flex-shrink:0;" onclick="addTaToQueue('${a.keyword.replace(/'/g,"\\'")}','${a.title.replace(/'/g,"\\'").replace(/"/g,'\\"')}')">Add to queue</button>
+    </div>`;
+  });
+  html += `</div>
+  <div class="card">
+    <div class="row" style="margin-bottom:0.75rem;"><span style="font-size:13px;font-weight:500;">Add entire cluster to Batch Queue</span></div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Adds all articles above to the Batch Queue at once. You can then generate titles and run them all automatically.</p>
+    <button class="btn bg" onclick="addAllTaToQueue(${JSON.stringify(data).replace(/'/g,"&#39;")})">Add all ${data.supporting.length + 1} articles to Batch Queue</button>
+  </div>`;
+
+  document.getElementById('ta-output').innerHTML = html;
+  document.getElementById('ta-output').style.display = 'block';
+  document.getElementById('ta-output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function addTaToQueue(kw, title) {
+  if (!BQ.find(i => i.kw.toLowerCase() === kw.toLowerCase())) {
+    BQ.push({ id: Date.now() + Math.random(), kw, vol: 0, kd: 0, da: 0, status: 'wait', titles: [{ title, why: 'From topical authority plan' }], chosenTitle: title, article: null, meta: null, slug: null, words: 0, error: null });
+    bqSave();
+  }
+  alert('"' + kw + '" added to Batch Queue. Go to Batch Queue to run it.');
+}
+
+function addAllTaToQueue(data) {
+  const all = [data.pillar, ...data.supporting];
+  let added = 0;
+  all.forEach(a => {
+    if (!BQ.find(i => i.kw.toLowerCase() === a.keyword.toLowerCase())) {
+      BQ.push({ id: Date.now() + Math.random(), kw: a.keyword, vol: 0, kd: 0, da: 0, status: 'wait', titles: [{ title: a.title, why: 'From topical authority plan' }], chosenTitle: a.title, article: null, meta: null, slug: null, words: 0, error: null });
+      added++;
+    }
+  });
+  bqSave();
+  alert(added + ' articles added to Batch Queue. Switch to Batch Queue to run them.');
+  go('batch');
+}
+
+/* ═══ HISTORY ═══ */
+function renderHist() {
+  const el = document.getElementById('hist-list');
+  document.getElementById('hist-count').textContent = S.history.length + ' article' + (S.history.length !== 1 ? 's' : '');
+  if (!S.history.length) { el.innerHTML = '<p style="font-size:13px;color:var(--text3);padding:1rem 0;text-align:center;">No articles generated yet.</p>'; return; }
+  el.innerHTML = S.history.map((h, i) => `<div class="hist-row"><div style="flex:1;min-width:0;"><div class="hist-title">${h.title}</div><div class="hist-meta">${h.date} · ${(h.words || 0).toLocaleString()} words${h.kw ? ' · ' + h.kw : ''}${h.region ? ' · ' + h.region : ''}</div></div><button class="btn bo bsm" onclick="loadHist(${i})">View</button></div>`).join('');
+}
+
+function loadHist(i) {
+  const h = S.history[i];
+  S.article = h.article; S.meta = h.meta || '';
+  document.getElementById('art-chips').innerHTML = `<span class="chip">${(h.words || 0).toLocaleString()} words</span><span class="chip">/${h.slug}</span><span class="chip">${h.date}</span>`;
+  if (h.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + h.meta; }
+  document.getElementById('output-box').textContent = h.article;
+  document.getElementById('output-wrap').style.display = 'block';
+  renderScorecard(h.article, h.words || 0, h.meta || '', h.slug || '');
+  go('generate');
+  setTimeout(() => document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function clearHist() {
+  if (!S.history.length) return;
+  if (confirm('Clear all article history?')) { S.history = []; persist(); renderHist(); }
+}
+
+/* ═══ API KEY ═══ */
+async function saveKey() {
+  const key = document.getElementById('api-key-in').value.trim();
+  const msg = document.getElementById('key-msg');
+  if (!key.startsWith('sk-ant-')) { msg.innerHTML = '<span style="color:var(--danger);">Key must start with sk-ant-</span>'; return; }
+  msg.textContent = 'Verifying...';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 5, messages: [{ role: 'user', content: 'Hi' }] })
+    });
+    if (res.ok) { S.apiKey = key; persist(); updApi(); msg.innerHTML = '<span style="color:var(--green);">Connected ✓</span>'; }
+    else { msg.innerHTML = '<span style="color:var(--danger);">Invalid key — check and retry</span>'; }
+  } catch (e) { msg.innerHTML = '<span style="color:var(--danger);">Connection error</span>'; }
+}
+
+/* ═══ UNSPLASH + WP SETUP ═══ */
+function saveUnsplashKey() {
+  const key = document.getElementById('unsplash-key-in').value.trim();
+  const msg = document.getElementById('unsplash-msg');
+  if (!key) { msg.innerHTML = '<span style="color:var(--danger);">Please enter a key</span>'; return; }
+  localStorage.setItem('ra_unsplash', key);
+  msg.innerHTML = '<span style="color:var(--green);">Saved ✓</span>';
+  setTimeout(() => msg.textContent = '', 3000);
+}
+
+async function saveWPCreds() {
+  const url = document.getElementById('wp-url-in').value.trim().replace(/\/$/, '');
+  const user = document.getElementById('wp-user-in').value.trim();
+  const pass = document.getElementById('wp-pass-in').value.trim();
+  const msg = document.getElementById('wp-msg');
+  if (!url || !user || !pass) { msg.innerHTML = '<span style="color:var(--danger);">Please fill all fields</span>'; return; }
+  msg.textContent = 'Testing connection...';
+  try {
+    const res = await fetch(url + '/wp-json/wp/v2/users/me', {
+      headers: { 'Authorization': 'Basic ' + btoa(user + ':' + pass) }
+    });
+    if (res.ok) {
+      localStorage.setItem('ra_wp_url', url);
+      localStorage.setItem('ra_wp_user', user);
+      localStorage.setItem('ra_wp_pass', pass);
+      msg.innerHTML = '<span style="color:var(--green);">Connected to WordPress ✓</span>';
+    } else {
+      msg.innerHTML = '<span style="color:var(--danger);">Connection failed — check URL, username, and application password</span>';
+    }
+  } catch (e) {
+    msg.innerHTML = '<span style="color:var(--danger);">Could not reach ' + url + ' — check URL and that REST API is enabled</span>';
+  }
+}
+
+/* ═══ IMAGE FETCHING ═══ */
+let fetchedImages = []; // [{placeholder, query, url, photographer, unsplashLink, blob}]
+
+function countImagePlaceholders(article) {
+  const matches = [...article.matchAll(/\[IMAGE:\s*([^\]]+)\]/gi)];
+  return matches;
+}
+
+async function fetchAllImages() {
+  const unsplashKey = localStorage.getItem('ra_unsplash');
+  if (!unsplashKey) {
+    alert('Please add your Unsplash API key in API Setup first.');
+    go('setup');
+    return;
+  }
+  const matches = countImagePlaceholders(S.article);
+  if (!matches.length) { alert('No image placeholders found in this article.'); return; }
+
+  const btn = document.getElementById('fetch-imgs-btn');
+  btn.disabled = true;
+  btn.textContent = 'Fetching images...';
+  document.getElementById('fetch-img-status').textContent = '0/' + matches.length + ' fetched';
+  fetchedImages = [];
+  document.getElementById('img-preview-grid').innerHTML = '';
+
+  for (let i = 0; i < matches.length; i++) {
+    const placeholder = matches[i][0];
+    const query = matches[i][1].trim();
+    const searchQuery = 'car automobile ' + query;
+    try {
+      const res = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`, {
+        headers: { 'Authorization': 'Client-ID ' + unsplashKey }
+      });
+      const data = await res.json();
+      if (data.results && data.results.length > 0) {
+        const photo = data.results[0];
+        const imgUrl = photo.urls.regular;
+        const photographer = photo.user.name;
+        const unsplashLink = photo.links.html;
+        // Fetch blob for embedding
+        const imgRes = await fetch(imgUrl);
+        const blob = await imgRes.blob();
+        const base64 = await blobToBase64(blob);
+        fetchedImages.push({ placeholder, query, url: imgUrl, photographer, unsplashLink, base64, blob });
+        renderImagePreview(fetchedImages);
+        document.getElementById('fetch-img-status').textContent = (i + 1) + '/' + matches.length + ' fetched';
+      } else {
+        fetchedImages.push({ placeholder, query, url: null, photographer: null, unsplashLink: null, base64: null, blob: null });
+      }
+    } catch (e) {
+      fetchedImages.push({ placeholder, query, url: null, error: e.message });
+    }
+    await sleep(300); // respect rate limits
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Refetch images';
+  document.getElementById('fetch-img-status').textContent = fetchedImages.filter(i => i.url).length + '/' + matches.length + ' images ready';
+}
+
+function blobToBase64(blob) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(blob);
+  });
+}
+
+function renderImagePreview(images) {
+  const grid = document.getElementById('img-preview-grid');
+  grid.innerHTML = images.map((img, i) => `
+    <div style="border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--bg3);">
+      ${img.url ? `<img src="${img.url}" style="width:100%;height:110px;object-fit:cover;display:block;">` : `<div style="height:110px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text3);">No image found</div>`}
+      <div style="padding:6px 8px;">
+        <div style="font-size:10px;color:var(--text2);line-height:1.4;margin-bottom:3px;">${img.query.slice(0, 40)}${img.query.length > 40 ? '...' : ''}</div>
+        ${img.photographer ? `<div style="font-size:10px;color:var(--text3);">📷 ${img.photographer}</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+/* ═══ ARTICLE PREVIEW MODAL ═══ */
+function openPreview() {
+  let html = markdownToHtml(S.article);
+  // Replace image placeholders with actual images
+  fetchedImages.forEach(img => {
+    if (img.url) {
+      const escaped = img.placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      html = html.replace(new RegExp(escaped.replace(/\[/g,'\\[').replace(/\]/g,'\\]'), 'gi'),
+        `<figure style="margin:1.5rem 0;text-align:center;">
+          <img src="${img.url}" style="max-width:100%;border-radius:8px;display:block;margin:0 auto;" alt="${img.query}">
+          <figcaption style="font-size:13px;color:#888;margin-top:6px;">Photo by <a href="${img.unsplashLink}?utm_source=refined_autos&utm_medium=referral" target="_blank" style="color:#888;">${img.photographer}</a> on <a href="https://unsplash.com?utm_source=refined_autos&utm_medium=referral" target="_blank" style="color:#888;">Unsplash</a></figcaption>
+        </figure>`);
+    }
+  });
+  document.getElementById('preview-content').innerHTML = html;
+  document.getElementById('preview-modal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreview() {
+  document.getElementById('preview-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function markdownToHtml(md) {
+  let html = md
+    .replace(/^# (.+)$/gm, '<h1 style="font-family:Georgia,serif;font-size:2rem;font-weight:600;color:#1a1a1a;margin:0 0 1rem;line-height:1.25;">$1</h1>')
+    .replace(/^## (.+)$/gm, '<h2 style="font-family:Georgia,serif;font-size:1.4rem;font-weight:600;color:#1a1a1a;margin:2rem 0 0.75rem;line-height:1.3;">$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3 style="font-size:1.1rem;font-weight:600;color:#1a1a1a;margin:1.5rem 0 0.5rem;">$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^[-•*] (.+)$/gm, '<li style="margin-bottom:6px;">$1</li>')
+    .replace(/(<li.*<\/li>\n?)+/g, '<ul style="margin:0.75rem 0 0.75rem 1.5rem;color:#1a1a1a;">$&</ul>')
+    .replace(/^\d+\. (.+)$/gm, '<li style="margin-bottom:6px;">$1</li>')
+    .replace(/\[IMAGE:[^\]]+\]/gi, '')
+    .split(/\n\n+/)
+    .map(p => {
+      p = p.trim();
+      if (!p) return '';
+      if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<figure')) return p;
+      return '<p style="margin:0 0 1.25rem;color:#1a1a1a;">' + p.replace(/\n/g, ' ') + '</p>';
+    })
+    .join('\n');
+  return html;
+}
+
+/* ═══ DOWNLOAD .DOC ═══ */
+function downloadDoc() {
+  const title = S.pickedTitle || 'Article';
+  let content = S.article;
+
+  // Build HTML with images embedded as base64
+  let htmlBody = markdownToHtml(content);
+  fetchedImages.forEach(img => {
+    if (img.base64) {
+      const escaped = img.placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      htmlBody = htmlBody.replace(
+        new RegExp(escaped.replace(/\[/g,'\\[').replace(/\]/g,'\\]'), 'gi'),
+        `<img src="${img.base64}" style="max-width:100%;margin:1rem 0;" alt="${img.query}"><br><small>Photo by ${img.photographer} on Unsplash</small>`
+      );
+    }
+  });
+
+  const docHtml = `
+    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+    <head><meta charset="utf-8">
+    <style>
+      body{font-family:Georgia,serif;font-size:12pt;line-height:1.6;color:#1a1a1a;margin:2cm;}
+      h1{font-size:22pt;margin-bottom:12pt;}
+      h2{font-size:16pt;margin-top:24pt;margin-bottom:8pt;}
+      h3{font-size:13pt;margin-top:18pt;}
+      p{margin-bottom:10pt;}
+      img{max-width:100%;}
+    </style>
+    </head>
+    <body>
+    <p style="font-size:10pt;color:#888;">Meta description: ${S.meta}</p>
+    ${htmlBody}
+    </body></html>`;
+
+  const blob = new Blob(['\ufeff', docHtml], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = title.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase().slice(0, 50) + '.doc';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ═══ WORDPRESS PUBLISH ═══ */
+async function publishToWP() {
+  const wpUrl = localStorage.getItem('ra_wp_url');
+  const wpUser = localStorage.getItem('ra_wp_user');
+  const wpPass = localStorage.getItem('ra_wp_pass');
+
+  if (!wpUrl || !wpUser || !wpPass) {
+    alert('Please set up your WordPress connection in API Setup first.');
+    go('setup');
+    return;
+  }
+
+  const btn = document.getElementById('wp-publish-btn');
+  btn.disabled = true;
+  btn.textContent = 'Publishing...';
+
+  try {
+    // Step 1: Upload images to WP media library
+    const imageMap = {}; // placeholder -> WP image URL
+    for (const img of fetchedImages) {
+      if (!img.blob || !img.url) continue;
+      btn.textContent = 'Uploading images...';
+      try {
+        const filename = img.query.replace(/\s+/g, '-').toLowerCase().slice(0, 30) + '.jpg';
+        const formData = new FormData();
+        formData.append('file', img.blob, filename);
+        formData.append('alt_text', img.query);
+        formData.append('caption', `Photo by ${img.photographer} on Unsplash`);
+
+        const uploadRes = await fetch(wpUrl + '/wp-json/wp/v2/media', {
+          method: 'POST',
+          headers: { 'Authorization': 'Basic ' + btoa(wpUser + ':' + wpPass) },
+          body: formData
+        });
+
+        if (uploadRes.ok) {
+          const mediaData = await uploadRes.json();
+          imageMap[img.placeholder] = { src: mediaData.source_url, id: mediaData.id, credit: img.photographer };
+        }
+      } catch (e) { /* skip failed image */ }
+    }
+
+    // Step 2: Convert article markdown to WordPress HTML with uploaded images
+    btn.textContent = 'Creating post...';
+    let postContent = markdownToHtml(S.article);
+
+    // Replace image placeholders with WP image blocks
+    fetchedImages.forEach(img => {
+      if (imageMap[img.placeholder]) {
+        const wpImg = imageMap[img.placeholder];
+        const block = `<!-- wp:image -->
+<figure class="wp-block-image"><img src="${wpImg.src}" alt="${img.query}"/><figcaption>Photo by ${wpImg.credit} on <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></figcaption></figure>
+<!-- /wp:image -->`;
+        postContent = postContent.replace(img.placeholder, block);
+      } else {
+        postContent = postContent.replace(img.placeholder, '');
+      }
+    });
+
+    // Step 3: Create post as draft
+    const postRes = await fetch(wpUrl + '/wp-json/wp/v2/posts', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + btoa(wpUser + ':' + wpPass),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: S.pickedTitle || 'New Article',
+        content: postContent,
+        status: 'draft',
+        excerpt: S.meta,
+        slug: S.history[0]?.slug || '',
+        meta: { _yoast_wpseo_metadesc: S.meta }
+      })
+    });
+
+    if (postRes.ok) {
+      const postData = await postRes.json();
+      const editUrl = wpUrl + '/wp-admin/post.php?post=' + postData.id + '&action=edit';
+      btn.textContent = 'Published as draft ✓';
+      btn.style.background = 'var(--green)';
+      setTimeout(() => {
+        if (confirm('Article published as draft in WordPress! Click OK to open it in your WordPress editor.')) {
+          window.open(editUrl, '_blank');
+        }
+        btn.disabled = false;
+        btn.textContent = 'Publish to WordPress';
+        btn.style.background = '';
+      }, 500);
+    } else {
+      const err = await postRes.json();
+      throw new Error(err.message || 'Failed to create post');
+    }
+  } catch (e) {
+    alert('WordPress publish error: ' + e.message + '\n\nCheck your connection settings in API Setup.');
+    btn.disabled = false;
+    btn.textContent = 'Publish to WordPress';
+  }
+}
+
+/* ═══ SHOW ARTICLE OUTPUT (updated) ═══ */
+function showArticleOutput(result, title) {
+  document.getElementById('art-chips').innerHTML = `<span class="chip">${result.words.toLocaleString()} words</span><span class="chip">/${result.slug}</span><span class="chip">Meta: ${result.meta.length} chars</span>`;
+  if (result.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + result.meta; }
+
+  // Count image placeholders
+  const matches = countImagePlaceholders(result.text);
+  document.getElementById('img-count').textContent = matches.length;
+  fetchedImages = []; // reset
+  document.getElementById('img-preview-grid').innerHTML = '';
+  document.getElementById('fetch-img-status').textContent = '';
+  document.getElementById('fetch-imgs-btn').disabled = false;
+  document.getElementById('fetch-imgs-btn').textContent = 'Fetch images from Unsplash';
+
+  document.getElementById('output-wrap').style.display = 'block';
+  renderScorecard(result.text, result.words, result.meta, result.slug);
+  document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+updStats(); updApi(); renderBQ();
+
+// Load saved keys into setup fields on page load
+window.addEventListener('load', () => {
+  const uk = localStorage.getItem('ra_unsplash');
+  if (uk) document.getElementById('unsplash-key-in').value = uk;
+  const wpUrl = localStorage.getItem('ra_wp_url');
+  const wpUser = localStorage.getItem('ra_wp_user');
+  if (wpUrl) document.getElementById('wp-url-in').value = wpUrl;
+  if (wpUser) document.getElementById('wp-user-in').value = wpUser;
+});
 </script>
 </body>
 </html>
