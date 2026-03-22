@@ -354,6 +354,8 @@ hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
             <button class="btn bo bsm" onclick="copyMeta()">Copy meta</button>
             <button class="btn bo bsm" onclick="resetFlow()">Start over</button>
           </div>
+          <!-- Hidden raw text for copy/preview functions -->
+          <textarea id="output-box" style="display:none;"></textarea>
         </div>
         <div class="card"><div class="card-head">SEO &amp; Mediavine scorecard</div><div id="scorecard"></div></div>
       </div>
@@ -961,8 +963,22 @@ function renderScorecard(article, wc, meta, slug) {
     <div class="sc-checks">${checks.map(c => `<div class="sc-check ${c.pass}"><span class="sc-icon">${c.pass === 'pass' ? '✓' : c.pass === 'warn' ? '⚠' : '✗'}</span><div><div class="sc-name">${c.label}</div><div class="sc-note">${c.note}</div></div></div>`).join('')}</div>`;
 }
 
-function copyFull() { navigator.clipboard.writeText(S.article).then(() => { const b = document.querySelector('.out-actions .btn'); const o = b.textContent; b.textContent = 'Copied!'; setTimeout(() => b.textContent = o, 1500); }); }
-function copyMeta() { navigator.clipboard.writeText(S.meta).then(() => { const btns = document.querySelectorAll('.out-actions .btn'); btns[3] && (btns[3].textContent = 'Copied!', setTimeout(() => btns[3].textContent = 'Copy text', 1500)); }); }
+function copyFull() {
+  if (!S.article) { alert('No article loaded.'); return; }
+  navigator.clipboard.writeText(S.article).then(() => {
+    const btns = document.querySelectorAll('.out-actions .btn');
+    const b = btns[3];
+    if (b) { const o = b.textContent; b.textContent = 'Copied!'; setTimeout(() => b.textContent = o, 1500); }
+  });
+}
+function copyMeta() {
+  if (!S.meta) { alert('No meta description loaded.'); return; }
+  navigator.clipboard.writeText(S.meta).then(() => {
+    const btns = document.querySelectorAll('.out-actions .btn');
+    const b = btns[4];
+    if (b) { const o = b.textContent; b.textContent = 'Copied!'; setTimeout(() => b.textContent = o, 1500); }
+  });
+}
 
 function resetFlow() {
   S.pickedKw = null; S.pickedTitle = null; S.confirmedData = null;
@@ -1139,14 +1155,28 @@ function bqSetProgress(label, done, total) {
 function bqViewArticle(id) {
   const item = BQ.find(i => i.id === id);
   if (!item || !item.article) return;
-  S.article = item.article; S.meta = item.meta || '';
-  document.getElementById('art-chips').innerHTML = `<span class="chip">${(item.words || 0).toLocaleString()} words</span><span class="chip">/${item.slug}</span><span class="chip">Batch</span>`;
-  if (item.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + item.meta; }
-  document.getElementById('output-box').textContent = item.article;
-  document.getElementById('output-wrap').style.display = 'block';
-  renderScorecard(item.article, item.words || 0, item.meta || '', item.slug || '');
+  S.article = item.article; S.meta = item.meta || ''; S.pickedTitle = item.chosenTitle || item.kw;
   go('generate');
-  setTimeout(() => document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  setTimeout(() => {
+    document.getElementById('art-chips').innerHTML = `<span class="chip">${(item.words || 0).toLocaleString()} words</span><span class="chip">/${item.slug || ''}</span><span class="chip">Batch</span>`;
+    if (item.meta) {
+      document.getElementById('meta-box').style.display = 'block';
+      document.getElementById('meta-box').textContent = 'Meta: ' + item.meta;
+    } else {
+      document.getElementById('meta-box').style.display = 'none';
+    }
+    // Reset image state
+    fetchedImages = [];
+    document.getElementById('img-preview-grid').innerHTML = '';
+    document.getElementById('fetch-img-status').textContent = '';
+    document.getElementById('fetch-imgs-btn').disabled = false;
+    document.getElementById('fetch-imgs-btn').textContent = 'Fetch images from Unsplash';
+    const matches = countImagePlaceholders(item.article);
+    document.getElementById('img-count').textContent = matches.length;
+    document.getElementById('output-wrap').style.display = 'block';
+    renderScorecard(item.article, item.words || 0, item.meta || '', item.slug || '');
+    document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 async function fetchTitles(kw, vol, kd, da) {
@@ -1344,14 +1374,28 @@ function renderHist() {
 
 function loadHist(i) {
   const h = S.history[i];
-  S.article = h.article; S.meta = h.meta || '';
-  document.getElementById('art-chips').innerHTML = `<span class="chip">${(h.words || 0).toLocaleString()} words</span><span class="chip">/${h.slug}</span><span class="chip">${h.date}</span>`;
-  if (h.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + h.meta; }
-  document.getElementById('output-box').textContent = h.article;
-  document.getElementById('output-wrap').style.display = 'block';
-  renderScorecard(h.article, h.words || 0, h.meta || '', h.slug || '');
+  S.article = h.article; S.meta = h.meta || ''; S.pickedTitle = h.title;
   go('generate');
-  setTimeout(() => document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  setTimeout(() => {
+    document.getElementById('art-chips').innerHTML = `<span class="chip">${(h.words || 0).toLocaleString()} words</span><span class="chip">/${h.slug}</span><span class="chip">${h.date}</span>`;
+    if (h.meta) {
+      document.getElementById('meta-box').style.display = 'block';
+      document.getElementById('meta-box').textContent = 'Meta: ' + h.meta;
+    } else {
+      document.getElementById('meta-box').style.display = 'none';
+    }
+    // Reset image state
+    fetchedImages = [];
+    document.getElementById('img-preview-grid').innerHTML = '';
+    document.getElementById('fetch-img-status').textContent = '';
+    document.getElementById('fetch-imgs-btn').disabled = false;
+    document.getElementById('fetch-imgs-btn').textContent = 'Fetch images from Unsplash';
+    const matches = countImagePlaceholders(h.article);
+    document.getElementById('img-count').textContent = matches.length;
+    document.getElementById('output-wrap').style.display = 'block';
+    renderScorecard(h.article, h.words || 0, h.meta || '', h.slug || '');
+    document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 function clearHist() {
@@ -1685,17 +1729,20 @@ async function publishToWP() {
 /* ═══ SHOW ARTICLE OUTPUT (updated) ═══ */
 function showArticleOutput(result, title) {
   document.getElementById('art-chips').innerHTML = `<span class="chip">${result.words.toLocaleString()} words</span><span class="chip">/${result.slug}</span><span class="chip">Meta: ${result.meta.length} chars</span>`;
-  if (result.meta) { document.getElementById('meta-box').style.display = 'block'; document.getElementById('meta-box').textContent = 'Meta: ' + result.meta; }
-
+  if (result.meta) {
+    document.getElementById('meta-box').style.display = 'block';
+    document.getElementById('meta-box').textContent = 'Meta: ' + result.meta;
+  } else {
+    document.getElementById('meta-box').style.display = 'none';
+  }
   // Count image placeholders
   const matches = countImagePlaceholders(result.text);
   document.getElementById('img-count').textContent = matches.length;
-  fetchedImages = []; // reset
+  fetchedImages = [];
   document.getElementById('img-preview-grid').innerHTML = '';
   document.getElementById('fetch-img-status').textContent = '';
   document.getElementById('fetch-imgs-btn').disabled = false;
   document.getElementById('fetch-imgs-btn').textContent = 'Fetch images from Unsplash';
-
   document.getElementById('output-wrap').style.display = 'block';
   renderScorecard(result.text, result.words, result.meta, result.slug);
   document.getElementById('output-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
