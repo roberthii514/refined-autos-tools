@@ -823,8 +823,14 @@ function buildPrompt(title, kw, audience, length, region) {
   var rn = region ? '\n- Target region: ' + region + '. Reference local pricing, conditions, and regulations. Make it feel written for readers in ' + region + '.' : '';
   var an = localStorage.getItem('ra_author_name') || '';
   var ae = localStorage.getItem('ra_author_exp') || '';
-  var aN = an ? '\n\nE-E-A-T VOICE: Written by ' + an + (ae ? ', ' + ae : '') + '. Use first person where natural ("In my experience...", "I have tested..."). Show genuine hands-on knowledge.' : '';
-  return 'Expert automotive journalist for refined.autos. Write a high-quality SEO article scoring 80+ on quality.\n\nBRIEF:\n- Title: ' + title + '\n- Keyword: ' + kw + '\n- Word count: ' + wt + ' words\n- Reader: ' + am[audience] + '\n- Year: ' + CY + ' -- NEVER reference years older than ' + CY + rn + aN + '\n\nCRITICAL RULES:\n1. DO NOT include an H1 in the body. WordPress uses the post title as H1. Start with the intro text.\n2. Minimum 5 H2 sections (## in markdown)\n3. Maximum 2-3 sentences per paragraph -- never longer\n4. Exactly 3-4 image placeholders: [IMAGE: description]\n5. At least 2 bullet or numbered lists\n6. Real facts, specific model years, actual cost ranges -- no vague statements\n7. No filler. Every sentence earns its place.\n\nFORMAT -- start response with these two lines:\nMETA DESCRIPTION: [150-155 char meta with keyword]\nSLUG: [url-slug-max-6-words -- NO years ever]\n\nThen the article (NO H1, start with intro):\n\n[Intro 150-180 words. Open with a specific fact or number.]\n[IMAGE: opening image]\n## [H2]\n[2-3 sentence paragraphs]\n## [H2]\n[IMAGE: image]\n## [H2]\n## [H2]\n[IMAGE: image]\n## [H2 or more as needed]\n## The bottom line\n[150-200 words, clear recommendation.]\n\nKeyword "' + kw + '" in first 100 words, one H2, and 3-4 more times naturally. Write now starting with META DESCRIPTION.';
+  var aN = an ? '\n\nE-E-A-T VOICE: Written by ' + an + (ae ? ', ' + ae : '') + '. Use first person where natural ("In my experience...", "I have tested...", "What I have found is..."). Share genuine opinions and real-world observations. The article should feel like a specific person with a specific point of view wrote it -- not a generic AI summary.' : '';
+  return 'Expert automotive journalist for refined.autos. Write a high-quality SEO article scoring 80+ on quality.\n\nBRIEF:\n- Title: ' + title + '\n- Keyword: ' + kw + '\n- Word count: ' + wt + ' words\n- Reader: ' + am[audience] + '\n- Year: ' + CY + ' -- NEVER reference years older than ' + CY + rn + aN + '\n\nCRITICAL RULES:\n1. DO NOT include an H1 in the body. WordPress uses the post title as H1. Start with the intro text.\n2. Minimum 5 H2 sections (## in markdown)\n3. Maximum 2-3 sentences per paragraph -- never longer\n4. Exactly 3-4 image placeholders: [IMAGE: description]\n5. At least 2 bullet or numbered lists\n6. No filler. Every sentence earns its place.\n\nACCURACY AND E-E-A-T RULES -- these are critical for Google trustworthiness:\n- For prices, costs, and rates you are confident about: state them as ranges not single figures ("typically $800-$1,500" not "costs $1,100")\n- For local incentives, rebates, or utility rates that change frequently: acknowledge they vary and direct the reader to verify ("check your local utility website for current rebate amounts -- these change regularly")\n- For well-documented mechanical facts, reliability data, and model specifications: state them confidently and specifically\n- For anything time-sensitive: add a natural qualifier ("as of ' + CY + '" or "rates vary -- verify before acting")\n- NEVER invent specific business names, mechanic shop names, or dealership names\n- NEVER invent a precise figure you are not certain of -- use a range or a qualifier instead\n- This accuracy approach actually builds MORE trust with readers and Google than fake precision\n\nFORMAT -- start response with these two lines:\nMETA DESCRIPTION: [150-155 char meta with keyword]\nSLUG: [url-slug-max-6-words -- NO years ever]\n\nThen the article (NO H1, start with intro):\n\n[Intro 150-180 words. Open with a specific fact or number.]\n[IMAGE: opening image]\n## [H2]\n[2-3 sentence paragraphs]\n## [H2]\n[IMAGE: image]\n## [H2]\n## [H2]\n[IMAGE: image]\n## [H2 or more as needed]\n## The bottom line\n[150-200 words, clear recommendation.]\n\nKeyword "' + kw + '" in first 100 words, one H2, and 3-4 more times naturally. Write now starting with META DESCRIPTION.';
+}
+
+async function accuracyPass(article, title, region) {
+  var prompt = 'You are an editorial fact-checker and E-E-A-T specialist for refined.autos, an automotive blog.\n\nReview this article and improve its trustworthiness without changing the structure, headings, word count, image placeholders, or overall tone.\n\nARTICLE TITLE: ' + title + '\nREGION: ' + (region || 'general') + '\n\nARTICLE:\n' + article + '\n\nYour job:\n1. Find any specific prices, rates, or figures that are stated with false precision and rewrite them as honest ranges (e.g. "$1,100" becomes "typically $800-$1,500")\n2. Find any local incentive amounts, rebate figures, or utility rates that could be out of date and add a natural qualifier directing readers to verify (e.g. "check your utility provider for current rates")\n3. Find any invented business names, dealership names, or mechanic shop names and remove or genericise them\n4. Find any claims stated as absolute fact that are actually variable by location or time and add a brief qualifier\n5. Keep everything that is a well-documented mechanical fact, reliability pattern, or model specification -- these should remain confident and specific\n6. Preserve ALL image placeholders exactly as written: [IMAGE: description]\n7. Preserve the meta description and slug lines at the top exactly\n8. Do NOT change the word count significantly, do NOT change headings, do NOT change the author box at the bottom\n\nReturn the complete improved article with the same META DESCRIPTION and SLUG lines at the top. No commentary -- just the article.';
+  var improved = await callClaude(prompt, 4500);
+  return improved;
 }
 function scoreArticle(article, wc, meta, slug) {
   var paras = article.split(/\n\n+/).filter(function(p) { return p.trim().length > 30 && !p.trim().startsWith('#'); });
@@ -843,20 +849,13 @@ function parseArticle(raw, kw) {
   return { text: text, meta: meta, slug: slug, words: text.split(/\s+/).length };
 }
 function appendAuthorBox(text) {
-  var name = localStorage.getItem('ra_author_name') || '';
-  var bio = localStorage.getItem('ra_author_bio') || '';
-  var exp = localStorage.getItem('ra_author_exp') || '';
-  var social = localStorage.getItem('ra_author_social') || '';
-  if (!name) return text;
-  return text + '\n\n---\n\n**About the author: ' + name + '**\n\n' + (exp ? exp + '. ' : '') + bio + (social ? ' [Follow](' + social + ')' : '');
+  // Author box is handled by the WordPress theme -- do not append to article body
+  // The author profile is used only to humanise the writing voice in the prompt
+  return text;
 }
 function getAuthorWPBlock() {
-  var name = localStorage.getItem('ra_author_name') || '';
-  var bio = localStorage.getItem('ra_author_bio') || '';
-  var exp = localStorage.getItem('ra_author_exp') || '';
-  var social = localStorage.getItem('ra_author_social') || '';
-  if (!name) return '';
-  return '\n\n<!-- wp:group {"className":"author-box"} -->\n<div class="wp-block-group author-box"><!-- wp:heading {"level":4} -->\n<h4>About the author</h4>\n<!-- /wp:heading --><!-- wp:heading {"level":3} -->\n<h3>' + name + '</h3>\n<!-- /wp:heading -->' + (exp ? '<!-- wp:paragraph -->\n<p><strong>' + exp + '</strong></p>\n<!-- /wp:paragraph -->' : '') + '<!-- wp:paragraph -->\n<p>' + bio + '</p>\n<!-- /wp:paragraph -->' + (social ? '<!-- wp:paragraph -->\n<p><a href="' + social + '" target="_blank" rel="noopener">Follow ' + name + '</a></p>\n<!-- /wp:paragraph -->' : '') + '</div>\n<!-- /wp:group -->';
+  // Author box is handled by the WordPress theme -- not injected into post content
+  return '';
 }
 async function genArticle() {
   if (!S.apiKey) { alert('Save API key first.'); go('setup'); return; }
@@ -870,6 +869,7 @@ async function genArticle() {
   document.getElementById('gen-spin').style.display = 'block';
   document.getElementById('out-wrap').style.display = 'none';
   try {
+    // Step 1: generate draft (retry if score under 80)
     var result, attempts = 0;
     while (attempts < 2) {
       attempts++;
@@ -879,9 +879,22 @@ async function genArticle() {
       if (scoreArticle(result.text, result.words, result.meta, result.slug) >= 80) break;
       if (attempts >= 2) break;
     }
+    // Step 2: accuracy pass -- bakes in E-E-A-T trustworthiness automatically
+    lbl.textContent = 'Running accuracy and E-E-A-T pass...';
+    var improvedRaw = await accuracyPass(result.text, S.pickedTitle, region);
+    // Parse the improved version -- it has the same META/SLUG header format
+    var improved = parseArticle(improvedRaw, cd.kw || S.pickedTitle);
+    // Use improved text but keep original meta/slug if the pass somehow loses them
+    if (improved.text && improved.text.length > result.text.length * 0.7) {
+      result.text = improved.text;
+      if (improved.meta && improved.meta.length > 50) result.meta = improved.meta;
+      if (improved.slug && improved.slug.length > 2) result.slug = improved.slug;
+      result.words = improved.words;
+    }
+    // Step 3: append author box
     result.text = appendAuthorBox(result.text);
     S.meta = result.meta; S.article = result.text;
-    S.count++; S.words += result.words; S.cost += 0.09;
+    S.count++; S.words += result.words; S.cost += 0.11;
     S.history.unshift({ title: S.pickedTitle, date: new Date().toLocaleDateString('en-GB'), words: result.words, slug: result.slug, meta: result.meta, article: result.text, kw: cd.kw || '', region: region, kwData: cd });
     if (S.history.length > 100) S.history = S.history.slice(0, 100);
     persist(); updStats();
@@ -921,7 +934,7 @@ function renderScorecard(article, wc, meta, slug) {
     { l: 'URL slug', p: /20\d\d/.test(slug) ? 'fail' : slug.split('-').length <= 6 ? 'pass' : 'warn', n: /20\d\d/.test(slug) ? 'Year in slug -- remove it' : slug.split('-').length <= 6 ? 'Good evergreen slug' : 'Consider shortening' },
     { l: 'Lists', p: lists >= 2 ? 'pass' : 'warn', n: lists >= 2 ? 'Good use of lists' : 'Add 1-2 bullet lists' },
     { l: 'Year refs', p: !article.includes('2023') && !article.includes('2024') ? 'pass' : 'warn', n: !article.includes('2023') && !article.includes('2024') ? 'No outdated years' : 'Update 2023/2024 refs to ' + CY },
-    { l: 'E-E-A-T author', p: localStorage.getItem('ra_author_name') ? 'pass' : 'warn', n: localStorage.getItem('ra_author_name') ? 'Author box added to WordPress post' : 'Set up author profile in Setup' }
+    { l: 'E-E-A-T voice', p: localStorage.getItem('ra_author_name') ? 'pass' : 'warn', n: localStorage.getItem('ra_author_name') ? 'Author voice humanising every article' : 'Set up author profile in Setup to humanise articles' }
   ];
   var passes = checks.filter(function(c) { return c.p === 'pass'; }).length;
   var score = Math.round(passes / checks.length * 100);
@@ -1235,7 +1248,17 @@ async function bqRunAll() {
     item.status = 'running'; bqSave(); renderBQ();
     try {
       var raw = await callClaude(buildPrompt(item.chosenTitle, item.kw, audience, length, region), 4500);
-      var result = parseArticle(raw, item.kw); result.text = appendAuthorBox(result.text);
+      var result = parseArticle(raw, item.kw);
+      // Accuracy and E-E-A-T pass
+      var improvedRaw2 = await accuracyPass(result.text, item.chosenTitle, region);
+      var improved2 = parseArticle(improvedRaw2, item.kw);
+      if (improved2.text && improved2.text.length > result.text.length * 0.7) {
+        result.text = improved2.text;
+        if (improved2.meta && improved2.meta.length > 50) result.meta = improved2.meta;
+        if (improved2.slug && improved2.slug.length > 2) result.slug = improved2.slug;
+        result.words = improved2.words;
+      }
+      result.text = appendAuthorBox(result.text);
       item.article = result.text; item.meta = result.meta; item.slug = result.slug; item.words = result.words; item.status = 'done';
       S.count++; S.words += result.words; S.cost += 0.09;
       S.history.unshift({ title: item.chosenTitle, date: new Date().toLocaleDateString('en-GB'), words: result.words, slug: result.slug, meta: result.meta, article: result.text, kw: item.kw, region: region });
