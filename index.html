@@ -815,9 +815,14 @@ async function accuracyPass(article, title, region) {
     '7. Preserve META DESCRIPTION and SLUG lines at the top exactly',
     '8. Do NOT change headings or overall structure',
     '',
-    'Return the complete improved article starting with META DESCRIPTION. No commentary.'
+    'Return ONLY the improved article starting with META DESCRIPTION. Do not include ARTICLE TITLE, REGION, or ARTICLE TEXT headers in your response. No commentary.'
   ];
-  return await api(lines.join('\n'), 4500);
+  var improved = await api(lines.join('\n'), 4500);
+  // Strip any leaked header lines from the response
+  improved = improved.replace(/^ARTICLE TITLE:.*\n?/m, '');
+  improved = improved.replace(/^REGION:.*\n?/m, '');
+  improved = improved.replace(/^ARTICLE TEXT:\s*\n?/m, '');
+  return improved.trim();
 }
 function parseArticle(raw, kw) {
   var mM = raw.match(/META DESCRIPTION:\s*(.+)/);
